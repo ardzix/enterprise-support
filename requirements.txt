@@ -1,0 +1,2 @@
+# Apps-
+-e git+https://github.com/ardzix/django-enterprise-core.git#egg=panel
