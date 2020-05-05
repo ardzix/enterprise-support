@@ -32,7 +32,7 @@ from django.dispatch import receiver
 
 from enterprise.structures.common.models import File
 from enterprise.structures.common.models.base import BaseModelGeneric, BaseModelUnique
-from enterprise.structures.authentication.models import User as U
+from core.structures.authentication.models import User as U
 from enterprise.structures.transaction.models import BankAccount
 from enterprise.libs import storage
 from enterprise.libs import base36

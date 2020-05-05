@@ -48,7 +48,7 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
 
-from enterprise.structures.authentication.models import User, EmailVerification
+from core.structures.authentication.models import User, EmailVerification
 
 
 def send_mail_with_attachment(subject_template_name, email_template_name, html_email_template_name,
@@ -546,7 +546,7 @@ def send_verification_email(email, user, length=6, base_url=None, *args, **kwarg
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings
-    from enterprise.structures.authentication.models import User
+    from core.structures.authentication.models import User
     # import ipdb ; ipdb.set_trace()
 
     if getattr(settings, 'AUTO_VERIFY_EMAIL', False):

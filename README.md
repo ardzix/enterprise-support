@@ -1,2 +1,2 @@
-# gajianduluan-core
-A core structures for gajianduluan.com
+# BRI-KUR-core
+A core structures for kur.bri.co.id

@@ -11,7 +11,7 @@ from django.conf import settings
 
 from enterprise.structures.common.models import File
 from enterprise.structures.common.models.base import BaseModelGeneric, BaseModelUnique
-from enterprise.structures.authentication.models import User, EmailVerification
+from core.structures.authentication.models import User, EmailVerification
 from enterprise.libs import storage
 
 from core.libs import constant

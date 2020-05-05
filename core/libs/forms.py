@@ -95,14 +95,14 @@ class ChangePasswordForm(PasswordChangeForm):
 class RegisterForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ("phone_number",)
+        fields = ("email",)
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
 
         self.error_class = ErrorDiv
 
-        self.fields["phone_number"].widget.attrs = {
+        self.fields["email"].widget.attrs = {
             "class": "form-control"
         }
 
@@ -115,66 +115,6 @@ class RegisterForm(UserCreationForm):
             "class": "form-control"
         }
         self.fields["password2"].required = False
-
-
-class PhoneCheckForm(ModelForm):
-    request_id = None
-    phone_number = None
-
-    class Meta:
-        model = get_user_model()
-        fields = ("phone_number",)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        phone = self.cleaned_data.get('phone_number')
-
-        client = nexmo.Client(
-            key=settings.NEXMO_API_KEY,
-            secret=settings.NEXMO_API_SECRET)
-        verify_resp = client.start_verification(
-            number=phone, brand='lakon.app')
-        if not verify_resp['status'] == '0' and not verify_resp['status'] == '10':
-            raise ValidationError(
-                verify_resp['error_text']
-            )
-
-        self.request_id = verify_resp['request_id']
-        self.phone_number = phone
-
-        return cleaned_data
-
-
-class PhoneVerifyForm(Form):
-    code = IntegerField(
-        label=_("Verification COde"),
-        widget=NumberInput,
-        help_text="We are sending a code to your phone number, please write down here",
-    )
-
-    request_id = CharField(
-        widget=HiddenInput
-    )
-
-    phone_number = CharField(
-        widget=HiddenInput
-    )
-
-    def clean(self):
-        cleaned_data = super().clean()
-        code = self.cleaned_data.get('code')
-        request_id = self.cleaned_data.get('request_id')
-        client = nexmo.Client(
-            key=settings.NEXMO_API_KEY,
-            secret=settings.NEXMO_API_SECRET)
-        response = client.check_verification(request_id, code=code)
-
-        if not response['status'] == '0':
-            raise ValidationError(
-                response['error_text']
-            )
-
-        return cleaned_data
 
 
 class NonceModelForm(ModelForm):
