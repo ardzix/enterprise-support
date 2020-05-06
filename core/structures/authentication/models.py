@@ -70,6 +70,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         db_index=True,
         blank=True,
         null=True)
+    username = models.CharField(_('username'), max_length=150, blank=True)
     full_name = models.CharField(_('full name'), max_length=150, blank=True)
     email = models.EmailField(_('email address'), unique=True)
     is_staff = models.BooleanField(
@@ -166,17 +167,19 @@ class EmailVerification(models.Model):
 def send_verification_email(email, user, base_url=None, *args, **kwargs):
     from enterprise.libs.email import send_mail
     from enterprise.libs.otp import generate_otp_code
+    from social_django.models import UserSocialAuth
     from django.conf import settings
 
-    subject_template_name = "email/email_verify.txt"
-    html_email_template_name = "email/email_verify.html"
-    email_template_name = html_email_template_name
     code = generate_otp_code(6)
-
     context = {
         "code": code,
         "name": user.full_name
     }
+
+    subject_template_name = "email/email_verify.txt"
+    html_email_template_name = "email/email_verify.html"
+
+    email_template_name = html_email_template_name
 
     send_mail(
         subject_template_name,
@@ -199,11 +202,10 @@ def send_verification_email(email, user, base_url=None, *args, **kwargs):
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings
-    print("Entering pre save")
-    print(getattr(settings, 'AUTO_VERIFY_EMAIL', False))
-    if getattr(settings, 'AUTO_VERIFY_EMAIL', False):
+    if getattr(settings, 'AUTO_VERIFY_EMAIL', False) and not instance.is_active:
         email = instance.email
-        if instance.is_sent_email:
+        ev = EmailVerification.objects.filter(email=email, is_verified=False).last()
+        if instance.is_sent_email and not ev:
             existed_user = User.objects.filter(id=instance.id).first()
             if not existed_user:
                 send_verification_email(

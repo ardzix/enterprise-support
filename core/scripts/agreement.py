@@ -16,12 +16,12 @@
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
 
-from core.structures.project.models import Loan
+from core.structures.loan.models import Loan
 from ..libs.agreement import generate_ma, generate_pa
 
 
 def generate_agreement_data():
-    for project in Loan.objects.all():
-        generate_ma(project)
-        for fund in project.fund_set.all():
+    for loan in Loan.objects.all():
+        generate_ma(loan)
+        for fund in loan.fund_set.all():
             generate_pa(fund)
