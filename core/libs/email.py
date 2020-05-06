@@ -10,8 +10,7 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
 
-from core.structures.authentication.models import User, EmailVerification
-
+from core.structures.authentication.models import User, EmailVerification, send_verification_email
 
 def send_mail_with_attachment(subject_template_name, email_template_name, html_email_template_name,
               context, to_email, attachment, filename, from_email=None, mandrill_template=None, mandrill_variables=None,
@@ -465,46 +464,6 @@ def repayment_email(email, cc, payment):
         email,
         cc=cc
     )
-
-def send_verification_email(email, user, length=6, base_url=None, *args, **kwargs):
-    from enterprise.libs.email import send_mail
-    from django.conf import settings
-
-    subject_template_name = "email/email_verify.txt"
-    html_email_template_name = "email/email_verify.html"
-    email_template_name = html_email_template_name
-    code = str(randint(10**(length-1), (10**(length)-1)))
-
-    if not base_url:
-        base_url = getattr(settings, 'BASE_URL')
-    url = code
-    if kwargs:
-        params = ''.join(['&%s=%s' % (k, v) for k, v in kwargs.items()])
-        url += params
-
-    context = {
-        "url": url,
-        "name": user.full_name
-    }
-
-    send_mail(
-        subject_template_name,
-        email_template_name,
-        html_email_template_name,
-        context,
-        email, cc=getattr(settings, "MAIL_NOTIFICATION_CC", [])
-    )
-
-    ev, created = EmailVerification.objects.get_or_create(
-        email=email
-    )
-    ev.code = code
-    ev.is_verified = False
-    ev.save()
-
-    return ev
-
-
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings

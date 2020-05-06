@@ -164,8 +164,8 @@ class EmailVerification(models.Model):
 
 
 def send_verification_email(email, user, base_url=None, *args, **kwargs):
-    from ...libs.email import send_mail
-    from ...libs.otp import generate_otp_code
+    from enterprise.libs.email import send_mail
+    from enterprise.libs.otp import generate_otp_code
     from django.conf import settings
 
     subject_template_name = "email/email_verify.txt"
