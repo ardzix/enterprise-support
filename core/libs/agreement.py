@@ -17,13 +17,13 @@
 '''
 
 from core.structures.account.models import Company
-from core.structures.project.models import Project, MasterAgreement, ParticipationAgreement
+from core.structures.loan.models import Loan, MasterAgreement, ParticipationAgreement
 from enterprise.structures.transaction.models import BankAccount
 
-def generate_ma(project):
-    ma = project.masteragreement_set.first()
+def generate_ma(loan):
+    ma = loan.masteragreement_set.first()
     if not ma:
-        borrower = project.owned_by
+        borrower = loan.owned_by
         company = Company.objects.filter(owned_by=borrower).last()
         address = None
         if company:
@@ -31,7 +31,7 @@ def generate_ma(project):
         if not address:
             address = borrower.get_profile().addresses.first()
         ma = MasterAgreement.objects.create(
-            project = project,
+            loan = loan,
             created_by = borrower,
             company = company,
             address = address
@@ -40,8 +40,8 @@ def generate_ma(project):
 
 def generate_pa(fund):
     if not fund.participationagreement_set.first():
-        project = fund.project
-        ma = project.masteragreement_set.last()
+        loan = fund.loan
+        ma = loan.masteragreement_set.last()
         lender = fund.owned_by
         bank_account = BankAccount.objects.filter(owned_by=lender).last()
         ParticipationAgreement.objects.create(

@@ -33,7 +33,7 @@ class DocumentKeyAdmin(admin.ModelAdmin):
     pass
 
 
-class ProjectAdmin(admin.ModelAdmin):
+class LoanAdmin(admin.ModelAdmin):
     pass
 
 
@@ -45,4 +45,4 @@ admin.site.register(Grade, GradeAdmin)
 admin.site.register(LoanType, LoanTypeAdmin)
 admin.site.register(DocumentKey, DocumentKeyAdmin)
 admin.site.register(Fund, FundAdmin)
-admin.site.register(Project, ProjectAdmin)
+admin.site.register(Loan, LoanAdmin)

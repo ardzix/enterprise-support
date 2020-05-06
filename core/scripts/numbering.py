@@ -15,14 +15,14 @@
 # Copyright - 2019 PT Bima Kapital Asia Teknologi, bimaasia.id
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''
-from core.structures.project.models import *
+from core.structures.loan.models import Loan
 
 
 def regenerate_numbering():
-    for l in Project.objects.all():
+    for l in Loan.objects.all():
         l.number = ''
         l.save(create_number=False)
-    for l in Project.objects.all():
+    for l in Loan.objects.all():
         l.save()
         print(l.get_number())
 

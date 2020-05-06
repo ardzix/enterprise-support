@@ -290,123 +290,123 @@ msgstr "Media Sosial"
 msgid "Social Medias"
 msgstr "Media Sosial"
 
-#: core/structures/project/models/__init__.py:70
+#: core/structures/loan/models/__init__.py:70
 msgid "Grade"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:71
+#: core/structures/loan/models/__init__.py:71
 msgid "Grades"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:90
+#: core/structures/loan/models/__init__.py:90
 msgid "Loan Type"
 msgstr "Jenis Pinjaman"
 
-#: core/structures/project/models/__init__.py:91
+#: core/structures/loan/models/__init__.py:91
 msgid "Loan Types"
 msgstr "Jenis Pinjaman"
 
-#: core/structures/project/models/__init__.py:106
+#: core/structures/loan/models/__init__.py:106
 msgid "Document Key"
 msgstr "Kunci Dokumen"
 
-#: core/structures/project/models/__init__.py:107
+#: core/structures/loan/models/__init__.py:107
 msgid "Document Keys"
 msgstr "Kunci Dokumen"
 
-#: core/structures/project/models/__init__.py:122
+#: core/structures/loan/models/__init__.py:122
 #, fuzzy
 #| msgid "Document Key"
 msgid "Detail Key"
 msgstr "Kunci Dokumen"
 
-#: core/structures/project/models/__init__.py:123
+#: core/structures/loan/models/__init__.py:123
 #, fuzzy
 #| msgid "Document Keys"
 msgid "Detail Keys"
 msgstr "Kunci Dokumen"
 
-#: core/structures/project/models/__init__.py:141
+#: core/structures/loan/models/__init__.py:141
 msgid "FactSheet Key"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:142
+#: core/structures/loan/models/__init__.py:142
 msgid "FactSheet Keys"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:347
-msgid "Project"
-msgstr "Proyek"
+#: core/structures/loan/models/__init__.py:347
+msgid "Loan"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:348
-msgid "Projects"
-msgstr "Proyek"
+#: core/structures/loan/models/__init__.py:348
+msgid "Loans"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:368
+#: core/structures/loan/models/__init__.py:368
 #, fuzzy
 #| msgid "Profile Detail"
-msgid "Project Detail"
+msgid "Loan Detail"
 msgstr "Detail Profil"
 
-#: core/structures/project/models/__init__.py:369
+#: core/structures/loan/models/__init__.py:369
 #, fuzzy
 #| msgid "Profile Details"
-msgid "Project Details"
+msgid "Loan Details"
 msgstr "Detail Profil"
 
-#: core/structures/project/models/__init__.py:388
+#: core/structures/loan/models/__init__.py:388
 #, fuzzy
-#| msgid "Project"
-msgid "Project FactSheet"
-msgstr "Proyek"
+#| msgid "Loan"
+msgid "Loan FactSheet"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:389
+#: core/structures/loan/models/__init__.py:389
 #, fuzzy
-#| msgid "Projects"
-msgid "Project FactSheets"
-msgstr "Proyek"
+#| msgid "Loans"
+msgid "Loan FactSheets"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:420
+#: core/structures/loan/models/__init__.py:420
 #, fuzzy
-#| msgid "Project"
-msgid "Project Document"
-msgstr "Proyek"
+#| msgid "Loan"
+msgid "Loan Document"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:421
+#: core/structures/loan/models/__init__.py:421
 #, fuzzy
-#| msgid "Projects"
-msgid "Project Documents"
-msgstr "Proyek"
+#| msgid "Loans"
+msgid "Loan Documents"
+msgstr "Pinjaman"
 
-#: core/structures/project/models/__init__.py:436
+#: core/structures/loan/models/__init__.py:436
 msgid "Fund"
 msgstr "Pendanaan"
 
-#: core/structures/project/models/__init__.py:437
+#: core/structures/loan/models/__init__.py:437
 msgid "Funds"
 msgstr "Pendanaan"
 
-#: core/structures/project/models/__init__.py:480
+#: core/structures/loan/models/__init__.py:480
 msgid "Payment"
 msgstr "Pembayaran"
 
-#: core/structures/project/models/__init__.py:481
+#: core/structures/loan/models/__init__.py:481
 msgid "Payments"
 msgstr "Pembayaran"
 
-#: core/structures/project/models/__init__.py:491
+#: core/structures/loan/models/__init__.py:491
 msgid "MasterAgreement"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:492
+#: core/structures/loan/models/__init__.py:492
 msgid "MasterAgreements"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:517
+#: core/structures/loan/models/__init__.py:517
 msgid "ParticipationAgreement"
 msgstr ""
 
-#: core/structures/project/models/__init__.py:518
+#: core/structures/loan/models/__init__.py:518
 msgid "ParticipationAgreements"
 msgstr ""
 

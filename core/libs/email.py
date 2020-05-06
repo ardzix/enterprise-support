@@ -1,43 +1,5 @@
-'''
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# File: email.py
-# Project: core.bimaasia.id
-# File Created: Tuesday, 11th June 2019 11:29:40 pm
-# 
-# Author: Arif Dzikrullah
-#         ardzix@hotmail.com>
-#         https://github.com/ardzix/>
-# 
-# Last Modified: Tuesday, 11th June 2019 11:29:41 pm
-# Modified By: arifdzikrullah (ardzix@hotmail.com>)
-# 
-# Handcrafted and Made with Love - Ardz
-# Copyright - 2019 PT Bima Kapital Asia Teknologi, bimaasia.id
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-'''
-
-
 from django.shortcuts import reverse
 from core.libs.generate_pdf import PA_pdf, MA_pdf
-
-'''
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# File: email.py
-# Project: core.wecare.id
-# File Created: Wednesday, 20th February 2019 3:30:08 pm
-#
-# Author: Arif Dzikrullah
-#         ardzix@hotmail.com>
-#         https://github.com/ardzix/>
-#
-# Last Modified: Wednesday, 20th February 2019 3:30:08 pm
-# Modified By: arifdzikrullah (ardzix@hotmail.com>)
-#
-# Handcrafted and Made with Love
-# Copyright - 2018 Wecare.Id, wecare.id
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-'''
-
 
 import json
 from datetime import date
@@ -108,7 +70,7 @@ def application_submit_email(email, user):
         email
     )
 
-def application_approved_email(request, project):
+def application_approved_email(request, loan):
     from enterprise.libs.email import send_mail
     from django.conf import settings
 
@@ -116,9 +78,9 @@ def application_approved_email(request, project):
     html_email_template_name = 'home/email/application_approved.html'
     email_template_name = html_email_template_name
 
-    email = project.owned_by.email
+    email = loan.owned_by.email
     context = {
-        'name' : project.owned_by.full_name
+        'name' : loan.owned_by.full_name
     }
 
     send_mail(
@@ -128,27 +90,27 @@ def application_approved_email(request, project):
         context,
         email
     )
-    offer_letter_email(request, project)
+    offer_letter_email(request, loan)
 
-def offer_letter_email(request, project):
+def offer_letter_email(request, loan):
     # from enterprise.libs.email import send_mail
     from django.conf import settings
 
     subject_template_name = 'home/email/offer_letter.txt'
     html_email_template_name = 'home/email/offer_letter.html'
     email_template_name = html_email_template_name
-    pdf = MA_pdf(request, project)
+    pdf = MA_pdf(request, loan)
 
     context = {
-        'name' : project.owned_by.full_name
+        'name' : loan.owned_by.full_name
     }
 
     filename = "{date}-{name}-ma.pdf".format(
         date=date.today(),
-        name=project.owned_by.full_name,
+        name=loan.owned_by.full_name,
     )
 
-    email = project.owned_by.email
+    email = loan.owned_by.email
     send_mail_with_attachment(
         subject_template_name,
         email_template_name,
@@ -219,7 +181,7 @@ def application_unpublish_email(email, user):
         email
     )
 
-def application_disbursed_email(email, cc, project):
+def application_disbursed_email(email, cc, loan):
     from enterprise.libs.email import send_mail
     from django.conf import settings
 
@@ -228,7 +190,7 @@ def application_disbursed_email(email, cc, project):
     email_template_name = html_email_template_name
 
     context = {
-        'project' : project
+        'loan' : loan
     }
 
     send_mail(
@@ -492,7 +454,7 @@ def repayment_email(email, cc, payment):
 
     context = {
         'payment' : payment,
-        'project' : payment.project,
+        'loan' : payment.loan,
     }
 
     send_mail(

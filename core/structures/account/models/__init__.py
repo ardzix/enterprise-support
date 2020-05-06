@@ -143,7 +143,7 @@ class Profile(BaseModelUnique):
 
     def get_id_card(self):
         if self.id_card:
-            return self.id_card.url
+            return getattr(self.id_card, 'url')
         else:
             return '-'
 
@@ -167,7 +167,7 @@ class Profile(BaseModelUnique):
         return today.year - self.birth_date.year
 
     def get_total_invested(self):
-        from core.structures.project.models import Fund
+        from core.structures.loan.models import Fund
         total_invested = Fund.objects.filter(
             created_by_id=self.created_by_id,
             status=1
@@ -216,13 +216,13 @@ class Profile(BaseModelUnique):
         else:
             return 'Rp.{:,.0f},-'.format(0)
 
-    def get_project_type(self):
-        from core.structures.project.models import Project
-        project = Project.objects.filter(
+    def get_loan_type(self):
+        from core.structures.loan.models import Loan
+        loan = Loan.objects.filter(
             created_by_id=self.created_by_id
         ).all()
-        if project:
-            return project
+        if loan:
+            return loan
 
 
 class ProfileDetail(BaseModelGeneric):

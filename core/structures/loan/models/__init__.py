@@ -189,7 +189,7 @@ def add_months(sourcedate, months):
     return datetime.date(year, month, day)
 
 
-class Project(BaseModelGeneric):
+class Loan(BaseModelGeneric):
     parent = models.ForeignKey(
         'self', blank=True, null=True, on_delete=models.CASCADE,)
     number = models.CharField(max_length=20)
@@ -247,7 +247,7 @@ class Project(BaseModelGeneric):
         return self.number
 
     def get_funds(self):
-        return self.fund_set
+        return getattr(self, 'fund_set')
 
     def get_fund_amount(self):
         if self.get_funds().count() > 0:
@@ -347,9 +347,9 @@ class Project(BaseModelGeneric):
 
     def create_number(self, *args, **kwargs):
         if not self.number and self.pk:
-            existing_project_count = Project.objects.filter(
+            existing_loan_count = Loan.objects.filter(
                 owned_by=self.owned_by).exclude(number="").count()
-            number = 1 + existing_project_count
+            number = 1 + existing_loan_count
             number = str(number).zfill(3)
             if self.loan_type.group_type == 1:
                 prefix = 'SL'
@@ -382,7 +382,7 @@ class Project(BaseModelGeneric):
         # flat
         for x in range(self.duration):
             Payment.objects.create(
-                project=self,
+                loan=self,
                 payment_order=per[x],
                 created_by=self.created_by,
                 due_date=add_months(datetime.date.today(), x + 1),
@@ -396,7 +396,7 @@ class Project(BaseModelGeneric):
         # effective
         # for x in range(self.duration):
         #     Payment.objects.create(
-        #         project=self,
+        #         loan=self,
         #         payment_order=per[x],
         #         created_by=self.created_by,
         #         due_date=add_months(datetime.date.today(), x + 1),
@@ -418,14 +418,14 @@ class Project(BaseModelGeneric):
         return su
 
     class Meta:
-        verbose_name = _('Project')
-        verbose_name_plural = _('Projects')
+        verbose_name = _('Loan')
+        verbose_name_plural = _('Loans')
         ordering = ['-published_at']
 
 
-class ProjectDetail(BaseModelGeneric):
+class LoanDetail(BaseModelGeneric):
     key = models.SlugField(max_length=150)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     description_id = models.TextField(blank=True, null=True)
 
@@ -439,13 +439,13 @@ class ProjectDetail(BaseModelGeneric):
         return str(DetailKey.objects.filter(short_name=self.key).last().display_name_id)
 
     class Meta:
-        verbose_name = _('Project Detail')
-        verbose_name_plural = _('Project Details')
+        verbose_name = _('Loan Detail')
+        verbose_name_plural = _('Loan Details')
 
 
 class FactSheet(BaseModelGeneric):
     key = models.SlugField(max_length=150)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     description_id = models.TextField(blank=True, null=True)
 
@@ -459,13 +459,13 @@ class FactSheet(BaseModelGeneric):
         return str(FactSheetKey.objects.filter(short_name=self.key).last().display_name_id)
 
     class Meta:
-        verbose_name = _('Project FactSheet')
-        verbose_name_plural = _('Project FactSheets')
+        verbose_name = _('Loan FactSheet')
+        verbose_name_plural = _('Loan FactSheets')
 
 
 class FinancialSheet(BaseModelGeneric):
     key = models.SlugField(max_length=150)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     group = models.ForeignKey(
         FinancialSheetGroup, on_delete=models.CASCADE, blank=True, null=True)
     data_type = models.PositiveIntegerField(
@@ -494,12 +494,12 @@ class FinancialSheet(BaseModelGeneric):
         return str(FinancialSheetKey.objects.filter(short_name=self.key).last().display_name_id)
 
     class Meta:
-        verbose_name = _('Project FinancialSheet')
-        verbose_name_plural = _('Project FinancialSheets')
+        verbose_name = _('Loan FinancialSheet')
+        verbose_name_plural = _('Loan FinancialSheets')
 
 
 class ARPAnalysis(BaseModelGeneric):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=150)
     group = models.PositiveIntegerField(choices=constant.ARP_ANALYSIS_CHOICES)
     month_1 = models.DecimalField(max_digits=19, decimal_places=2, default=0)
@@ -526,9 +526,9 @@ class ARPAnalysis(BaseModelGeneric):
         verbose_name_plural = _('Account Receivable and Payable Analysis')
 
 
-class ProjectDocument(BaseModelGeneric):
+class LoanDocument(BaseModelGeneric):
     key = models.SlugField(max_length=150)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     document = models.FileField(
         max_length=300,
         storage=storage.FILE_STORAGE,
@@ -554,13 +554,13 @@ class ProjectDocument(BaseModelGeneric):
         return str(DocumentKey.objects.filter(short_name=self.key).last().display_name_id)
 
     class Meta:
-        verbose_name = _('Project Document')
-        verbose_name_plural = _('Project Documents')
+        verbose_name = _('Loan Document')
+        verbose_name_plural = _('Loan Documents')
         ordering = ['key']
 
 
 class Fund(BaseModelGeneric):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
     status = models.PositiveIntegerField(
         default=1, choices=constant.PAYMENT_STATUS_CHOICES)
@@ -574,12 +574,12 @@ class Fund(BaseModelGeneric):
         return 'Rp.{:,.0f},-'.format(self.amount)
 
     def get_number(self):
-        return '%s-%s' % (self.project.get_number(), self.number)
+        return '%s-%s' % (self.loan.get_number(), self.number)
 
     def create_number(self):
         if not self.number and self.pk:
             existing_fund_count = Fund.objects.filter(
-                project=self.project).exclude(number="").count()
+                loan=self.loan).exclude(number="").count()
             number = 1 + existing_fund_count
             number = str(number).zfill(4)
             self.number = number
@@ -597,7 +597,7 @@ class Fund(BaseModelGeneric):
 
 
 class Payment(BaseModelGeneric):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     interest_amount = models.DecimalField(max_digits=12, decimal_places=0)
     interest_lender_amount = models.DecimalField(
         max_digits=12, decimal_places=0)
@@ -615,7 +615,7 @@ class Payment(BaseModelGeneric):
         max_length=40, choices=constant.PAYMENT_STATUS_CHOICES, default='pending')
 
     def __str__(self):
-        return '%s:%s' % (self.project.__str__(), self.due_date)
+        return '%s:%s' % (self.loan.__str__(), self.due_date)
 
     def get_status(self):
         status = dict(constant.PAYMENT_STATUS_CHOICES)[self.status]
@@ -661,13 +661,13 @@ class Payment(BaseModelGeneric):
                 admin_user,
                 balance_to_be_transfered,
                 obj=self,
-                description='Repayment of loan: %s to Bima' % (self.project.__str__()))
+                description='Repayment of loan: %s to Bima' % (self.loan.__str__()))
         except Exception as e:
             print(e)
             errors.append(e)
 
-        for fund in self.project.get_funds().all():
-            fund_percentage = Decimal(fund.amount)/Decimal(self.project.amount)
+        for fund in self.loan.get_funds().all():
+            fund_percentage = Decimal(fund.amount)/Decimal(self.loan.amount)
             lender_payment = fund_percentage * lender_balance_to_be_transfered
 
             try:
@@ -677,7 +677,7 @@ class Payment(BaseModelGeneric):
                     lender_payment,
                     obj=self,
                     description='Repayment of loan: %s to %s' % (
-                        self.project.__str__(),
+                        self.loan.__str__(),
                         fund.owned_by.__str__()
                     )
                 )
@@ -696,7 +696,7 @@ class Payment(BaseModelGeneric):
 
 
 class MasterAgreement(BaseModelGeneric):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     number = models.PositiveIntegerField()
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, blank=True, null=True)
@@ -750,7 +750,7 @@ class ParticipationAgreement(BaseModelGeneric):
         return super().save(*args, **kwargs)
 
 
-@receiver(post_save, sender=Project)
+@receiver(post_save, sender=Loan)
 def generate_ma(sender, instance, **kwargs):
     from core.libs.agreement import generate_ma as f
     f(instance)
