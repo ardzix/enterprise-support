@@ -86,7 +86,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
-    is_sent_email = models.BooleanField(default=False)
+    is_sent_email = models.BooleanField(default=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
@@ -199,7 +199,8 @@ def send_verification_email(email, user, base_url=None, *args, **kwargs):
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings
-
+    print("Entering pre save")
+    print(getattr(settings, 'AUTO_VERIFY_EMAIL', False))
     if getattr(settings, 'AUTO_VERIFY_EMAIL', False):
         email = instance.email
         if instance.is_sent_email:
