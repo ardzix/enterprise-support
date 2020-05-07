@@ -253,76 +253,15 @@ class ProfileDetail(BaseModelGeneric):
         verbose_name_plural = _('Profile Details')
 
 
-class CompanySector(BaseModelGeneric):
-    display_name = models.CharField(max_length=300)
-    short_name = models.SlugField(max_length=300)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.display_name
-
-    class Meta:
-        verbose_name = _('Company Sector')
-        verbose_name_plural = _('Company Sectors')
-
-
 class Company(BaseModelGeneric):
-    display_name = models.CharField(max_length=300)
-    short_name = models.SlugField(max_length=300)
-    phone = models.CharField(max_length=100)
-    staffs = models.ManyToManyField(User, blank=True)
-
-    registration_number = models.CharField(max_length=100)
     type = models.PositiveIntegerField(choices=constant.COMPANY_TYPE_CHOICES)
-    country = models.CharField(
-        max_length=3,
-        choices=constant.COUNTRY_CHOICES,
-        default='IDN')
-    year_built = models.PositiveIntegerField()
-    sector = models.ForeignKey(CompanySector, on_delete=models.CASCADE)
-
-    logo = models.ImageField(
-        storage=storage.LOGO_STORAGE,
-        max_length=300,
-        blank=True,
-        null=True
-    )
-    cover = models.ImageField(
-        storage=storage.COVER_STORAGE,
-        max_length=300,
-        blank=True,
-        null=True
-    )
-    website_url = models.URLField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    address = models.ForeignKey(
-        Address, on_delete=models.CASCADE, blank=True, null=True)
-
-    def __str__(self):
-        return self.display_name
-
-    def is_executive(self, user):
-        return self.executive.pk == user.pk
-
-    def is_staff(self, user):
-        return user.id in self.staffs.values_list('id', flat=True)
-
-    def get_short_description(self):
-        return '%s . . .' % self.description[0:150]
-
-    def get_logo(self):
-        if self.logo:
-            return self.logo.url
-        return None
-
-    def get_type(self):
-        return dict(constant.COMPANY_TYPE_CHOICES)[self.type]
-
-    def get_cover(self):
-        if self.cover:
-            return self.cover.url
-        else:
-            return NO_IMAGE_URL
+    ownership_bussiness = models.PositiveIntegerField(choices=constant.COMPANY_OWNERSHIP_CHOICES)
+    income = models.DecimalField(max_digits=12,decimal_places=2)
+    cost_bussiness = models.DecimalField(max_digits=12,decimal_places=2)
+    cost_household = models.DecimalField(max_digits=12,decimal_places=2)
+    total = models.DecimalField(max_digits=12,decimal_places=2)
+    account_number = models.DecimalField(max_digits=20,decimal_places=0)
+    account_number_other = models.DecimalField(max_digits=20,decimal_places=0)
 
     class Meta:
         verbose_name = _('Company')

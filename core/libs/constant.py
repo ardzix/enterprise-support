@@ -147,6 +147,11 @@ COMPANY_TYPE_CHOICES = (
     (3, 'UKM'),
 )
 
+COMPANY_OWNERSHIP_CHOICES = (
+    (1, 'Milik Sendiri'),
+    (2, 'Milik Orang Lain'),
+)
+
 LOAN_TYPE_CHOICES = (
     (1, _('Student Loan')),
     (2, _('Business')),
