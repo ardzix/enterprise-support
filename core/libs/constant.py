@@ -47,7 +47,7 @@ RELIGION_CHOICES = (
     ('islam', 'Islam'),
     ('katolik', 'Katolik'),
     ('konghucu', 'Konghucu'),
-    ('protestan', 'Protestan')
+    ('kristen', 'Kristen')
 )
 
 EDUCATION_CHOICES = (
