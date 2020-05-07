@@ -100,6 +100,7 @@ class Profile(BaseModelUnique):
         null=True
     )
     birth_date = models.DateField(blank=True, null=True)
+    birth_place = models.CharField(max_length=40, blank=True, null=True)
     id_card = models.FileField(
         max_length=300,
         storage=storage.FILE_STORAGE,
@@ -112,17 +113,31 @@ class Profile(BaseModelUnique):
         blank=True,
         null=True
     )
-    npwp_num = models.CharField(max_length=40, blank=True, null=True)
     id_card_num = models.CharField(max_length=40, blank=True, null=True)
+    npwp_num = models.CharField(max_length=40, blank=True, null=True)
     addresses = models.ManyToManyField(Address, blank=True)
     phones = models.ManyToManyField(Phone, blank=True)
     type = models.PositiveIntegerField(
         choices=constant.PROFILE_TYPE_CHOICES, default=3)
     reject_reason = models.PositiveIntegerField(
         choices=constant.PROFILE_REJECT_REASON_CHOICES, blank=True, null=True)
+    marital_status = models.PositiveIntegerField(choices=constant.MARITAS_STATUS_CHOICES,
+                                                 default=1)
+
+    spouse_full_name = models.CharField(max_length=150, blank=True, null=True)
+    spouse_id_card_num = models.CharField(max_length=40, blank=True, null=True)
+    spouse_birth_date = models.DateField(blank=True, null=True)
+    spouse_birth_place = models.CharField(max_length=40, blank=True, null=True)
+    mother_name = models.CharField(max_length=150, blank=True, null=True)
+    religion = models.CharField(
+        max_length=20, choices=constant.RELIGION_CHOICES, blank=True, null=True)
+    education = models.CharField(
+        max_length=20, choices=constant.EDUCATION_CHOICES, blank=True, null=True)
+    ownership_residence = models.CharField(
+        max_length=20, choices=constant.EDUCATION_CHOICES, blank=True, null=True)
 
     def __str__(self):
-        return self.owned_by.nick_name
+        return self.owned_by.full_name
 
     def get_avatar(self):
         if self.avatar:

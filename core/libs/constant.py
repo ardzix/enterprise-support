@@ -34,6 +34,34 @@ GENDER_CHOICES = (
     (2, _('Female')),
 )
 
+MARITAS_STATUS_CHOICES = (
+    (1, _('Single')),
+    (2, _('Married')),
+)
+
+
+RELIGION_CHOICES = (
+    ('buddha', 'Buddha'),
+    ('hindu', 'Hindu'),
+    ('islam', 'Islam'),
+    ('katolik', 'Katolik'),
+    ('konghucu', 'Konghucu'),
+    ('protestan', 'Protestan')
+)
+
+EDUCATION_CHOICES = (
+    ('sd', 'SD'),
+    ('smp', 'SMP'),
+    ('sma', 'SMA'),
+    ('sarjana', 'Sarjana'),
+    ('tidak-sekolah', 'Tidak Sekolah')
+)
+
+RESIDENCE_CHOICES = (
+    ('sewa', 'Sewa'),
+    ('punya-sendiri', 'Punya Sendiri')
+)
+
 LOAN_INTEREST_CHOICES = (
     (Decimal('0.03'), '3%'),
     (Decimal('0.035'), '3.5%'),
