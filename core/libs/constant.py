@@ -63,6 +63,43 @@ RESIDENCE_CHOICES = (
     ('punya-sendiri', 'Punya Sendiri')
 )
 
+JOB = (
+    ('swasta', 'Swasta'),
+    ('bumn', 'BUMN'),
+    ('pns', 'PNS'),
+    ('lain', 'Lainnya')
+)
+
+RATING = (
+    ('silver', 'Silver'),
+    ('gold', 'Gold'),
+    ('premium', 'Premium')
+)
+
+TYPE_BUSSINESS = (
+    ('dropshipper', 'Dropshipper'),
+    ('stockiest', 'Stockiest'),
+    ('distributor', 'Distributor'),
+    ('lain-lain', 'Lain-Lain')
+)
+
+HISTORY = (
+    ('', 'Pilih'),
+    ('1', 'Bintang 1'),
+    ('2', 'Bintang 2'),
+    ('3', 'Bintang 3'),
+    ('4', 'Bintang 4'),
+    ('5', 'Bintang 5')
+)
+
+ECOMMERCE = (
+    ('', 'Pilih'),
+    ('tokopedia', 'Tokopedia'),
+    ('shopee', 'Shopee'),
+    ('gojek', 'Gojek'),
+    ('grab', 'Grab')
+)
+
 LOAN_INTEREST_CHOICES = (
     (Decimal('0.03'), '3%'),
     (Decimal('0.035'), '3.5%'),
