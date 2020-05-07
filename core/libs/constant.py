@@ -30,13 +30,14 @@ LANGUAGE_CHOICES = [(language.alpha_3, language.name)
                     for language in list(pycountry.languages)]
 
 GENDER_CHOICES = (
-    (1, _('Male')),
-    (2, _('Female')),
+    (1, "Pria"),
+    (2, "Wanita"),
 )
 
 MARITAS_STATUS_CHOICES = (
-    (1, _('Single')),
-    (2, _('Married')),
+    (1, "Menikah"),
+    (2, "Belum menikah"),
+    (3, "Duda/janda"),
 )
 
 
