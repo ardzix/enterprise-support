@@ -19,6 +19,29 @@ from core.libs import constant
 User = settings.AUTH_USER_MODEL
 
 
+class NonceWhiteList(models.Model):
+    nonce = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.nonce
+
+    class Meta:
+        verbose_name = _('Nonce WhiteList')
+        verbose_name_plural = _('Nonce WhiteList')
+
+
+class Branch(models.Model):
+    region = models.CharField(max_length=4)
+    number = models.CharField(max_length=4)
+
+    def __str__(self):
+        return self.number
+
+    class Meta:
+        verbose_name = _('Branch')
+        verbose_name_plural = _('Branches')
+
+
 class Province(models.Model):
     name = models.CharField(max_length=255)
 

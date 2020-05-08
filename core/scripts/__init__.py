@@ -17,9 +17,11 @@
 '''
 
 from core.scripts.administrative import *
+from core.scripts.branch import *
 from core.scripts.agreement import *
 from core.scripts.numbering import *
 
 def generate_master_data():
     import_provices()
     import_regencies()
+    import_branches()
