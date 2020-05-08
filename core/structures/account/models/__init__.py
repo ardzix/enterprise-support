@@ -123,6 +123,8 @@ class Profile(BaseModelUnique):
         choices=constant.PROFILE_REJECT_REASON_CHOICES, blank=True, null=True)
     marital_status = models.PositiveIntegerField(choices=constant.MARITAS_STATUS_CHOICES,
                                                  default=1)
+    job = models.PositiveIntegerField(choices=constant.JOB_CHOICES,
+                                                 default=1)
 
     spouse_full_name = models.CharField(max_length=150, blank=True, null=True)
     spouse_id_card_num = models.CharField(max_length=40, blank=True, null=True)

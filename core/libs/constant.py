@@ -63,7 +63,7 @@ RESIDENCE_CHOICES = (
     ('punya-sendiri', 'Punya Sendiri')
 )
 
-JOB = (
+JOB_CHOICES = (
     ('swasta', 'Swasta'),
     ('bumn', 'BUMN'),
     ('pns', 'PNS'),
@@ -133,6 +133,18 @@ LOAN_DURATION_CHOICES = (
     (22, _('22 Months')),
     (23, _('23 Months')),
     (24, _('24 Months')),
+    (25, _('25 Months')),
+    (26, _('26 Months')),
+    (27, _('27 Months')),
+    (28, _('28 Months')),
+    (29, _('29 Months')),
+    (30, _('30 Months')),
+    (31, _('31 Months')),
+    (32, _('32 Months')),
+    (33, _('33 Months')),
+    (34, _('34 Months')),
+    (35, _('35 Months')),
+    (36, _('36 Months')),
 )
 
 ADMIN_FEE_CHOICES = (

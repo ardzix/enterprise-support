@@ -193,23 +193,17 @@ class Loan(BaseModelGeneric):
     parent = models.ForeignKey(
         'self', blank=True, null=True, on_delete=models.CASCADE,)
     number = models.CharField(max_length=20)
-    short_description = models.CharField(max_length=255)
+    short_description = models.CharField(max_length=255,blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
     status = models.CharField(default='requested', max_length=40,
                               choices=constant.PROJECT_STATUS_CHOICES)
 
-    company = models.ForeignKey(Company, on_delete=models.CASCADE,
+    bussiness = models.ForeignKey(Company, on_delete=models.CASCADE,
                                 blank=True, null=True)
-    guarantee = models.ForeignKey(Guarantee, on_delete=models.CASCADE,
-                                  blank=True, null=True)
-    financial = models.ForeignKey(Financial, on_delete=models.CASCADE,
-                                  blank=True, null=True)
-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,
-                                     blank=True, null=True)
+    attachements = models.ManyToManyField(File, blank=True)
 
-    duration = models.PositiveIntegerField(
-        choices=constant.LOAN_DURATION_CHOICES)
+    duration = models.PositiveIntegerField(default=1)
     admin_fee = models.DecimalField(choices=constant.ADMIN_FEE_CHOICES,
                                     decimal_places=2, max_digits=2, default=0.02)
     grade = models.ForeignKey(
@@ -218,7 +212,7 @@ class Loan(BaseModelGeneric):
         Grade, blank=True, null=True, on_delete=models.CASCADE,
         related_name='%(app_label)s_%(class)s_score')
     loan_type = models.ForeignKey(
-        LoanType, on_delete=models.CASCADE)
+        LoanType, on_delete=models.CASCADE, blank=True, null=True)
     interest = models.DecimalField(
         decimal_places=3, max_digits=3, blank=True, null=True)
     lender_interest = models.DecimalField(
@@ -351,10 +345,7 @@ class Loan(BaseModelGeneric):
                 owned_by=self.owned_by).exclude(number="").count()
             number = 1 + existing_loan_count
             number = str(number).zfill(3)
-            if self.loan_type.group_type == 1:
-                prefix = 'SL'
-            else:
-                prefix = 'WC'
+            prefix = 'KUR'
             self.number = '{}-{}'.format(prefix, number)
             self.save()
 
@@ -750,13 +741,13 @@ class ParticipationAgreement(BaseModelGeneric):
         return super().save(*args, **kwargs)
 
 
-@receiver(post_save, sender=Loan)
-def generate_ma(sender, instance, **kwargs):
-    from core.libs.agreement import generate_ma as f
-    f(instance)
+# @receiver(post_save, sender=Loan)
+# def generate_ma(sender, instance, **kwargs):
+#     from core.libs.agreement import generate_ma as f
+#     f(instance)
 
 
-@receiver(post_save, sender=Fund)
-def generate_pa(sender, instance, **kwargs):
-    from core.libs.agreement import generate_pa as f
-    f(instance)
+# @receiver(post_save, sender=Fund)
+# def generate_pa(sender, instance, **kwargs):
+#     from core.libs.agreement import generate_pa as f
+#     f(instance)
