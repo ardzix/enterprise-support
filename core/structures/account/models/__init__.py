@@ -147,7 +147,7 @@ class Profile(BaseModelUnique):
     marital_status = models.PositiveIntegerField(choices=constant.MARITAS_STATUS_CHOICES,
                                                  default=1)
     job = models.PositiveIntegerField(choices=constant.JOB_CHOICES,
-                                                 default=1)
+                                      default=1)
 
     spouse_full_name = models.CharField(max_length=150, blank=True, null=True)
     spouse_id_card_num = models.CharField(max_length=40, blank=True, null=True)
@@ -280,13 +280,15 @@ class ProfileDetail(BaseModelGeneric):
 
 class Company(BaseModelGeneric):
     type = models.PositiveIntegerField(choices=constant.COMPANY_TYPE_CHOICES)
-    ownership_bussiness = models.PositiveIntegerField(choices=constant.COMPANY_OWNERSHIP_CHOICES)
-    income = models.DecimalField(max_digits=12,decimal_places=2)
-    cost_bussiness = models.DecimalField(max_digits=12,decimal_places=2)
-    cost_household = models.DecimalField(max_digits=12,decimal_places=2)
-    total = models.DecimalField(max_digits=12,decimal_places=2)
-    account_number = models.DecimalField(max_digits=20,decimal_places=0)
-    account_number_other = models.DecimalField(max_digits=20,decimal_places=0)
+    ownership_bussiness = models.PositiveIntegerField(
+        choices=constant.COMPANY_OWNERSHIP_CHOICES)
+    income = models.DecimalField(max_digits=12, decimal_places=2)
+    cost_bussiness = models.DecimalField(max_digits=12, decimal_places=2)
+    cost_household = models.DecimalField(max_digits=12, decimal_places=2)
+    total = models.DecimalField(max_digits=12, decimal_places=2)
+    account_number = models.DecimalField(max_digits=20, decimal_places=0)
+    account_number_other = models.DecimalField(
+        max_digits=20, decimal_places=0, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Company')
