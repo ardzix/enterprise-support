@@ -295,6 +295,24 @@ class Company(BaseModelGeneric):
         verbose_name_plural = _('Companies')
 
 
+class ECommerce(BaseModelGeneric):
+
+    type_of_bussiness = models.CharField(
+        max_length=20, choices=constant.TYPE_BUSSINESS)
+    name_store = models.CharField(max_length=150)
+    domain_store = models.CharField(max_length=150)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    transaction_freq = models.DecimalField(max_digits=9, decimal_places=0)
+    cashflow = models.DecimalField(max_digits=12, decimal_places=2)
+    success_rate = models.DecimalField(max_digits=3, decimal_places=2)
+    ecommerce = models.CharField(
+        max_length=20, choices=constant.ECOMMERCE)
+
+    class Meta:
+        verbose_name = _('ECommerce')
+        verbose_name_plural = _('ECommerces')
+
+
 class CompanyDetail(BaseModelGeneric):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)

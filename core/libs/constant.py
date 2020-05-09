@@ -42,20 +42,20 @@ MARITAS_STATUS_CHOICES = (
 
 
 RELIGION_CHOICES = (
-    ('buddha', 'Buddha'),
-    ('hindu', 'Hindu'),
     ('islam', 'Islam'),
+    ('kristen', 'Kristen'),
     ('katolik', 'Katolik'),
-    ('konghucu', 'Konghucu'),
-    ('kristen', 'Kristen')
+    ('hindu', 'Hindu'),
+    ('buddha', 'Buddha'),
+    ('konghucu', 'Konghucu')
 )
 
 EDUCATION_CHOICES = (
-    ('sd', 'SD'),
-    ('smp', 'SMP'),
-    ('sma', 'SMA'),
-    ('sarjana', 'Sarjana'),
-    ('tidak-sekolah', 'Tidak Sekolah')
+    ('sd-smp', 'SD s/d SMP'),
+    ('smu', 'SMU'),
+    ('s1', 'Strata 1'),
+    ('s2', 'Strata 2'),
+    ('s3', 'Strata 3')
 )
 
 RESIDENCE_CHOICES = (
@@ -93,7 +93,6 @@ HISTORY = (
 )
 
 ECOMMERCE = (
-    ('', 'Pilih'),
     ('tokopedia', 'Tokopedia'),
     ('shopee', 'Shopee'),
     ('gojek', 'Gojek'),
