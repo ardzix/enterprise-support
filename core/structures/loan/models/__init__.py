@@ -193,16 +193,16 @@ class Loan(BaseModelGeneric):
     parent = models.ForeignKey(
         'self', blank=True, null=True, on_delete=models.CASCADE,)
     number = models.CharField(max_length=20)
-    short_description = models.CharField(max_length=255,blank=True, null=True)
+    short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
     status = models.CharField(default='requested', max_length=40,
                               choices=constant.PROJECT_STATUS_CHOICES)
 
     bussiness = models.ForeignKey(Company, on_delete=models.CASCADE,
-                                blank=True, null=True)
+                                  blank=True, null=True)
     ecommerce = models.ForeignKey(ECommerce, on_delete=models.CASCADE,
-                                blank=True, null=True)
+                                  blank=True, null=True)
     attachements = models.ManyToManyField(File, blank=True)
 
     duration = models.PositiveIntegerField(default=1)
@@ -210,6 +210,9 @@ class Loan(BaseModelGeneric):
                                     decimal_places=2, max_digits=2, default=0.00)
     interest = models.DecimalField(
         decimal_places=3, max_digits=3, blank=True, null=True)
+
+    score = models.DecimalField(
+        decimal_places=0, max_digits=4, blank=True, null=True)
 
     crm_approved_at = models.DateTimeField(blank=True, null=True)
     crm_approved_at_timestamp = models.PositiveIntegerField(
@@ -733,10 +736,24 @@ class ParticipationAgreement(BaseModelGeneric):
         return super().save(*args, **kwargs)
 
 
-# @receiver(post_save, sender=Loan)
-# def generate_ma(sender, instance, **kwargs):
-#     from core.libs.agreement import generate_ma as f
-#     f(instance)
+@receiver(post_save, sender=Loan)
+def generate_ma(sender, instance, created, **kwargs):
+    # from core.libs.agreement import generate_ma as f
+    # f(instance)
+    if created:
+        # assign bussiness
+        bussiness = Company.objects.filter(
+            nonce=instance.nonce, deleted_at__isnull=True).last()
+        instance.bussiness = bussiness
+        # assign ecommerce
+        ecommerce = ECommerce.objects.filter(
+            nonce=instance.nonce, deleted_at__isnull=True).last()
+        instance.ecommerce = ecommerce
+        # assign documents
+        files = File.objects.filter(
+            nonce=instance.nonce, deleted_at__isnull=True)
+        instance.attachements.set(files)
+        instance.save()
 
 
 # @receiver(post_save, sender=Fund)

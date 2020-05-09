@@ -64,8 +64,9 @@ EDUCATION_CHOICES = (
 )
 
 RESIDENCE_CHOICES = (
-    ('sewa', 'Sewa'),
-    ('punya-sendiri', 'Punya Sendiri')
+    ('milik-sendiri', 'Milik Sendiri'),
+    ('kontrakan', 'Kontrakan'),
+    ('milik-orang-tua', 'Milik Orang Tua'),
 )
 
 JOB_CHOICES = (
