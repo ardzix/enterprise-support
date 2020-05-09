@@ -29,6 +29,11 @@ CURRENCY_CHOICES = [(currency.alpha_3, currency.name)
 LANGUAGE_CHOICES = [(language.alpha_3, language.name)
                     for language in list(pycountry.languages)]
 
+IS_CUSTOMER = (
+    ('ya', 'Ya'),
+    ('tidak', 'Tidak')
+)
+
 GENDER_CHOICES = (
     (1, "Pria"),
     (2, "Wanita"),
