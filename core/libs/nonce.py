@@ -17,6 +17,7 @@
 '''
 
 
+from core.structures.account.models import NonceWhiteList
 class NonceObject(object):
     MODEL = None
     NONCE = None
@@ -38,3 +39,7 @@ class NonceObject(object):
             return True
         else:
             return False
+
+
+def validate_nonce(nonce):
+    return NonceWhiteList.objects.filter(nonce=nonce).exists()
