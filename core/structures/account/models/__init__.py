@@ -282,13 +282,18 @@ class Company(BaseModelGeneric):
     type = models.PositiveIntegerField(choices=constant.COMPANY_TYPE_CHOICES)
     ownership_bussiness = models.PositiveIntegerField(
         choices=constant.COMPANY_OWNERSHIP_CHOICES)
+    business_started_date = models.DateField()
     income = models.DecimalField(max_digits=12, decimal_places=2)
     cost_bussiness = models.DecimalField(max_digits=12, decimal_places=2)
     cost_household = models.DecimalField(max_digits=12, decimal_places=2)
     total = models.DecimalField(max_digits=12, decimal_places=2)
     account_number = models.DecimalField(max_digits=20, decimal_places=0)
-    account_number_other = models.DecimalField(
-        max_digits=20, decimal_places=0, blank=True, null=True)
+    total_account_number = models.DecimalField(
+        max_digits=12, decimal_places=0)
+    total_account_number_other = models.DecimalField(
+        max_digits=12, decimal_places=0)
+    have_internet_banking = models.BooleanField(default=False)
+    current_balance = models.DecimalField(max_digits=12, decimal_places=2)
 
     class Meta:
         verbose_name = _('Company')
