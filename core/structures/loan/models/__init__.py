@@ -39,7 +39,7 @@ from enterprise.libs import base36
 from enterprise.libs.moment import to_timestamp
 
 from core.libs import constant
-from core.structures.account.models import Company, Address, Profile
+from core.structures.account.models import Company, Address, Profile, ECommerce
 from core.structures.borrower.models import Guarantee, Financial, SocialMedia
 
 
@@ -201,21 +201,14 @@ class Loan(BaseModelGeneric):
 
     bussiness = models.ForeignKey(Company, on_delete=models.CASCADE,
                                 blank=True, null=True)
+    ecommerce = models.ForeignKey(ECommerce, on_delete=models.CASCADE,
+                                blank=True, null=True)
     attachements = models.ManyToManyField(File, blank=True)
 
     duration = models.PositiveIntegerField(default=1)
     admin_fee = models.DecimalField(choices=constant.ADMIN_FEE_CHOICES,
-                                    decimal_places=2, max_digits=2, default=0.02)
-    grade = models.ForeignKey(
-        Grade, blank=True, null=True, on_delete=models.CASCADE)
-    score = models.ForeignKey(
-        Grade, blank=True, null=True, on_delete=models.CASCADE,
-        related_name='%(app_label)s_%(class)s_score')
-    loan_type = models.ForeignKey(
-        LoanType, on_delete=models.CASCADE, blank=True, null=True)
+                                    decimal_places=2, max_digits=2, default=0.00)
     interest = models.DecimalField(
-        decimal_places=3, max_digits=3, blank=True, null=True)
-    lender_interest = models.DecimalField(
         decimal_places=3, max_digits=3, blank=True, null=True)
 
     crm_approved_at = models.DateTimeField(blank=True, null=True)
@@ -411,7 +404,6 @@ class Loan(BaseModelGeneric):
     class Meta:
         verbose_name = _('Loan')
         verbose_name_plural = _('Loans')
-        ordering = ['-published_at']
 
 
 class LoanDetail(BaseModelGeneric):

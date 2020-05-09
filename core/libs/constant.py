@@ -152,6 +152,7 @@ LOAN_DURATION_CHOICES = (
 )
 
 ADMIN_FEE_CHOICES = (
+    (Decimal('0.00'), '-'),
     (Decimal('0.01'), '1%'),
     (Decimal('0.02'), '2%'),
     (Decimal('0.03'), '3%'),
