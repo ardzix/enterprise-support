@@ -133,7 +133,7 @@ class Scoring(object):
         elif 34 <= age < 44:
             self.score += 2
         else:
-            self.score += 55
+            self.score += 5
 
     def calculate_activa(self):
         pass
