@@ -29,7 +29,7 @@ CURRENCY_CHOICES = [(currency.alpha_3, currency.name)
 LANGUAGE_CHOICES = [(language.alpha_3, language.name)
                     for language in list(pycountry.languages)]
 
-IS_CUSTOMER = (
+YES_OR_NO = (
     ('ya', 'Ya'),
     ('tidak', 'Tidak')
 )
