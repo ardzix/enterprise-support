@@ -32,13 +32,14 @@ from django.dispatch import receiver
 
 from enterprise.structures.common.models import File
 from enterprise.structures.common.models.base import BaseModelGeneric, BaseModelUnique
-from core.structures.authentication.models import User as U
 from enterprise.structures.transaction.models import BankAccount
 from enterprise.libs import storage
 from enterprise.libs import base36
 from enterprise.libs.moment import to_timestamp
 
 from core.libs import constant
+from core.libs.scoring import Scoring
+from core.structures.authentication.models import User as U
 from core.structures.account.models import Company, Address, Profile, ECommerce
 from core.structures.borrower.models import Guarantee, Financial, SocialMedia
 
@@ -753,6 +754,7 @@ def generate_ma(sender, instance, created, **kwargs):
         files = File.objects.filter(
             nonce=instance.nonce, deleted_at__isnull=True)
         instance.attachements.set(files)
+        instance.score = Scoring(instance).score
         instance.save()
 
 

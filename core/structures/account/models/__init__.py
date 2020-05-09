@@ -286,6 +286,7 @@ class Company(BaseModelGeneric):
     income = models.DecimalField(max_digits=12, decimal_places=2)
     cost_bussiness = models.DecimalField(max_digits=12, decimal_places=2)
     cost_household = models.DecimalField(max_digits=12, decimal_places=2)
+    cost_instalments = models.DecimalField(max_digits=12, decimal_places=2)
     total = models.DecimalField(max_digits=12, decimal_places=2)
     account_number = models.DecimalField(max_digits=20, decimal_places=0)
     total_account_number = models.DecimalField(
