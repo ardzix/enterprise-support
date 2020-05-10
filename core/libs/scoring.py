@@ -38,6 +38,7 @@ class Scoring(object):
         self.calculate_plafond()
         self.calculate_region()
         self.calculate_work_duration()
+        self.calculate_domicile_duration()
         self.calculate_net_profit()
         self.calculate_residence_ownership()
         self.calculate_marital_status()
@@ -91,7 +92,17 @@ class Scoring(object):
             self.score += 13
 
     def calculate_domicile_duration(self):
-        pass
+        address = self.profile.addresses.filter(name='Domisili').last()
+        if address and address.start_live:
+            duration = datetime.date.today().year - address.start_live.year
+            if duration < 7:
+                self.score -= 15
+            elif 7 <= duration < 16:
+                self.score -= 1
+            elif 16 <= duration < 28:
+                self.score += 3
+            else:
+                self.score += 13
 
     def calculate_net_profit(self):
         net_profit = self.instance.bussiness.income - self.instance.bussiness.total
@@ -136,7 +147,18 @@ class Scoring(object):
             self.score += 5
 
     def calculate_activa(self):
-        pass
+        activa = self.instance.bussiness.current_balance
+        if activa < 500000:
+            self.score -= 30
+        elif 500000 <= activa < 4500000:
+            self.score -= 3
+        elif 4500000 <= activa < 9000000:
+            self.score += 15
+        elif 9000000 <= activa < 14500000:
+            self.score += 31
+        else:
+            self.score += 57
+
 
     def calculate_total_account(self):
         total = self.instance.bussiness.total_account_number + \

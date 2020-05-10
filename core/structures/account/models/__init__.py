@@ -77,6 +77,7 @@ class Address(BaseModelGeneric):
         Province, on_delete=models.CASCADE, blank=True, null=True)
     regency = models.ForeignKey(
         Regency, on_delete=models.CASCADE, blank=True, null=True)
+    start_live = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.address
