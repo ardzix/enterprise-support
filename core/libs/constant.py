@@ -70,10 +70,10 @@ RESIDENCE_CHOICES = (
 )
 
 JOB_CHOICES = (
-    ('swasta', 'Swasta'),
-    ('bumn', 'BUMN'),
-    ('pns', 'PNS'),
-    ('lain', 'Lainnya')
+    (1, 'Swasta'),
+    (2, 'BUMN'),
+    (3, 'PNS'),
+    (4, 'Lainnya')
 )
 
 RATING = (

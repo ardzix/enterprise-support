@@ -176,3 +176,12 @@ class Scoring(object):
         else:
             self.score -= 2
 
+
+def pre_screen(loan):
+    rating = loan.ecommerce.rating
+    transaction_freq = loan.ecommerce.transaction_freq
+    success_rate = loan.ecommerce.success_rate
+
+    if rating > 3.5 and transaction_freq > 7043 and success_rate >= 0.86:
+        return 'continue'
+    return 'fail'

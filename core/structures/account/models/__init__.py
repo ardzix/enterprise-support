@@ -197,8 +197,11 @@ class Profile(BaseModelUnique):
     def get_gender(self):
         return dict(constant.GENDER_CHOICES)[self.gender]
 
-    def get_type(self):
-        return dict(constant.PROFILE_TYPE_CHOICES)[self.type]
+    def get_marital_status(self):
+        return dict(constant.MARITAS_STATUS_CHOICES)[self.marital_status]
+
+    def get_job(self):
+        return dict(constant.JOB_CHOICES)[self.job]
 
     def get_number(self, *args, **kwargs):
         return str(self.pk).zfill(5)
