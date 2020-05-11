@@ -169,14 +169,9 @@ ADMIN_FEE_CHOICES = (
 PROJECT_STATUS_CHOICES = (
     ('requested', _('Requested')),
     ('processed', _('Processed')),
-    ('crm_approved', _('CRM Approved')),
-    ('crm_rejected', _('CRM Rejected')),
     ('approved', _('Approved')),
     ('rejected', _('Rejected')),
-    ('published', _('Published')),
-    ('unpublished', _('UnPublished')),
     ('processed', _('Processed')),
-    ('disbursed', _('Disbursed')),
     ('closed', _('Closed')),
 )
 

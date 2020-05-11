@@ -258,38 +258,47 @@ class Loan(BaseModelGeneric):
     def get_number(self):
         return '%s-%s' % (self.owned_by.get_profile().get_number(), self.number)
 
+    def get_grade(self):
+        score = self.score
+        grade = 0
+        if 396 <= score <= 597:
+            grade = 10
+        elif 598 <= score <= 626:
+            grade = 9
+        elif 627 <= score <= 644:
+            grade = 8
+        elif 645 <= score <= 657:
+            grade = 7
+        elif 658 <= score <= 669:
+            grade = 6
+        elif 670 <= score <= 680:
+            grade = 5
+        elif 681 <= score <= 691:
+            grade = 4
+        elif 692 <= score <= 703:
+            grade = 3
+        elif 704 <= score <= 721:
+            grade = 2
+        elif 722 <= score <= 825:
+            grade = 1
+
+        grade -= self.pre_screen_reduction
+        if grade > 10:
+            grade = 10
+        return grade
+
+    def get_pd(self):
+        grade = self.get_grade()
+        
+
+    def get_complete_grade(self):
+        return '%s (score: %s)' % (self.get_grade(), self.score)
+
     def disburse(self, user=None, date=None, *args, **kwargs):
         if user:
             # mark when the record deleted
             self.disbursed_date = date if date else datetime.date.today()
             self.disbursed_by = user
-
-            # save it
-            return super().save(*args, **kwargs)
-
-    def crm_approve(self, user=None, *args, **kwargs):
-        if user:
-            # mark when the record deleted
-            self.crm_unapproved_at = None
-            self.crm_unapproved_at_timestamp = None
-            self.crm_unapproved_by = None
-            self.crm_approved_at = timezone.now()
-            self.crm_approved_at_timestamp = to_timestamp(self.crm_approved_at)
-            self.crm_approved_by = user
-
-            # save it
-            return super().save(*args, **kwargs)
-
-    def crm_reject(self, user=None, *args, **kwargs):
-        if user:
-            # mark when the record reovered
-            self.crm_approved_at = None
-            self.crm_approved_at_timestamp = None
-            self.crm_approved_by = None
-            self.crm_unapproved_at = timezone.now()
-            self.crm_unapproved_at_timestamp = to_timestamp(
-                self.crm_unapproved_at)
-            self.crm_unapproved_by = user
 
             # save it
             return super().save(*args, **kwargs)
@@ -303,59 +312,6 @@ class Loan(BaseModelGeneric):
             prefix = 'KUR'
             self.number = '{}-{}'.format(prefix, number)
             self.save()
-
-    def generate_repayment(self):
-        rate = self.interest/12
-        if not self.lender_interest:
-            self.lender_interest = self.interest
-            self.save()
-        lender_rate = self.lender_interest/12
-        per = list(range(1, self.duration+1))
-        nper = self.duration
-        pv = self.amount
-
-        calculated_principal = pv/nper
-        calculated_pmt = abs(pmt(rate, nper, pv))
-        calculated_lender_pmt = abs(pmt(lender_rate, nper, pv))
-        calculated_interest = calculated_pmt - calculated_principal
-        calculated_lender_interest = calculated_lender_pmt - calculated_principal
-
-        # calculated_ipmt = ipmt(rate, per, nper, pv)
-        # calculated_lender_ipmt = ipmt(lender_rate, per, nper, pv)
-        # calculated_ppmt = ppmt(rate, per, nper, pv)
-        # calculated_lender_ppmt = ppmt(lender_rate, per, nper, pv)
-
-        # flat
-        for x in range(self.duration):
-            Payment.objects.create(
-                loan=self,
-                payment_order=per[x],
-                created_by=self.created_by,
-                due_date=add_months(datetime.date.today(), x + 1),
-                interest_amount=calculated_interest,
-                interest_lender_amount=calculated_lender_interest,
-                principal_amount=calculated_principal,
-                principal_lender_amount=calculated_principal,
-                amount=calculated_pmt,
-                lender_amount=calculated_lender_pmt
-            )
-        # effective
-        # for x in range(self.duration):
-        #     Payment.objects.create(
-        #         loan=self,
-        #         payment_order=per[x],
-        #         created_by=self.created_by,
-        #         due_date=add_months(datetime.date.today(), x + 1),
-        #         interest_amount=abs(calculated_ipmt[x]),
-        #         interest_lender_amount=abs(calculated_lender_ipmt[x]),
-        #         principal_amount=abs(calculated_ppmt[x]),
-        #         principal_lender_amount=abs(calculated_lender_ppmt[x]),
-        #         amount=abs(calculated_ipmt[x]) + abs(calculated_ppmt[x]),
-        #         lender_amount=abs(
-        #             calculated_lender_ipmt[x]) + abs(calculated_lender_ppmt[x])
-        #     )
-
-        return self.payment_set.all()
 
     def save(self, create_number=True, *args, **kwargs):
         su = super().save(*args, **kwargs)
