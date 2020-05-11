@@ -303,6 +303,8 @@ class Loan(BaseModelGeneric):
         return pd_mapping[self.get_grade()]
 
     def get_complete_grade(self):
+        if self.unapproved_at:
+            return "-"
         return '%s (score: %s) PD:%s' % (self.get_grade(), self.score, self.get_pd())
 
     def disburse(self, user=None, date=None, *args, **kwargs):
