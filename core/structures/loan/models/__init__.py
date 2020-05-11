@@ -260,7 +260,7 @@ class Loan(BaseModelGeneric):
 
     def get_grade(self):
         score = self.score
-        grade = 0
+        grade = 10
         if 396 <= score <= 597:
             grade = 10
         elif 598 <= score <= 626:
@@ -288,8 +288,19 @@ class Loan(BaseModelGeneric):
         return grade
 
     def get_pd(self):
-        grade = self.get_grade()
-        
+        pd_mapping = {
+            1 : '1.7%',
+            2 : '2.7%',
+            3 : '3.3%',
+            4 : '3.9%',
+            5 : '4.6%',
+            6 : '5.4%',
+            7 : '6.5%',
+            8 : '8.0%',
+            9 : '11.0%',
+            10 : '24.6%',
+        }
+        return pd_mapping[self.get_grade()]
 
     def get_complete_grade(self):
         return '%s (score: %s)' % (self.get_grade(), self.score)
