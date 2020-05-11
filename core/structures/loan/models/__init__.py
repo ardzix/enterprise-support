@@ -255,34 +255,6 @@ class Loan(BaseModelGeneric):
     def get_formatted_amount(self):
         return 'Rp.{:,.0f},-'.format(self.amount)
 
-    def get_formatted_fund_amount(self):
-        return 'Rp.{:,.0f},-'.format(self.get_fund_amount())
-
-    def get_interest_str(self):
-        if not self.interest:
-            return '-'
-        return '%s%%' % ('{:.2f}'.format(self.interest * 100))
-
-    def get_lender_interest_str(self):
-        if not self.interest:
-            return '-'
-        return '%s%%' % ('{:.2f}'.format(self.lender_interest * 100))
-
-    def get_funding_remaining(self):
-        if not self.fundraising_end_date:
-            return -1
-        return (self.fundraising_end_date - datetime.date.today()).days
-
-    def get_funding_remaining_str(self):
-        if self.get_funding_remaining() < 0:
-            return "N.A."
-        return '%d day(s) to go' % self.get_funding_remaining()
-
-    def get_funding_remaining_str_id(self):
-        if self.get_funding_remaining() < 0:
-            return "Belum Tersedia"
-        return '%d hari lagi' % self.get_funding_remaining()
-
     def get_number(self):
         return '%s-%s' % (self.owned_by.get_profile().get_number(), self.number)
 
@@ -747,8 +719,9 @@ def generate_ma(sender, instance, created, **kwargs):
         instance.pre_screen_reduction = reduction
 
         if not approved:
-            instance.note = "Tidak lolos pre screen"
-            instance.reject(instance.created)
+            instance.notes = "Tidak lolos pre screen"
+            instance.status = "rejected"
+            instance.reject(instance.created_by)
 
         #commit
         instance.save()

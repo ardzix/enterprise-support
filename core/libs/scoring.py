@@ -218,4 +218,4 @@ def pre_screen(loan):
     elif considered_score ==3:
          return True, -2
     else: 
-        return False, None
+        return False, 0
