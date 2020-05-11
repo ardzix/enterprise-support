@@ -3,14 +3,14 @@
 # File: scoring.py
 # Project: kur.bri.co.id
 # File Created: Saturday, 9th May 2020 10:11:38 pm
-# 
+#
 # Author: Arif Dzikrullah
 #         ardzix@hotmail.com>
 #         https://github.com/ardzix/>
-# 
+#
 # Last Modified: Saturday, 9th May 2020 10:11:39 pm
 # Modified By: Arif Dzikrullah (ardzix@hotmail.com>)
-# 
+#
 # Handcrafted and Made with Love - Ardz
 # Copyright - 2020 PT Bank Rakyat Indonesia, bri.co.id
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -159,7 +159,6 @@ class Scoring(object):
         else:
             self.score += 57
 
-
     def calculate_total_account(self):
         total = self.instance.bussiness.total_account_number + \
             self.instance.bussiness.total_account_number_other
@@ -178,10 +177,45 @@ class Scoring(object):
 
 
 def pre_screen(loan):
+    '''
+    Calculate pre screen scoring
+    Params: Loan object
+    Returns: Is Approved, Grade Reduction
+    '''
     rating = loan.ecommerce.rating
     transaction_freq = loan.ecommerce.transaction_freq
     success_rate = loan.ecommerce.success_rate
+    continue_score = 0
+    considered_score = 0
+    rejected_score = 0
 
-    if rating > 3.5 and transaction_freq > 7043 and success_rate >= 0.86:
-        return 'continue'
-    return 'fail'
+    if rating > 3.5:
+        continue_score += 1
+    elif 2.43 <= rating <= 3.5:
+        considered_score += 1
+    else:
+        rejected_score += 1
+
+    if transaction_freq > 7043:
+        continue_score += 1
+    elif 1350 <= transaction_freq <= 7043:
+        considered_score += 1
+    else:
+        rejected_score += 1
+
+    if success_rate > 0.81 and continue_score == 2:
+        continue_score += 1
+    elif continue_score < 2 and success_rate >= 0.92:
+        considered_score += 1
+    else:
+        rejected_score += 1
+
+    # Return: approved, minus grade
+    if continue_score == 3:
+        return True, 0
+    elif continue_score == 2:
+         return True, -1
+    elif considered_score ==3:
+         return True, -2
+    else: 
+        return False, None

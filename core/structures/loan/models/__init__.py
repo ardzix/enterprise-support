@@ -38,7 +38,7 @@ from enterprise.libs import base36
 from enterprise.libs.moment import to_timestamp
 
 from core.libs import constant
-from core.libs.scoring import Scoring
+from core.libs.scoring import Scoring, pre_screen
 from core.structures.authentication.models import User as U
 from core.structures.account.models import Company, Address, Profile, ECommerce
 from core.structures.borrower.models import Guarantee, Financial, SocialMedia
@@ -214,23 +214,9 @@ class Loan(BaseModelGeneric):
 
     score = models.DecimalField(
         decimal_places=0, max_digits=4, blank=True, null=True)
-
-    crm_approved_at = models.DateTimeField(blank=True, null=True)
-    crm_approved_at_timestamp = models.PositiveIntegerField(
-        db_index=True, blank=True, null=True)
-    crm_approved_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
-                                        related_name="%(app_label)s_%(class)s_crm_approved_by")
-
-    crm_unapproved_at = models.DateTimeField(blank=True, null=True)
-    crm_unapproved_at_timestamp = models.PositiveIntegerField(
-        db_index=True, blank=True, null=True)
-    crm_unapproved_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
-                                          related_name="%(app_label)s_%(class)s_crm_unapproved_by")
-
-    disbursed_date = models.DateField(blank=True, null=True)
-    disbursed_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
-                                     related_name='%(app_label)s_%(class)s_disbursed_by')
-    fundraising_end_date = models.DateField(blank=True, null=True)
+    
+    pre_screen_approved = models.BooleanField(default=False)
+    pre_screen_reduction = models.IntegerField(default=-2)
 
     notes = models.TextField(blank=True, null=True)
 
@@ -754,7 +740,17 @@ def generate_ma(sender, instance, created, **kwargs):
         files = File.objects.filter(
             nonce=instance.nonce, deleted_at__isnull=True)
         instance.attachements.set(files)
+        #calculate scoring
         instance.score = Scoring(instance).score
+        approved, reduction = pre_screen(instance)
+        instance.pre_screen_approved = approved
+        instance.pre_screen_reduction = reduction
+
+        if not approved:
+            instance.note = "Tidak lolos pre screen"
+            instance.reject(instance.created)
+
+        #commit
         instance.save()
 
 
