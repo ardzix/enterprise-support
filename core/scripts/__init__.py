@@ -22,6 +22,10 @@ from core.scripts.agreement import *
 from core.scripts.numbering import *
 
 def generate_master_data():
+    clear_all()
     import_provices()
     import_regencies()
+    import_districts()
+    import_kelurahan()
+
     import_branches()

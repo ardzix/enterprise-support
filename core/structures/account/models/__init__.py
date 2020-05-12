@@ -65,6 +65,30 @@ class Regency(models.Model):
         verbose_name_plural = _('Regencies')
 
 
+class District(models.Model):
+    regency = models.ForeignKey(Regency, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('District')
+        verbose_name_plural = _('Districts')
+
+
+class Kelurahan(models.Model):
+    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    postal_code = models.PositiveIntegerField()
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Kelurahan')
+        verbose_name_plural = _('Kelurahan')
+
+
 class Address(BaseModelGeneric):
     name = models.CharField(max_length=255)
     address = models.TextField()
