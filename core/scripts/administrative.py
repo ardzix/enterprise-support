@@ -81,7 +81,9 @@ def import_kelurahan():
                 try:
                     d = District.objects.get(name=row['kecamatan'], regency_id=row['city_code'])
                 except:
-                    d = District.objects.get(name=row['kecamatan'])
+                    d = District.objects.filter(name=row['kecamatan']).last()
+                    if not d:
+                        continue
                 districts[d.name] = d.id
             district_id = districts.get(row['kecamatan'])
             name = row['kelurahan']
