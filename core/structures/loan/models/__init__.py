@@ -302,6 +302,15 @@ class Loan(BaseModelGeneric):
         }
         return pd_mapping[self.get_grade()]
 
+    def get_color(self):
+        grade = self.get_grade()
+        if grade <= 5:
+            return 'green'
+        elif grade >= 9:
+            return 'red'
+        else:
+            return 'yellow'
+
     def get_complete_grade(self):
         if self.unapproved_at:
             return "-"
