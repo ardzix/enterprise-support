@@ -51,6 +51,7 @@ class Province(models.Model):
     class Meta:
         verbose_name = _('Province')
         verbose_name_plural = _('Provinces')
+        ordering = ['name']
 
 
 class Regency(models.Model):
@@ -63,6 +64,7 @@ class Regency(models.Model):
     class Meta:
         verbose_name = _('Regency')
         verbose_name_plural = _('Regencies')
+        ordering = ['name']
 
 
 class District(models.Model):
@@ -75,6 +77,7 @@ class District(models.Model):
     class Meta:
         verbose_name = _('District')
         verbose_name_plural = _('Districts')
+        ordering = ['name']
 
 
 class Kelurahan(models.Model):
@@ -87,12 +90,13 @@ class Kelurahan(models.Model):
     class Meta:
         verbose_name = _('Kelurahan')
         verbose_name_plural = _('Kelurahan')
+        ordering = ['name']
 
 
 class Address(BaseModelGeneric):
     name = models.CharField(max_length=255)
     address = models.TextField()
-    postal_code = models.CharField(max_length=20, blank=True, null=True)
+    postal_code = models.PositiveIntegerField()
     country = models.CharField(max_length=3, choices=constant.COUNTRY_CHOICES,
                                default='IDN')
     timezone = models.CharField(max_length=48, blank=True, null=True)
@@ -101,6 +105,10 @@ class Address(BaseModelGeneric):
         Province, on_delete=models.CASCADE, blank=True, null=True)
     regency = models.ForeignKey(
         Regency, on_delete=models.CASCADE, blank=True, null=True)
+    district = models.ForeignKey(
+        District, on_delete=models.CASCADE, blank=True, null=True)
+    kelurahan = models.ForeignKey(
+        Kelurahan, on_delete=models.CASCADE, blank=True, null=True)
     start_live = models.DateField(blank=True, null=True)
 
     def __str__(self):
