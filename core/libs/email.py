@@ -466,7 +466,24 @@ def repayment_email(email, cc, payment):
     )
 
 def user_created_by_admin_email(email, user):
-    pass
+    from enterprise.libs.email import send_mail
+    from django.conf import settings
+
+    subject_template_name = 'home/email/account_verification.txt'
+    html_email_template_name = 'home/email/account_verification.html'
+    email_template_name = html_email_template_name
+
+    context = {
+        'name' : user.full_name
+    }
+
+    send_mail(
+        subject_template_name,
+        email_template_name,
+        html_email_template_name,
+        context,
+        email
+    )
 
 
 @receiver(pre_save, sender=User)
