@@ -464,6 +464,11 @@ def repayment_email(email, cc, payment):
         email,
         cc=cc
     )
+
+def user_created_by_admin_email(email, user):
+    pass
+
+
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings
