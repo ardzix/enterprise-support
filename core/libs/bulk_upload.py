@@ -18,6 +18,7 @@
 
 
 import datetime
+import urllib
 from core.structures.account.models import (Profile, Address, Phone,
                                             Company, ECommerce, Province, Regency,
                                             District, Kelurahan)
@@ -31,7 +32,11 @@ def bulk_upload(file):
 
 
 def import_csv(file):
-    lines = file.file.readlines()
+    try:
+        lines = file.file.readlines()
+    except:
+        u = urllib.request.urlopen(file.file.url)
+        lines = u.readlines()
     for i, line in enumerate(lines):
         if i == 0:
             continue
