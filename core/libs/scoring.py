@@ -69,7 +69,11 @@ class Scoring(object):
 
     def calculate_region(self):
         account = self.instance.bussiness.account_number
-        branch = Branch.objects.get(number=str(account)[0:4])
+        try:
+            branch = Branch.objects.get(number=str(account)[0:4])
+        except:
+            self.score -= 19
+            return None
         region = branch.region
         if region == 'I' or region == 'J' or region == 'K' or region == 'L':
             self.score += 13
