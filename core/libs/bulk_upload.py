@@ -104,7 +104,7 @@ def import_csv(file):
         transaction_freq = cols[46]
         cashflow = cols[47]
         success_rate = cols[48]
-        ecommerce = 'shopee'  # need to change by request.user
+        ecommerce = file.owned_by.get_profile().associated_with
 
         # Loan
         amount = float(cols[49])
