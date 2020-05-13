@@ -84,6 +84,7 @@ class Kelurahan(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     postal_code = models.PositiveIntegerField()
+
     def __str__(self):
         return self.name
 
@@ -327,7 +328,8 @@ class Company(BaseModelGeneric):
     cost_household = models.DecimalField(max_digits=12, decimal_places=2)
     cost_instalments = models.DecimalField(max_digits=12, decimal_places=2)
     total = models.DecimalField(max_digits=12, decimal_places=2)
-    account_number = models.DecimalField(max_digits=20, decimal_places=0)
+    account_number = models.DecimalField(
+        max_digits=20, decimal_places=0, blank=True, null=True)
     total_account_number = models.DecimalField(
         max_digits=12, decimal_places=0)
     total_account_number_other = models.DecimalField(
