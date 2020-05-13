@@ -19,6 +19,7 @@
 
 import datetime
 import urllib
+from slugify import slugify
 from core.structures.account.models import (Profile, Address, Phone,
                                             Company, ECommerce, Province, Regency,
                                             District, Kelurahan)
@@ -26,10 +27,34 @@ from core.structures.authentication.models import User
 from core.structures.loan.models import Loan
 
 
-def bulk_upload(file):
+def bulk_upload(file, name):
     if file.file.name.split('.')[-1] == 'csv':
         import_csv(file)
+    else:
+        associate_document(file, name)
 
+
+def associate_document(file, name):
+    nonce = file.nonce
+    loans = Loan.objects.filter(nonce=nonce)
+    if not loans:
+        raise Exception('Mohon upload dokumen CSV terlebih dahulu')
+    try:
+        nik, document = name.split('_')
+    except:
+        raise Exception('Mohon upload dokumen dengan format nama yang benar')
+    try:
+        profile = Profile.objects.get(id_card_num=nik)
+    except:
+        raise Exception('NIK %s tidak ditemukan' % nik)
+    try:
+        loan = loans.get(owned_by=profile.owned_by)
+    except:
+        raise Exception('Data pinjaman tidak ditemukan')
+    file.display_name = document
+    file.short_name = slugify(document)
+    file.save()
+    loan.attachements.add(file)
 
 def import_csv(file):
     try:
