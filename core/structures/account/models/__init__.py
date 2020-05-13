@@ -194,6 +194,9 @@ class Profile(BaseModelUnique):
     ownership_residence = models.CharField(
         max_length=20, choices=constant.RESIDENCE_CHOICES, blank=True, null=True)
 
+    associated_with = models.CharField(
+        max_length=20, choices=constant.ECOMMERCE, blank=True, null=True)
+
     def __str__(self):
         return self.owned_by.full_name
 

@@ -225,7 +225,7 @@ LOAN_TYPE_CHOICES = (
 
 PROFILE_TYPE_CHOICES = (
     (1, _('Borrower')),
-    (2, _('Lender')),
+    (2, _('E-Commerce')),
     (3, _('Undefined'))
 )
 
