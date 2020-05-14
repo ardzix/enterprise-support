@@ -27,7 +27,7 @@ class Scoring(object):
     def __init__(self, loan, score=500, *args, **kwargs):
         self.instance = loan
         self.score = score
-        self.profile = Profile.objects.get(owned_by=self.instance.owned_by)
+        self.profile = Profile.objects.filter(owned_by=self.instance.owned_by).last()
         self.calculate()
 
     def get_score(self):
