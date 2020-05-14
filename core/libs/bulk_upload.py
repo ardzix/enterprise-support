@@ -145,8 +145,9 @@ def import_csv(file, uploader):
                 )
             profile, created = Profile.objects.get_or_create(
                 created_by=uploader,
-                owned_by=user
             )
+            profile.owned_by=user
+            profile.save()
         else:
             user = profile.owned_by
 
@@ -187,6 +188,9 @@ def import_csv(file, uploader):
             postal_code=postal_code,
             start_live=start_live
         )
+        address_obj.owned_by = profile.owned_by
+        address_obj.save()
+
         id_address_obj = Address.objects.create(
             nonce=file.nonce,
             created_by=uploader,
@@ -203,16 +207,19 @@ def import_csv(file, uploader):
                 name__icontains=id_card_kelurahan).last(),
             postal_code=id_card_postal_code
         )
+        id_address_obj.owned_by = profile.owned_by
+        id_address_obj.save()
+
         profile.addresses.set((address_obj, id_address_obj))
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
-            created_by=uploader,
-            owned_by=profile.owned_by
+            created_by=profile.owned_by
         )
         if created:
             phone.nonce = file.nonce
             phone.save()
+        phone.save()
         profile.phones.add(phone)
 
         business = Company.objects.create(
@@ -233,9 +240,10 @@ def import_csv(file, uploader):
             have_internet_banking=have_internet_banking,
             current_balance=current_balance
         )
+        business.owned_by = profile.owned_by
+        business.save()
 
         ecommerce = ECommerce.objects.create(
-            owned_by=profile.owned_by,
             created_by=uploader,
             nonce=file.nonce,
             type_of_bussiness=type_of_bussiness,
@@ -247,11 +255,16 @@ def import_csv(file, uploader):
             success_rate=success_rate,
             ecommerce=ecommerce
         )
+        ecommerce.owned_by = profile.owned_by
+        ecommerce.save()
 
         loan = Loan.objects.create(
             nonce=file.nonce,
-            owned_by=profile.owned_by,
             created_by=uploader,
             amount=amount,
             duration=duration
         )
+        loan.bussiness = business
+        loan.ecommerce = ecommerce
+        loan.owned_by = profile.owned_by
+        loan.save()
