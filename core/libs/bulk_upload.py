@@ -43,9 +43,9 @@ def associate_document(file, name):
         nik, document = name.split('_')
     except:
         raise Exception('Mohon upload dokumen dengan format nama yang benar')
-    try:
-        profile = Profile.objects.get(id_card_num=nik)
-    except:
+
+    profile = Profile.objects.filter(id_card_num=nik).last()
+    if not profile:
         raise Exception('NIK %s tidak ditemukan' % nik)
     try:
         loan = loans.get(owned_by=profile.owned_by)
@@ -151,7 +151,7 @@ def import_csv(file, uploader):
         else:
             user = profile.owned_by
 
-        profile = Profile.objects.get(owned_by=user)
+        profile = Profile.objects.filter(owned_by=user).last()
         profile.id_card_num = nik
         profile.birth_place = birth_place
         profile.birth_date = birth_date
