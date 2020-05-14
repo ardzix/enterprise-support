@@ -186,7 +186,7 @@ def import_csv(file, uploader):
             postal_code=postal_code,
             start_live=start_live
         )
-        address_obj.owned_by = profile.owned_by
+        address_obj.owned_by = user
         address_obj.save()
 
         id_address_obj = Address.objects.create(
@@ -205,14 +205,14 @@ def import_csv(file, uploader):
                 name__icontains=id_card_kelurahan).last(),
             postal_code=id_card_postal_code
         )
-        id_address_obj.owned_by = profile.owned_by
+        id_address_obj.owned_by = user
         id_address_obj.save()
 
         profile.addresses.set((address_obj, id_address_obj))
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
-            created_by=file.owned_by
+            created_by=user
         )
         if created:
             phone.nonce = file.nonce
@@ -238,7 +238,7 @@ def import_csv(file, uploader):
             have_internet_banking=have_internet_banking,
             current_balance=current_balance
         )
-        business.owned_by = profile.owned_by
+        business.owned_by = user
         business.save()
 
         ecommerce = ECommerce.objects.create(
@@ -253,7 +253,7 @@ def import_csv(file, uploader):
             success_rate=success_rate,
             ecommerce=ecommerce
         )
-        ecommerce.owned_by = profile.owned_by
+        ecommerce.owned_by = user
         ecommerce.save()
 
         loan = Loan.objects.create(
@@ -264,5 +264,5 @@ def import_csv(file, uploader):
         )
         loan.bussiness = business
         loan.ecommerce = ecommerce
-        loan.owned_by = profile.owned_by
+        loan.owned_by = user
         loan.save()
