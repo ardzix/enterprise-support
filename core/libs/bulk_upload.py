@@ -144,7 +144,7 @@ def import_csv(file, uploader):
                     email=email
                 )
             profile, created = Profile.objects.get_or_create(
-                created_by=uploader
+                created_by=uploader,
                 owned_by=user
             )
         else:
@@ -173,7 +173,7 @@ def import_csv(file, uploader):
         # Address
         address_obj = Address.objects.create(
             nonce=file.nonce,
-            created_by=uploader
+            created_by=uploader,
             owned_by=user,
             name="Domisili",
             address=address,
@@ -189,7 +189,7 @@ def import_csv(file, uploader):
         )
         id_address_obj = Address.objects.create(
             nonce=file.nonce,
-            created_by=uploader
+            created_by=uploader,
             owned_by=user,
             name="KTP",
             address=id_card_address,
@@ -207,7 +207,7 @@ def import_csv(file, uploader):
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
-            created_by=uploader
+            created_by=uploader,
             owned_by=profile.owned_by
         )
         if created:
