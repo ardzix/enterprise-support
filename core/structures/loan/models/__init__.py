@@ -214,7 +214,7 @@ class Loan(BaseModelGeneric):
 
     score = models.DecimalField(
         decimal_places=0, max_digits=4, blank=True, null=True)
-    
+
     pre_screen_approved = models.BooleanField(default=False)
     pre_screen_reduction = models.IntegerField(default=-2)
 
@@ -289,16 +289,16 @@ class Loan(BaseModelGeneric):
 
     def get_pd(self):
         pd_mapping = {
-            1 : '1.7%',
-            2 : '2.7%',
-            3 : '3.3%',
-            4 : '3.9%',
-            5 : '4.6%',
-            6 : '5.4%',
-            7 : '6.5%',
-            8 : '8.0%',
-            9 : '11.0%',
-            10 : '24.6%',
+            1: '1.7%',
+            2: '2.7%',
+            3: '3.3%',
+            4: '3.9%',
+            5: '4.6%',
+            6: '5.4%',
+            7: '6.5%',
+            8: '8.0%',
+            9: '11.0%',
+            10: '24.6%',
         }
         return pd_mapping[self.get_grade()]
 
@@ -306,15 +306,24 @@ class Loan(BaseModelGeneric):
         grade = self.get_grade()
         if grade <= 5:
             return 'green'
-        elif grade >= 9:
-            return 'red'
-        else:
+        elif grade <= 8:
             return 'yellow'
+        else:
+            return 'red'
+
+    def get_b_color(self):
+        grade = self.get_grade()
+        if grade <= 5:
+            return 'success'
+        elif grade <= 8:
+            return 'warning'
+        else:
+            return 'danger'
 
     def get_complete_grade(self):
         if self.unapproved_at:
-            return "-"
-        return '%s (score: %s) PD:%s' % (self.get_grade(), self.score, self.get_pd())
+            return '%s, %s' % (_('Rejected'), self.notes)
+        return '<span class="bg-%s">%s (score: %s) PD:%s</span>' % (self.get_b_color(), self.get_grade(), self.score, self.get_pd())
 
     def disburse(self, user=None, date=None, *args, **kwargs):
         if user:
@@ -690,7 +699,7 @@ def generate_ma(sender, instance, created, **kwargs):
         files = File.objects.filter(
             nonce=instance.nonce, deleted_at__isnull=True)
         instance.attachements.set(files)
-        #calculate scoring
+        # calculate scoring
         instance.score = Scoring(instance).score
         approved, reduction = pre_screen(instance)
         instance.pre_screen_approved = approved
@@ -701,7 +710,7 @@ def generate_ma(sender, instance, created, **kwargs):
             instance.status = "rejected"
             instance.reject(instance.created_by)
 
-        #commit
+        # commit
         instance.save()
 
 

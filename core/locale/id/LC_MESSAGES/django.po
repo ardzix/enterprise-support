@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 14:13+0700\n"
+"POT-Creation-Date: 2020-05-14 11:21+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,436 +18,703 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: core/libs/constant.py:33
-msgid "Male"
-msgstr "Laki-laki"
-
-#: core/libs/constant.py:34
-msgid "Female"
-msgstr "Perempuan"
-
-#: core/libs/constant.py:46
+#: libs/constant.py:117
 msgid "1 Month"
 msgstr "1 Bulan"
 
-#: core/libs/constant.py:47
+#: libs/constant.py:118
 msgid "2 Months"
 msgstr "2 Bulan"
 
-#: core/libs/constant.py:48
+#: libs/constant.py:119
 msgid "3 Months"
 msgstr "3 Bulan"
 
-#: core/libs/constant.py:49
+#: libs/constant.py:120
 msgid "4 Months"
 msgstr "4 Bulan"
 
-#: core/libs/constant.py:50
+#: libs/constant.py:121
 msgid "5 Months"
 msgstr "5 Bulan"
 
-#: core/libs/constant.py:51
+#: libs/constant.py:122
 msgid "6 Months"
 msgstr "6 Bulan"
 
-#: core/libs/constant.py:52
+#: libs/constant.py:123
 msgid "7 Months"
 msgstr "7 Bulan"
 
-#: core/libs/constant.py:53
+#: libs/constant.py:124
 msgid "8 Months"
 msgstr "8 Bulan"
 
-#: core/libs/constant.py:54
+#: libs/constant.py:125
 msgid "9 Months"
 msgstr "9 Bulan"
 
-#: core/libs/constant.py:55
+#: libs/constant.py:126
 msgid "10 Months"
 msgstr "10 Bulan"
 
-#: core/libs/constant.py:56
+#: libs/constant.py:127
 msgid "11 Months"
 msgstr "11 Bulan"
 
-#: core/libs/constant.py:57
+#: libs/constant.py:128
 msgid "12 Months"
 msgstr "12 Bulan"
 
-#: core/libs/constant.py:86
+#: libs/constant.py:129
+msgid "13 Months"
+msgstr "13 Bulan"
+
+#: libs/constant.py:130
+msgid "14 Months"
+msgstr "14 Bulan"
+
+#: libs/constant.py:131
+msgid "15 Months"
+msgstr "15 Bulan"
+
+#: libs/constant.py:132
+msgid "16 Months"
+msgstr "16 Bulan"
+
+#: libs/constant.py:133
+msgid "17 Months"
+msgstr "17 Bulan"
+
+#: libs/constant.py:134
+msgid "18 Months"
+msgstr "18 Bulan"
+
+#: libs/constant.py:135
+msgid "19 Months"
+msgstr "19 Bulan"
+
+#: libs/constant.py:136
+msgid "20 Months"
+msgstr "20 Bulan"
+
+#: libs/constant.py:137
+msgid "21 Months"
+msgstr "21 Bulan"
+
+#: libs/constant.py:138
+msgid "22 Months"
+msgstr "22 Bulan"
+
+#: libs/constant.py:139
+msgid "23 Months"
+msgstr "23 Bulan"
+
+#: libs/constant.py:140
+msgid "24 Months"
+msgstr "24 Bulan"
+
+#: libs/constant.py:141
+#, fuzzy
+#| msgid "5 Months"
+msgid "25 Months"
+msgstr "5 Bulan"
+
+#: libs/constant.py:142
+#, fuzzy
+#| msgid "6 Months"
+msgid "26 Months"
+msgstr "6 Bulan"
+
+#: libs/constant.py:143
+#, fuzzy
+#| msgid "7 Months"
+msgid "27 Months"
+msgstr "7 Bulan"
+
+#: libs/constant.py:144
+#, fuzzy
+#| msgid "8 Months"
+msgid "28 Months"
+msgstr "8 Bulan"
+
+#: libs/constant.py:145
+#, fuzzy
+#| msgid "9 Months"
+msgid "29 Months"
+msgstr "9 Bulan"
+
+#: libs/constant.py:146
+#, fuzzy
+#| msgid "3 Months"
+msgid "30 Months"
+msgstr "3 Bulan"
+
+#: libs/constant.py:147
+#, fuzzy
+#| msgid "3 Months"
+msgid "31 Months"
+msgstr "3 Bulan"
+
+#: libs/constant.py:148
+#, fuzzy
+#| msgid "2 Months"
+msgid "32 Months"
+msgstr "2 Bulan"
+
+#: libs/constant.py:149
+#, fuzzy
+#| msgid "3 Months"
+msgid "33 Months"
+msgstr "3 Bulan"
+
+#: libs/constant.py:150
+#, fuzzy
+#| msgid "4 Months"
+msgid "34 Months"
+msgstr "4 Bulan"
+
+#: libs/constant.py:151
+#, fuzzy
+#| msgid "5 Months"
+msgid "35 Months"
+msgstr "5 Bulan"
+
+#: libs/constant.py:152
+#, fuzzy
+#| msgid "6 Months"
+msgid "36 Months"
+msgstr "6 Bulan"
+
+#: libs/constant.py:170
 msgid "Requested"
 msgstr "Diajukan"
 
-#: core/libs/constant.py:87
+#: libs/constant.py:171 libs/constant.py:174
 msgid "Processed"
 msgstr "Diproses"
 
-#: core/libs/constant.py:88
-#, fuzzy
-#| msgid "Approved"
-msgid "CRM Approved"
-msgstr "Disetujui"
-
-#: core/libs/constant.py:89
-#, fuzzy
-#| msgid "Rejected"
-msgid "CRM Rejected"
-msgstr "Ditolak"
-
-#: core/libs/constant.py:90
+#: libs/constant.py:172
 msgid "Approved"
 msgstr "Disetujui"
 
-#: core/libs/constant.py:91
+#: libs/constant.py:173 structures/loan/models/__init__.py:316
 msgid "Rejected"
 msgstr "Ditolak"
 
-#: core/libs/constant.py:92
-msgid "Published"
-msgstr "Dipublikasi"
-
-#: core/libs/constant.py:93
-msgid "UnPublished"
-msgstr "Tidak Dipulbikasi"
-
-#: core/libs/constant.py:94
-msgid "Disbursed"
-msgstr "Didisburse"
-
-#: core/libs/constant.py:95
+#: libs/constant.py:175
 msgid "Closed"
 msgstr "Ditutup"
 
-#: core/libs/constant.py:99
+#: libs/constant.py:179
 msgid "Pending"
 msgstr "Menunggu"
 
-#: core/libs/constant.py:100
+#: libs/constant.py:180
 msgid "Paid"
 msgstr "Terbayar"
 
-#: core/libs/constant.py:101
+#: libs/constant.py:181
 msgid "Expired"
 msgstr "Kadaluarsa"
 
-#: core/libs/constant.py:102
+#: libs/constant.py:182
 msgid "Cancelled"
 msgstr "Dibatalkan"
 
-#: core/libs/constant.py:106
+#: libs/constant.py:186
 msgid "Car"
 msgstr "Mobil"
 
-#: core/libs/constant.py:107
+#: libs/constant.py:187
 msgid "Motorcycle"
 msgstr "Sepeda Motor"
 
-#: core/libs/constant.py:108
+#: libs/constant.py:188
 msgid "Inventory"
 msgstr ""
 
-#: core/libs/constant.py:109
+#: libs/constant.py:189
 msgid "Account Receivable/Invoice"
 msgstr ""
 
-#: core/libs/constant.py:110
+#: libs/constant.py:190
 msgid "Gold/Jewelry"
 msgstr "Emas/Perhiasan"
 
-#: core/libs/constant.py:111
+#: libs/constant.py:191
 msgid "Insurance"
 msgstr "Asuransi"
 
-#: core/libs/constant.py:112
+#: libs/constant.py:192
 msgid "Others"
 msgstr "Lainnya"
 
-#: core/libs/constant.py:122
+#: libs/constant.py:222
 msgid "Student Loan"
 msgstr ""
 
-#: core/libs/constant.py:123
+#: libs/constant.py:223
 msgid "Business"
 msgstr "Bisnis"
 
-#: core/libs/constant.py:127
+#: libs/constant.py:227
 msgid "Borrower"
 msgstr "Peminjam"
 
-#: core/libs/constant.py:128
-msgid "Lender"
-msgstr "Pendana"
+#: libs/constant.py:228
+msgid "E-Commerce"
+msgstr ""
 
-#: core/libs/constant.py:129
+#: libs/constant.py:229
 msgid "Undefined"
 msgstr ""
 
-#: core/libs/constant.py:133
+#: libs/constant.py:233
 msgid "ID Card can not be read"
 msgstr ""
 
-#: core/libs/constant.py:134 core/libs/constant.py:135
+#: libs/constant.py:234 libs/constant.py:235
 msgid "Bank account verification failed"
 msgstr ""
 
-#: core/libs/forms.py:150
-msgid "Verification COde"
-msgstr "Kode Verifikasi"
+#: libs/constant.py:266
+msgid "Fiscal"
+msgstr ""
 
-#: core/structures/account/models/__init__.py:24
+#: libs/constant.py:267
+msgid "Score"
+msgstr ""
+
+#: libs/constant.py:268
+msgid "Weight"
+msgstr ""
+
+#: libs/constant.py:269
+msgid "Fiscal & Score"
+msgstr ""
+
+#: libs/constant.py:270
+msgid "Weight & Score"
+msgstr ""
+
+#: libs/constant.py:274
+msgid "Account Receivable"
+msgstr ""
+
+#: libs/constant.py:275
+msgid "Account Payable"
+msgstr ""
+
+#: structures/account/models/__init__.py:29
+#: structures/account/models/__init__.py:30
+msgid "Nonce WhiteList"
+msgstr ""
+
+#: structures/account/models/__init__.py:41
+msgid "Branch"
+msgstr ""
+
+#: structures/account/models/__init__.py:42
+msgid "Branches"
+msgstr ""
+
+#: structures/account/models/__init__.py:52
 msgid "Province"
 msgstr ""
 
-#: core/structures/account/models/__init__.py:25
+#: structures/account/models/__init__.py:53
 msgid "Provinces"
 msgstr ""
 
-#: core/structures/account/models/__init__.py:36
+#: structures/account/models/__init__.py:65
 msgid "Regency"
 msgstr ""
 
-#: core/structures/account/models/__init__.py:37
+#: structures/account/models/__init__.py:66
 msgid "Regencies"
 msgstr ""
 
-#: core/structures/account/models/__init__.py:56
+#: structures/account/models/__init__.py:78
+msgid "District"
+msgstr ""
+
+#: structures/account/models/__init__.py:79
+msgid "Districts"
+msgstr ""
+
+#: structures/account/models/__init__.py:92
+#: structures/account/models/__init__.py:93
+msgid "Kelurahan"
+msgstr ""
+
+#: structures/account/models/__init__.py:119
 msgid "Address"
 msgstr "Alamat"
 
-#: core/structures/account/models/__init__.py:57
+#: structures/account/models/__init__.py:120
 msgid "Addresses"
 msgstr "Alamat"
 
-#: core/structures/account/models/__init__.py:77
+#: structures/account/models/__init__.py:140
 msgid "Phone"
 msgstr "Telepon"
 
-#: core/structures/account/models/__init__.py:78
+#: structures/account/models/__init__.py:141
 msgid "Phones"
 msgstr "Telepon"
 
-#: core/structures/account/models/__init__.py:163
+#: structures/account/models/__init__.py:317
 msgid "Profile Detail"
 msgstr "Detail Profil"
 
-#: core/structures/account/models/__init__.py:164
+#: structures/account/models/__init__.py:318
 msgid "Profile Details"
 msgstr "Detail Profil"
 
-#: core/structures/account/models/__init__.py:176
-msgid "Company Sector"
-msgstr "Sektor Perusahaan"
-
-#: core/structures/account/models/__init__.py:177
-msgid "Company Sectors"
-msgstr "Sektor Perusahaan"
-
-#: core/structures/account/models/__init__.py:238
+#: structures/account/models/__init__.py:341
 msgid "Company"
 msgstr "Perusahaan"
 
-#: core/structures/account/models/__init__.py:239
+#: structures/account/models/__init__.py:342
 msgid "Companies"
 msgstr "Perusahaan"
 
-#: core/structures/account/models/__init__.py:251
+#: structures/account/models/__init__.py:359
+msgid "ECommerce"
+msgstr ""
+
+#: structures/account/models/__init__.py:360
+msgid "ECommerces"
+msgstr ""
+
+#: structures/account/models/__init__.py:372
 msgid "Company Detail"
 msgstr "Detail Perusahaan"
 
-#: core/structures/account/models/__init__.py:252
+#: structures/account/models/__init__.py:373
 msgid "Company Details"
 msgstr "Detail Perusahaan"
 
-#: core/structures/borrower/models/__init__.py:44
+#: structures/authentication/admin.py:17
+msgid "Personal info"
+msgstr ""
+
+#: structures/authentication/admin.py:18
+msgid "Permissions"
+msgstr ""
+
+#: structures/authentication/admin.py:20
+msgid "Important dates"
+msgstr ""
+
+#: structures/authentication/forms.py:17
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: structures/authentication/forms.py:20 structures/authentication/forms.py:74
+msgid "Password"
+msgstr ""
+
+#: structures/authentication/forms.py:26
+msgid "Password confirmation"
+msgstr ""
+
+#: structures/authentication/forms.py:29
+msgid "Enter the same password as before, for verification."
+msgstr ""
+
+#: structures/authentication/forms.py:76
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"{}\">this form</a>."
+msgstr ""
+
+#: structures/authentication/models.py:73
+msgid "username"
+msgstr ""
+
+#: structures/authentication/models.py:74
+msgid "full name"
+msgstr ""
+
+#: structures/authentication/models.py:75
+#, fuzzy
+#| msgid "Address"
+msgid "email address"
+msgstr "Alamat"
+
+#: structures/authentication/models.py:77
+msgid "staff status"
+msgstr ""
+
+#: structures/authentication/models.py:80
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: structures/authentication/models.py:83
+msgid "active"
+msgstr ""
+
+#: structures/authentication/models.py:86
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: structures/authentication/models.py:91
+msgid "date joined"
+msgstr ""
+
+#: structures/authentication/models.py:99
+msgid "user"
+msgstr ""
+
+#: structures/authentication/models.py:100
+msgid "users"
+msgstr ""
+
+#: structures/authentication/models.py:163
+#, fuzzy
+#| msgid "Verification COde"
+msgid "Email Varification"
+msgstr "Kode Verifikasi"
+
+#: structures/authentication/models.py:164
+#, fuzzy
+#| msgid "Verification COde"
+msgid "Email Varifications"
+msgstr "Kode Verifikasi"
+
+#: structures/borrower/models/__init__.py:44
 msgid "Guarantee"
 msgstr "Garansi"
 
-#: core/structures/borrower/models/__init__.py:45
+#: structures/borrower/models/__init__.py:45
 msgid "Guarantees"
 msgstr "Garansi"
 
-#: core/structures/borrower/models/__init__.py:57
+#: structures/borrower/models/__init__.py:57
 msgid "Guarantee Detail"
 msgstr "Detail Garansi"
 
-#: core/structures/borrower/models/__init__.py:58
+#: structures/borrower/models/__init__.py:58
 msgid "Guarantee Details"
 msgstr "Detail Garansi"
 
-#: core/structures/borrower/models/__init__.py:79
+#: structures/borrower/models/__init__.py:79
 msgid "Financial"
 msgstr "Keuangan"
 
-#: core/structures/borrower/models/__init__.py:80
+#: structures/borrower/models/__init__.py:80
 msgid "Financials"
 msgstr "Keuangan"
 
-#: core/structures/borrower/models/__init__.py:91
+#: structures/borrower/models/__init__.py:91
 msgid "Social Media"
 msgstr "Media Sosial"
 
-#: core/structures/borrower/models/__init__.py:92
+#: structures/borrower/models/__init__.py:92
 msgid "Social Medias"
 msgstr "Media Sosial"
 
-#: core/structures/loan/models/__init__.py:70
+#: structures/loan/models/__init__.py:71
 msgid "Grade"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:71
+#: structures/loan/models/__init__.py:72
 msgid "Grades"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:90
+#: structures/loan/models/__init__.py:91
 msgid "Loan Type"
 msgstr "Jenis Pinjaman"
 
-#: core/structures/loan/models/__init__.py:91
+#: structures/loan/models/__init__.py:92
 msgid "Loan Types"
 msgstr "Jenis Pinjaman"
 
-#: core/structures/loan/models/__init__.py:106
+#: structures/loan/models/__init__.py:107
 msgid "Document Key"
 msgstr "Kunci Dokumen"
 
-#: core/structures/loan/models/__init__.py:107
+#: structures/loan/models/__init__.py:108
 msgid "Document Keys"
 msgstr "Kunci Dokumen"
 
-#: core/structures/loan/models/__init__.py:122
+#: structures/loan/models/__init__.py:124
 #, fuzzy
 #| msgid "Document Key"
 msgid "Detail Key"
 msgstr "Kunci Dokumen"
 
-#: core/structures/loan/models/__init__.py:123
+#: structures/loan/models/__init__.py:125
 #, fuzzy
 #| msgid "Document Keys"
 msgid "Detail Keys"
 msgstr "Kunci Dokumen"
 
-#: core/structures/loan/models/__init__.py:141
+#: structures/loan/models/__init__.py:143
 msgid "FactSheet Key"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:142
+#: structures/loan/models/__init__.py:144
 msgid "FactSheet Keys"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:347
+#: structures/loan/models/__init__.py:155
+#, fuzzy
+#| msgid "Financial"
+msgid "FinancialSheet Group"
+msgstr "Keuangan"
+
+#: structures/loan/models/__init__.py:156
+#, fuzzy
+#| msgid "Financials"
+msgid "FinancialSheet Groups"
+msgstr "Keuangan"
+
+#: structures/loan/models/__init__.py:181
+#, fuzzy
+#| msgid "Financial"
+msgid "FinancialSheet Key"
+msgstr "Keuangan"
+
+#: structures/loan/models/__init__.py:182
+#, fuzzy
+#| msgid "Financials"
+msgid "FinancialSheet Keys"
+msgstr "Keuangan"
+
+#: structures/loan/models/__init__.py:345
 msgid "Loan"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:348
+#: structures/loan/models/__init__.py:346
 msgid "Loans"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:368
+#: structures/loan/models/__init__.py:365
 #, fuzzy
 #| msgid "Profile Detail"
 msgid "Loan Detail"
 msgstr "Detail Profil"
 
-#: core/structures/loan/models/__init__.py:369
+#: structures/loan/models/__init__.py:366
 #, fuzzy
 #| msgid "Profile Details"
 msgid "Loan Details"
 msgstr "Detail Profil"
 
-#: core/structures/loan/models/__init__.py:388
+#: structures/loan/models/__init__.py:385
 #, fuzzy
 #| msgid "Loan"
 msgid "Loan FactSheet"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:389
+#: structures/loan/models/__init__.py:386
 #, fuzzy
 #| msgid "Loans"
 msgid "Loan FactSheets"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:420
+#: structures/loan/models/__init__.py:420
+#, fuzzy
+#| msgid "Loan"
+msgid "Loan FinancialSheet"
+msgstr "Pinjaman"
+
+#: structures/loan/models/__init__.py:421
+#, fuzzy
+#| msgid "Loans"
+msgid "Loan FinancialSheets"
+msgstr "Pinjaman"
+
+#: structures/loan/models/__init__.py:448
+#: structures/loan/models/__init__.py:449
+msgid "Account Receivable and Payable Analysis"
+msgstr ""
+
+#: structures/loan/models/__init__.py:480
 #, fuzzy
 #| msgid "Loan"
 msgid "Loan Document"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:421
+#: structures/loan/models/__init__.py:481
 #, fuzzy
 #| msgid "Loans"
 msgid "Loan Documents"
 msgstr "Pinjaman"
 
-#: core/structures/loan/models/__init__.py:436
+#: structures/loan/models/__init__.py:518
 msgid "Fund"
 msgstr "Pendanaan"
 
-#: core/structures/loan/models/__init__.py:437
+#: structures/loan/models/__init__.py:519
 msgid "Funds"
 msgstr "Pendanaan"
 
-#: core/structures/loan/models/__init__.py:480
+#: structures/loan/models/__init__.py:617
 msgid "Payment"
 msgstr "Pembayaran"
 
-#: core/structures/loan/models/__init__.py:481
+#: structures/loan/models/__init__.py:618
 msgid "Payments"
 msgstr "Pembayaran"
 
-#: core/structures/loan/models/__init__.py:491
+#: structures/loan/models/__init__.py:630
 msgid "MasterAgreement"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:492
+#: structures/loan/models/__init__.py:631
 msgid "MasterAgreements"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:517
+#: structures/loan/models/__init__.py:657
 msgid "ParticipationAgreement"
 msgstr ""
 
-#: core/structures/loan/models/__init__.py:518
+#: structures/loan/models/__init__.py:658
 msgid "ParticipationAgreements"
 msgstr ""
 
+#~ msgid "Male"
+#~ msgstr "Laki-laki"
+
+#~ msgid "Female"
+#~ msgstr "Perempuan"
+
+#, fuzzy
+#~| msgid "Approved"
+#~ msgid "CRM Approved"
+#~ msgstr "Disetujui"
+
+#, fuzzy
+#~| msgid "Rejected"
+#~ msgid "CRM Rejected"
+#~ msgstr "Ditolak"
+
+#~ msgid "Published"
+#~ msgstr "Dipublikasi"
+
+#~ msgid "UnPublished"
+#~ msgstr "Tidak Dipulbikasi"
+
+#~ msgid "Disbursed"
+#~ msgstr "Didisburse"
+
+#~ msgid "Lender"
+#~ msgstr "Pendana"
+
+#~ msgid "Company Sector"
+#~ msgstr "Sektor Perusahaan"
+
+#~ msgid "Company Sectors"
+#~ msgstr "Sektor Perusahaan"
+
 #~ msgid "Secret"
 #~ msgstr "Rahasia"
-
-#~ msgid "13 Months"
-#~ msgstr "13 Bulan"
-
-#~ msgid "14 Months"
-#~ msgstr "14 Bulan"
-
-#~ msgid "15 Months"
-#~ msgstr "15 Bulan"
-
-#~ msgid "16 Months"
-#~ msgstr "16 Bulan"
-
-#~ msgid "17 Months"
-#~ msgstr "17 Bulan"
-
-#~ msgid "18 Months"
-#~ msgstr "18 Bulan"
-
-#~ msgid "19 Months"
-#~ msgstr "19 Bulan"
-
-#~ msgid "20 Months"
-#~ msgstr "20 Bulan"
-
-#~ msgid "21 Months"
-#~ msgstr "21 Bulan"
-
-#~ msgid "22 Months"
-#~ msgstr "22 Bulan"
-
-#~ msgid "23 Months"
-#~ msgstr "23 Bulan"
-
-#~ msgid "24 Months"
-#~ msgstr "24 Bulan"
 
 #~ msgid "Individual"
 #~ msgstr "Individu"

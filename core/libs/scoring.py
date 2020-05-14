@@ -209,7 +209,7 @@ def pre_screen(loan):
 
     if success_rate > 0.81 and continue_score == 2:
         continue_score += 1
-    elif continue_score < 2 and success_rate >= 0.92:
+    elif continue_score < 2 and success_rate >= 0.85:
         considered_score += 1
     else:
         rejected_score += 1

@@ -113,7 +113,7 @@ class Address(BaseModelGeneric):
     start_live = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return self.address
+        return self.name
 
     class Meta:
         verbose_name = _('Address')
@@ -337,6 +337,12 @@ class Company(BaseModelGeneric):
     have_internet_banking = models.BooleanField(default=False)
     current_balance = models.DecimalField(max_digits=12, decimal_places=2)
 
+    def get_type(self):
+        return dict(constant.COMPANY_TYPE_CHOICES)[self.type]
+
+    def get_ownership(self):
+        return dict(constant.COMPANY_OWNERSHIP_CHOICES)[self.ownership_bussiness]
+
     class Meta:
         verbose_name = _('Company')
         verbose_name_plural = _('Companies')
@@ -354,6 +360,15 @@ class ECommerce(BaseModelGeneric):
     success_rate = models.DecimalField(max_digits=3, decimal_places=2)
     ecommerce = models.CharField(
         max_length=20, choices=constant.ECOMMERCE)
+
+    def get_type(self):
+        return dict(constant.TYPE_BUSSINESS)[self.type_of_bussiness]
+
+    def get_success_rate(self):
+        return '%d %%' % (self.success_rate * 100)
+
+    def get_ecommerce(self):
+        return dict(constant.ECOMMERCE)[self.ecommerce]
 
     class Meta:
         verbose_name = _('ECommerce')

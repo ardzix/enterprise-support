@@ -170,10 +170,11 @@ def import_csv(file):
         user.save()
 
         # Address
-        address = Address.objects.create(
+        address_obj = Address.objects.create(
             nonce=file.nonce,
             created_by=user,
             name="Domisili",
+            address=address,
             province=Province.objects.filter(
                 name__icontains=province).last(),
             regency=Regency.objects.filter(name__icontains=regency).last(),
@@ -184,10 +185,11 @@ def import_csv(file):
             postal_code=postal_code,
             start_live=start_live
         )
-        id_address = Address.objects.create(
+        id_address_obj = Address.objects.create(
             nonce=file.nonce,
             created_by=user,
             name="KTP",
+            address=id_card_address,
             province=Province.objects.filter(
                 name__icontains=id_card_province).last(),
             regency=Regency.objects.filter(
@@ -198,7 +200,7 @@ def import_csv(file):
                 name__icontains=id_card_kelurahan).last(),
             postal_code=id_card_postal_code
         )
-        profile.addresses.set((address, id_address))
+        profile.addresses.set((address_obj, id_address_obj))
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
