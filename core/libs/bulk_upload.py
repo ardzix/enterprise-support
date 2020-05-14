@@ -27,9 +27,9 @@ from core.structures.authentication.models import User
 from core.structures.loan.models import Loan
 
 
-def bulk_upload(file, name):
+def bulk_upload(file, name, uploader):
     if file.file.name.split('.')[-1] == 'csv':
-        import_csv(file)
+        import_csv(file, uploader)
     else:
         associate_document(file, name)
 
@@ -56,7 +56,7 @@ def associate_document(file, name):
     file.save()
     loan.attachements.add(file)
 
-def import_csv(file):
+def import_csv(file, uploader):
     try:
         lines = file.file.readlines()
     except:
@@ -144,7 +144,8 @@ def import_csv(file):
                     email=email
                 )
             profile, created = Profile.objects.get_or_create(
-                created_by=user
+                created_by=uploader
+                owned_by=user
             )
         else:
             user = profile.owned_by
@@ -172,7 +173,8 @@ def import_csv(file):
         # Address
         address_obj = Address.objects.create(
             nonce=file.nonce,
-            created_by=user,
+            created_by=uploader
+            owned_by=user,
             name="Domisili",
             address=address,
             province=Province.objects.filter(
@@ -187,7 +189,8 @@ def import_csv(file):
         )
         id_address_obj = Address.objects.create(
             nonce=file.nonce,
-            created_by=user,
+            created_by=uploader
+            owned_by=user,
             name="KTP",
             address=id_card_address,
             province=Province.objects.filter(
@@ -204,7 +207,8 @@ def import_csv(file):
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
-            created_by=file.owned_by
+            created_by=uploader
+            owned_by=profile.owned_by
         )
         if created:
             phone.nonce = file.nonce
@@ -212,7 +216,8 @@ def import_csv(file):
         profile.phones.add(phone)
 
         business = Company.objects.create(
-            created_by=profile.owned_by,
+            owned_by=profile.owned_by,
+            created_by=uploader,
             nonce=file.nonce,
             type=business_type,
             ownership_bussiness=ownership_bussiness,
@@ -230,7 +235,8 @@ def import_csv(file):
         )
 
         ecommerce = ECommerce.objects.create(
-            created_by=profile.owned_by,
+            owned_by=profile.owned_by,
+            created_by=uploader,
             nonce=file.nonce,
             type_of_bussiness=type_of_bussiness,
             name_store=name_store,
@@ -244,7 +250,8 @@ def import_csv(file):
 
         loan = Loan.objects.create(
             nonce=file.nonce,
-            created_by=profile.owned_by,
+            owned_by=profile.owned_by,
+            created_by=uploader,
             amount=amount,
             duration=duration
         )
