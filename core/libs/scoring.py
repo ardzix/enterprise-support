@@ -28,6 +28,8 @@ class Scoring(object):
         self.instance = loan
         self.score = score
         self.profile = Profile.objects.filter(owned_by=self.instance.owned_by).last()
+        if not self.profile:
+            self.profile = Profile.objects.filter(nonce=self.instance.nonce).last()
         self.calculate()
 
     def get_score(self):

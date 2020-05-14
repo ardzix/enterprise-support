@@ -17,6 +17,7 @@
 '''
 
 
+import uuid
 import datetime
 import urllib
 from slugify import slugify
@@ -65,6 +66,7 @@ def import_csv(file, uploader):
     for i, line in enumerate(lines):
         if i == 0:
             continue
+        nonce = str(uuid.uuid4)
         row = line.decode('utf-8')
         cols = row.split(',')
 
@@ -164,14 +166,14 @@ def import_csv(file, uploader):
         profile.religion = religion
         profile.education = education
         profile.ownership_residence = ownership_residence
-        profile.nonce = file.nonce
+        profile.nonce = nonce
         profile.save()
         user.full_name = full_name
         user.save()
 
         # Address
         address_obj = Address.objects.create(
-            nonce=file.nonce,
+            nonce=nonce,
             created_by=uploader,
             owned_by=user,
             name="Domisili",
@@ -190,7 +192,7 @@ def import_csv(file, uploader):
         address_obj.save()
 
         id_address_obj = Address.objects.create(
-            nonce=file.nonce,
+            nonce=nonce,
             created_by=uploader,
             owned_by=user,
             name="KTP",
@@ -215,7 +217,7 @@ def import_csv(file, uploader):
             created_by=user
         )
         if created:
-            phone.nonce = file.nonce
+            phone.nonce = nonce
             phone.save()
         phone.save()
         profile.phones.add(phone)
@@ -223,7 +225,7 @@ def import_csv(file, uploader):
         business = Company.objects.create(
             owned_by=profile.owned_by,
             created_by=uploader,
-            nonce=file.nonce,
+            nonce=nonce,
             type=business_type,
             ownership_bussiness=ownership_bussiness,
             business_started_date=business_started_date,
@@ -243,7 +245,7 @@ def import_csv(file, uploader):
 
         ecommerce = ECommerce.objects.create(
             created_by=uploader,
-            nonce=file.nonce,
+            nonce=nonce,
             type_of_bussiness=type_of_bussiness,
             name_store=name_store,
             domain_store=domain_store,
@@ -257,7 +259,7 @@ def import_csv(file, uploader):
         ecommerce.save()
 
         loan = Loan.objects.create(
-            nonce=file.nonce,
+            nonce=nonce,
             created_by=uploader,
             amount=amount,
             duration=duration
