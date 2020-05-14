@@ -17,7 +17,6 @@
 '''
 
 
-import uuid
 import datetime
 import urllib
 from slugify import slugify
@@ -66,7 +65,7 @@ def import_csv(file, uploader):
     for i, line in enumerate(lines):
         if i == 0:
             continue
-        nonce = str(uuid.uuid4)
+        nonce = file.nonce
         row = line.decode('utf-8')
         cols = row.split(',')
 
