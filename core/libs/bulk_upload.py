@@ -174,7 +174,7 @@ def import_csv(file, uploader):
         # Address
         address_obj = Address.objects.create(
             nonce=nonce,
-            created_by=uploader,
+            created_by=user,
             owned_by=user,
             name="Domisili",
             address=address,
@@ -188,12 +188,10 @@ def import_csv(file, uploader):
             postal_code=postal_code,
             start_live=start_live
         )
-        address_obj.owned_by = user
-        address_obj.save()
 
         id_address_obj = Address.objects.create(
             nonce=nonce,
-            created_by=uploader,
+            created_by=user,
             owned_by=user,
             name="KTP",
             address=id_card_address,
@@ -207,8 +205,6 @@ def import_csv(file, uploader):
                 name__icontains=id_card_kelurahan).last(),
             postal_code=id_card_postal_code
         )
-        id_address_obj.owned_by = user
-        id_address_obj.save()
 
         profile.addresses.set((address_obj, id_address_obj))
 
@@ -224,7 +220,7 @@ def import_csv(file, uploader):
 
         business = Company.objects.create(
             owned_by=profile.owned_by,
-            created_by=uploader,
+            created_by=user,
             nonce=nonce,
             type=business_type,
             ownership_bussiness=ownership_bussiness,
@@ -240,11 +236,9 @@ def import_csv(file, uploader):
             have_internet_banking=have_internet_banking,
             current_balance=current_balance
         )
-        business.owned_by = user
-        business.save()
 
         ecommerce = ECommerce.objects.create(
-            created_by=uploader,
+            created_by=user,
             nonce=nonce,
             type_of_bussiness=type_of_bussiness,
             name_store=name_store,
@@ -255,12 +249,10 @@ def import_csv(file, uploader):
             success_rate=success_rate,
             ecommerce=ecommerce
         )
-        ecommerce.owned_by = user
-        ecommerce.save()
 
         loan = Loan.objects.create(
             nonce=nonce,
-            created_by=uploader,
+            created_by=user,
             amount=amount,
             duration=duration
         )
@@ -268,3 +260,4 @@ def import_csv(file, uploader):
         loan.ecommerce = ecommerce
         loan.owned_by = user
         loan.save()
+        loan.publish(uploader)
