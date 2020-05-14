@@ -143,10 +143,10 @@ def import_csv(file, uploader):
                     full_name=full_name,
                     email=email
                 )
+            
             profile, created = Profile.objects.get_or_create(
-                created_by=uploader,
+                created_by=user,
             )
-            profile.owned_by=user
             profile.save()
         else:
             user = profile.owned_by
@@ -214,7 +214,7 @@ def import_csv(file, uploader):
 
         phone, created = Phone.objects.get_or_create(
             number=phone,
-            created_by=profile.owned_by
+            created_by=file.owned_by
         )
         if created:
             phone.nonce = file.nonce
