@@ -1,5 +1,6 @@
 from random import randint
 from datetime import date
+from slugify import slugify
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
@@ -362,13 +363,13 @@ class ECommerce(BaseModelGeneric):
         max_length=20, choices=constant.ECOMMERCE)
 
     def get_type(self):
-        return dict(constant.TYPE_BUSSINESS)[self.type_of_bussiness]
+        return dict(constant.TYPE_BUSSINESS).get(slugify(self.type_of_bussiness))
 
     def get_success_rate(self):
         return '%d %%' % (self.success_rate * 100)
 
     def get_ecommerce(self):
-        return dict(constant.ECOMMERCE)[self.ecommerce]
+        return dict(constant.ECOMMERCE).get(slugify(self.ecommerce))
 
     class Meta:
         verbose_name = _('ECommerce')
