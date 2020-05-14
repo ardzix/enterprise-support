@@ -260,6 +260,8 @@ class Loan(BaseModelGeneric):
 
     def get_grade(self):
         score = self.score
+        if not score:
+            score = Scoring(self).score
         grade = 10
         if 396 <= score <= 597:
             grade = 10
