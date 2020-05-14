@@ -143,12 +143,9 @@ def import_csv(file, uploader):
                     full_name=full_name,
                     email=email
                 )
-            try:
-                profile, created = Profile.objects.get_or_create(
+                Profile.objects.get_or_create(
                     created_by=user,
                 )
-            except:
-                profile = Profile.objects.filter(created_by=user).last()
         else:
             user = profile.owned_by
 
