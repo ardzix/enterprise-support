@@ -177,7 +177,7 @@ class Scoring(object):
 
     def calculate_internet_banking(self):
         if self.instance.bussiness.have_internet_banking:
-            self.score += 4
+            self.score += 17
         else:
             self.score -= 2
 
