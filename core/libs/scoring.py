@@ -24,7 +24,7 @@ class Scoring(object):
     score = 0
     profile = None
 
-    def __init__(self, loan, score=500, *args, **kwargs):
+    def __init__(self, loan, score=642, *args, **kwargs):
         self.instance = loan
         self.score = score
         self.profile = Profile.objects.filter(owned_by=self.instance.owned_by).last()
