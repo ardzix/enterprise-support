@@ -108,7 +108,7 @@ def import_csv(file, uploader):
         spouse_name = cols[22]
         spouse_nik = cols[23]
         spouse_birth_place = cols[24]
-        spouse_birth_date = datetime.datetime.strptime(cols[25], "%d/%m/%Y").date()
+        spouse_birth_date = datetime.datetime.strptime(cols[25], "%d/%m/%Y").date() if cols[25] != '' else None
         mother_name = cols[26]
         religion = cols[27]
         education = cols[28]
