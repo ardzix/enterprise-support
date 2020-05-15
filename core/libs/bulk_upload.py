@@ -35,11 +35,7 @@ def bulk_upload(file, name, uploader):
 
 
 def associate_document(file, name):
-    nonce = file.nonce
-    loans = Loan.objects.filter(nonce=nonce)
 
-    if not loans:
-        raise Exception('Mohon upload dokumen CSV terlebih dahulu')
     try:
         nik, document = name.split('_')
     except:
@@ -154,7 +150,8 @@ def import_csv(file, uploader):
                 if not user:
                     user = User.objects.create(
                         full_name=full_name,
-                        email=email
+                        email=email,
+                        is_sent_email=False
                     )
                     Profile.objects.get_or_create(
                         created_by=user,
@@ -272,6 +269,6 @@ def import_csv(file, uploader):
             loan.owned_by = user
             loan.save()
             loan.publish(uploader)
-        except:
+        except Exception as e:
             fail += 1
             continue
