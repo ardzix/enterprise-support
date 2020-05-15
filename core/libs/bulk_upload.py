@@ -264,10 +264,11 @@ def import_csv(file, uploader):
                 amount=amount,
                 duration=duration
             )
-            loan.bussiness = business
-            loan.ecommerce = ecommerce
-            loan.owned_by = user
-            loan.save()
+            # code bellow is handled in signal
+            # loan.bussiness = business
+            # loan.ecommerce = ecommerce
+            # loan.owned_by = user
+            # loan.save()
             loan.publish(uploader)
         except Exception as e:
             fail += 1
