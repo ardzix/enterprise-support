@@ -37,22 +37,22 @@ def bulk_upload(file, name, uploader):
 def associate_document(file, name):
     nonce = file.nonce
     loans = Loan.objects.filter(nonce=nonce)
-    print(loans)
+
     if not loans:
         raise Exception('Mohon upload dokumen CSV terlebih dahulu')
     try:
         nik, document = name.split('_')
     except:
         raise Exception('Mohon upload dokumen dengan format nama yang benar')
-    print(nik)
+
     profile = Profile.objects.filter(id_card_num=nik).last()
     if not profile:
         raise Exception('NIK %s tidak ditemukan' % nik)
-    print(profile)
-    try:
-        loan = loans.get(owned_by=profile.owned_by)
-    except:
+
+    loan = Loan.objects.filter(owned_by=profile.owned_by).last()
+    if not loan:
         raise Exception('Data pinjaman tidak ditemukan')
+
     file.display_name = document
     file.short_name = slugify(document)
     file.save()
@@ -65,205 +65,210 @@ def import_csv(file, uploader):
         u = urllib.request.urlopen(file.file.url)
         lines = u.readlines()
     emails = []
+    
     for i, line in enumerate(lines):
         if i == 0:
             continue
-        nonce = file.nonce
-        row = line.decode('utf-8')
-        cols = row.split(',')
 
-        # Contact
-        email = cols[20]
-        phone = cols[21]
+        try:
+            nonce = file.nonce
+            row = line.decode('utf-8')
+            cols = row.split(',')
 
-        if email in emails:
-            raise Exception('Email %s duplikat')
-        emails.append(email)
+            # Contact
+            email = cols[20]
+            phone = cols[21]
 
-        # Profile
-        nik = cols[0]
-        full_name = cols[1]
-        birth_place = cols[2]
-        birth_date = datetime.datetime.strptime(cols[3], "%d/%m/%Y").date()
-        gender = cols[4]
-        marital_status = cols[5]
-        job = cols[6]
+            if email in emails:
+                raise Exception('Email %s duplikat')
+            emails.append(email)
 
-        # Address
-        id_card_address = cols[7]
-        id_card_province = cols[8]
-        id_card_regency = cols[9]
-        id_card_district = cols[10]
-        id_card_kelurahan = cols[11]
-        id_card_postal_code = cols[12]
-        address = cols[13]
-        province = cols[14]
-        regency = cols[15]
-        district = cols[16]
-        kelurahan = cols[17]
-        postal_code = cols[18]
-        start_live = datetime.datetime.strptime(cols[19], "%d/%m/%Y").date()
+            # Profile
+            nik = cols[0]
+            full_name = cols[1]
+            birth_place = cols[2]
+            birth_date = datetime.datetime.strptime(cols[3], "%d/%m/%Y").date()
+            gender = cols[4]
+            marital_status = cols[5]
+            job = cols[6]
 
-        # Other info
-        spouse_name = cols[22]
-        spouse_nik = cols[23]
-        spouse_birth_place = cols[24]
-        spouse_birth_date = datetime.datetime.strptime(cols[25], "%d/%m/%Y").date() if cols[25] != '' else None
-        mother_name = cols[26]
-        religion = cols[27]
-        education = cols[28]
-        ownership_residence = cols[29]
+            # Address
+            id_card_address = cols[7]
+            id_card_province = cols[8]
+            id_card_regency = cols[9]
+            id_card_district = cols[10]
+            id_card_kelurahan = cols[11]
+            id_card_postal_code = cols[12]
+            address = cols[13]
+            province = cols[14]
+            regency = cols[15]
+            district = cols[16]
+            kelurahan = cols[17]
+            postal_code = cols[18]
+            start_live = datetime.datetime.strptime(cols[19], "%d/%m/%Y").date()
 
-        # Business
-        business_type = cols[30]
-        ownership_bussiness = cols[31]
-        business_started_date = datetime.datetime.strptime(cols[32], "%d/%m/%Y").date()
-        income = float(cols[33])
-        cost_bussiness = float(cols[34])
-        cost_household = float(cols[35])
-        cost_instalments = float(cols[36])
-        total = float(cost_bussiness + cost_household + cost_instalments)
-        account_number = cols[37]
-        total_account_number = cols[38]
-        total_account_number_other = cols[39]
-        have_internet_banking = True if cols[40] == 'ya' else False
-        current_balance = float(cols[41])
+            # Other info
+            spouse_name = cols[22]
+            spouse_nik = cols[23]
+            spouse_birth_place = cols[24]
+            spouse_birth_date = datetime.datetime.strptime(cols[25], "%d/%m/%Y").date() if cols[25] != '' else None
+            mother_name = cols[26]
+            religion = cols[27]
+            education = cols[28]
+            ownership_residence = cols[29]
 
-        # Ecommerce
-        type_of_bussiness = cols[42]
-        name_store = cols[43]
-        domain_store = cols[44]
-        rating = cols[45]
-        transaction_freq = cols[46]
-        cashflow = cols[47]
-        success_rate = cols[48]
-        ecommerce = file.owned_by.get_profile().associated_with
+            # Business
+            business_type = cols[30]
+            ownership_bussiness = cols[31]
+            business_started_date = datetime.datetime.strptime(cols[32], "%d/%m/%Y").date()
+            income = float(cols[33]) if cols[33] != '' else 0
+            cost_bussiness = float(cols[34]) if cols[34] != '' else 0
+            cost_household = float(cols[35]) if cols[35] != '' else 0
+            cost_instalments = float(cols[36]) if cols[36] != '' else 0
+            total = float(cost_bussiness + cost_household + cost_instalments)
+            account_number = cols[37]
+            total_account_number = cols[38]
+            total_account_number_other = cols[39]
+            have_internet_banking = True if cols[40] == 'ya' else False
+            current_balance = float(cols[41]) if cols[41] != '' else 0
 
-        # Loan
-        amount = float(cols[49])
-        duration = int(cols[50])
+            # Ecommerce
+            type_of_bussiness = cols[42]
+            name_store = cols[43]
+            domain_store = cols[44]
+            rating = cols[45]
+            transaction_freq = cols[46]
+            cashflow = cols[47]
+            success_rate = cols[48]
+            ecommerce = file.owned_by.get_profile().associated_with
 
-        profile = Profile.objects.filter(id_card_num=nik).last()
-        if not profile:
-            user = User.objects.filter(email=email).first()
-            if not user:
-                user = User.objects.create(
-                    full_name=full_name,
-                    email=email
-                )
-                Profile.objects.get_or_create(
-                    created_by=user,
-                )
-        else:
-            user = profile.owned_by
+            # Loan
+            amount = float(cols[49]) if cols[49] != '' else 0
+            duration = int(cols[50])
 
-        profile = Profile.objects.filter(owned_by=user).last()
-        profile.id_card_num = nik
-        profile.birth_place = birth_place
-        profile.birth_date = birth_date
-        profile.gender = gender
-        profile.marital_status = marital_status
-        profile.job = job
-        profile.spouse_full_name = spouse_name
-        profile.spouse_id_card_num = spouse_nik
-        profile.spouse_birth_place = spouse_birth_place
-        profile.spouse_birth_date = spouse_birth_date
-        profile.mother_name = mother_name
-        profile.religion = religion
-        profile.education = education
-        profile.ownership_residence = ownership_residence
-        profile.nonce = nonce
-        profile.save()
-        user.full_name = full_name
-        user.save()
+            profile = Profile.objects.filter(id_card_num=nik).last()
+            if not profile:
+                user = User.objects.filter(email=email).first()
+                if not user:
+                    user = User.objects.create(
+                        full_name=full_name,
+                        email=email
+                    )
+                    Profile.objects.get_or_create(
+                        created_by=user,
+                    )
+            else:
+                user = profile.owned_by
 
-        # Address
-        address_obj = Address.objects.create(
-            nonce=nonce,
-            created_by=user,
-            owned_by=user,
-            name="Domisili",
-            address=address,
-            province=Province.objects.filter(
-                name__icontains=province).last(),
-            regency=Regency.objects.filter(name__icontains=regency).last(),
-            district=District.objects.filter(
-                name__icontains=district).last(),
-            kelurahan=Kelurahan.objects.filter(
-                name__icontains=kelurahan).last(),
-            postal_code=postal_code,
-            start_live=start_live
-        )
+            profile = Profile.objects.filter(owned_by=user).last()
+            profile.id_card_num = nik
+            profile.birth_place = birth_place
+            profile.birth_date = birth_date
+            profile.gender = gender
+            profile.marital_status = marital_status
+            profile.job = job
+            profile.spouse_full_name = spouse_name
+            profile.spouse_id_card_num = spouse_nik
+            profile.spouse_birth_place = spouse_birth_place
+            profile.spouse_birth_date = spouse_birth_date
+            profile.mother_name = mother_name
+            profile.religion = religion
+            profile.education = education
+            profile.ownership_residence = ownership_residence
+            profile.nonce = nonce
+            profile.save()
+            user.full_name = full_name
+            user.save()
 
-        id_address_obj = Address.objects.create(
-            nonce=nonce,
-            created_by=user,
-            owned_by=user,
-            name="KTP",
-            address=id_card_address,
-            province=Province.objects.filter(
-                name__icontains=id_card_province).last(),
-            regency=Regency.objects.filter(
-                name__icontains=id_card_regency).last(),
-            district=District.objects.filter(
-                name__icontains=id_card_district).last(),
-            kelurahan=Kelurahan.objects.filter(
-                name__icontains=id_card_kelurahan).last(),
-            postal_code=id_card_postal_code
-        )
+            # Address
+            address_obj = Address.objects.create(
+                nonce=nonce,
+                created_by=user,
+                owned_by=user,
+                name="Domisili",
+                address=address,
+                province=Province.objects.filter(
+                    name__icontains=province).last(),
+                regency=Regency.objects.filter(name__icontains=regency).last(),
+                district=District.objects.filter(
+                    name__icontains=district).last(),
+                kelurahan=Kelurahan.objects.filter(
+                    name__icontains=kelurahan).last(),
+                postal_code=postal_code,
+                start_live=start_live
+            )
 
-        profile.addresses.set((address_obj, id_address_obj))
+            id_address_obj = Address.objects.create(
+                nonce=nonce,
+                created_by=user,
+                owned_by=user,
+                name="KTP",
+                address=id_card_address,
+                province=Province.objects.filter(
+                    name__icontains=id_card_province).last(),
+                regency=Regency.objects.filter(
+                    name__icontains=id_card_regency).last(),
+                district=District.objects.filter(
+                    name__icontains=id_card_district).last(),
+                kelurahan=Kelurahan.objects.filter(
+                    name__icontains=id_card_kelurahan).last(),
+                postal_code=id_card_postal_code
+            )
 
-        phone, created = Phone.objects.get_or_create(
-            number=phone,
-            created_by=user
-        )
-        if created:
-            phone.nonce = nonce
+            profile.addresses.set((address_obj, id_address_obj))
+
+            phone, created = Phone.objects.get_or_create(
+                number=phone,
+                created_by=user
+            )
+            if created:
+                phone.nonce = nonce
+                phone.save()
             phone.save()
-        phone.save()
-        profile.phones.add(phone)
+            profile.phones.add(phone)
 
-        business = Company.objects.create(
-            owned_by=profile.owned_by,
-            created_by=user,
-            nonce=nonce,
-            type=business_type,
-            ownership_bussiness=ownership_bussiness,
-            business_started_date=business_started_date,
-            income=income,
-            cost_bussiness=cost_bussiness,
-            cost_household=cost_household,
-            cost_instalments=cost_instalments,
-            total=total,
-            account_number=account_number,
-            total_account_number=total_account_number,
-            total_account_number_other=total_account_number_other,
-            have_internet_banking=have_internet_banking,
-            current_balance=current_balance
-        )
+            business = Company.objects.create(
+                owned_by=profile.owned_by,
+                created_by=user,
+                nonce=nonce,
+                type=business_type,
+                ownership_bussiness=ownership_bussiness,
+                business_started_date=business_started_date,
+                income=income,
+                cost_bussiness=cost_bussiness,
+                cost_household=cost_household,
+                cost_instalments=cost_instalments,
+                total=total,
+                account_number=account_number,
+                total_account_number=total_account_number,
+                total_account_number_other=total_account_number_other,
+                have_internet_banking=have_internet_banking,
+                current_balance=current_balance
+            )
 
-        ecommerce = ECommerce.objects.create(
-            created_by=user,
-            nonce=nonce,
-            type_of_bussiness=type_of_bussiness,
-            name_store=name_store,
-            domain_store=domain_store,
-            rating=rating,
-            transaction_freq=transaction_freq,
-            cashflow=cashflow,
-            success_rate=success_rate,
-            ecommerce=ecommerce
-        )
+            ecommerce = ECommerce.objects.create(
+                created_by=user,
+                nonce=nonce,
+                type_of_bussiness=type_of_bussiness,
+                name_store=name_store,
+                domain_store=domain_store,
+                rating=rating,
+                transaction_freq=transaction_freq,
+                cashflow=cashflow,
+                success_rate=success_rate,
+                ecommerce=ecommerce
+            )
 
-        loan = Loan.objects.create(
-            nonce=nonce,
-            created_by=user,
-            amount=amount,
-            duration=duration
-        )
-        loan.bussiness = business
-        loan.ecommerce = ecommerce
-        loan.owned_by = user
-        loan.save()
-        loan.publish(uploader)
+            loan = Loan.objects.create(
+                nonce=nonce,
+                created_by=user,
+                amount=amount,
+                duration=duration
+            )
+            loan.bussiness = business
+            loan.ecommerce = ecommerce
+            loan.owned_by = user
+            loan.save()
+            loan.publish(uploader)
+        except:
+            continue
