@@ -221,7 +221,7 @@ def pre_screen(loan):
         return True, 0
     elif continue_score == 2:
          return True, -1
-    elif considered_score ==3:
+    elif considered_score >=2 and continue_score>=1:
          return True, -2
     else: 
         return False, 0
