@@ -66,6 +66,8 @@ def import_csv(file, uploader):
         lines = u.readlines()
     emails = []
     
+    succes = 0
+    fail = 0
     for i, line in enumerate(lines):
         if i == 0:
             continue
@@ -73,7 +75,7 @@ def import_csv(file, uploader):
         try:
             nonce = file.nonce
             row = line.decode('utf-8')
-            cols = row.split(',')
+            cols = row.split(';')
 
             # Contact
             email = cols[20]
@@ -271,4 +273,5 @@ def import_csv(file, uploader):
             loan.save()
             loan.publish(uploader)
         except:
+            fail += 1
             continue
