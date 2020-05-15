@@ -684,7 +684,7 @@ class ParticipationAgreement(BaseModelGeneric):
         return super().save(*args, **kwargs)
 
 
-# @receiver(post_save, sender=Loan)
+@receiver(post_save, sender=Loan)
 def generate_ma(sender, instance, created, **kwargs):
     # from core.libs.agreement import generate_ma as f
     # f(instance)
