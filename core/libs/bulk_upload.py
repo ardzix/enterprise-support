@@ -37,16 +37,18 @@ def bulk_upload(file, name, uploader):
 def associate_document(file, name):
     nonce = file.nonce
     loans = Loan.objects.filter(nonce=nonce)
+    print(loans)
     if not loans:
         raise Exception('Mohon upload dokumen CSV terlebih dahulu')
     try:
         nik, document = name.split('_')
     except:
         raise Exception('Mohon upload dokumen dengan format nama yang benar')
-
+    print(nik)
     profile = Profile.objects.filter(id_card_num=nik).last()
     if not profile:
         raise Exception('NIK %s tidak ditemukan' % nik)
+    print(profile)
     try:
         loan = loans.get(owned_by=profile.owned_by)
     except:
@@ -62,12 +64,21 @@ def import_csv(file, uploader):
     except:
         u = urllib.request.urlopen(file.file.url)
         lines = u.readlines()
+    emails = []
     for i, line in enumerate(lines):
         if i == 0:
             continue
         nonce = file.nonce
         row = line.decode('utf-8')
         cols = row.split(',')
+
+        # Contact
+        email = cols[20]
+        phone = cols[21]
+
+        if email in emails:
+            raise Exception('Email %s duplikat')
+        emails.append(email)
 
         # Profile
         nik = cols[0]
@@ -92,10 +103,6 @@ def import_csv(file, uploader):
         kelurahan = cols[17]
         postal_code = cols[18]
         start_live = datetime.datetime.strptime(cols[19], "%d/%m/%Y").date()
-
-        # Contact
-        email = cols[20]
-        phone = cols[21]
 
         # Other info
         spouse_name = cols[22]
