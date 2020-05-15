@@ -20,6 +20,10 @@
 import datetime
 import urllib
 from slugify import slugify
+from django.db.utils import IntegrityError
+from core.libs.email import bulk_upload_report
+from django.utils.translation import gettext_lazy as _
+
 from core.structures.account.models import (Profile, Address, Phone,
                                             Company, ECommerce, Province, Regency,
                                             District, Kelurahan)
@@ -61,88 +65,87 @@ def import_csv(file, uploader):
         u = urllib.request.urlopen(file.file.url)
         lines = u.readlines()
     emails = []
-    
-    succes = 0
-    fail = 0
+    failed = []
+    success = []
     for i, line in enumerate(lines):
         if i == 0:
             continue
-
+        _nik = "-"
         try:
             nonce = file.nonce
             row = line.decode('utf-8')
             cols = row.split(';')
-
+            nik = cols[0]
+            _nik = nik
             # Contact
-            email = cols[20]
-            phone = cols[21]
+            email = cols[20] if cols[20] != '' else None
+            phone = cols[21] if cols[21] != '' else None
 
             if email in emails:
                 raise Exception('Email %s duplikat')
             emails.append(email)
 
             # Profile
-            nik = cols[0]
-            full_name = cols[1]
-            birth_place = cols[2]
-            birth_date = datetime.datetime.strptime(cols[3], "%d/%m/%Y").date()
-            gender = cols[4]
-            marital_status = cols[5]
-            job = cols[6]
+            full_name = cols[1] if cols[1] != '' else None
+            birth_place = cols[2] if cols[2] != '' else None
+            birth_date = datetime.datetime.strptime(cols[3], "%d/%m/%Y").date() if cols[3] != '' else None
+            gender = cols[4] if cols[4] != '' else None
+            marital_status = cols[5] if cols[5] != '' else None
+            job = cols[6] if cols[6] != '' else None
 
             # Address
-            id_card_address = cols[7]
-            id_card_province = cols[8]
-            id_card_regency = cols[9]
-            id_card_district = cols[10]
-            id_card_kelurahan = cols[11]
-            id_card_postal_code = cols[12]
-            address = cols[13]
-            province = cols[14]
-            regency = cols[15]
-            district = cols[16]
-            kelurahan = cols[17]
-            postal_code = cols[18]
-            start_live = datetime.datetime.strptime(cols[19], "%d/%m/%Y").date()
+            id_card_address = cols[7] if cols[7] != '' else None
+            id_card_province = cols[8] if cols[8] != '' else None
+            id_card_regency = cols[9] if cols[9] != '' else None
+            id_card_district = cols[10] if cols[10] != '' else None
+            id_card_kelurahan = cols[11] if cols[11] != '' else None
+            id_card_postal_code = cols[12] if cols[12] != '' else None
+            address = cols[13] if cols[13] != '' else None
+            province = cols[14] if cols[14] != '' else None
+            regency = cols[15] if cols[15] != '' else None
+            district = cols[16] if cols[16] != '' else None
+            kelurahan = cols[17] if cols[17] != '' else None
+            postal_code = cols[18] if cols[18] != '' else None
+            start_live = datetime.datetime.strptime(cols[19], "%d/%m/%Y").date() if cols[19] != '' else None
 
             # Other info
-            spouse_name = cols[22]
-            spouse_nik = cols[23]
-            spouse_birth_place = cols[24]
+            spouse_name = cols[22] if cols[22] != '' else None
+            spouse_nik = cols[23] if cols[23] != '' else None
+            spouse_birth_place = cols[24] if cols[24] != '' else None
             spouse_birth_date = datetime.datetime.strptime(cols[25], "%d/%m/%Y").date() if cols[25] != '' else None
-            mother_name = cols[26]
-            religion = cols[27]
-            education = cols[28]
-            ownership_residence = cols[29]
+            mother_name = cols[26] if cols[26] != '' else None
+            religion = cols[27] if cols[27] != '' else None
+            education = cols[28] if cols[28] != '' else None
+            ownership_residence = cols[29] if cols[29] != '' else None
 
             # Business
-            business_type = cols[30]
-            ownership_bussiness = cols[31]
-            business_started_date = datetime.datetime.strptime(cols[32], "%d/%m/%Y").date()
+            business_type = cols[30] if cols[30] != '' else None
+            ownership_bussiness = cols[31] if cols[31] != '' else None
+            business_started_date = datetime.datetime.strptime(cols[32], "%d/%m/%Y").date() if cols[32] != '' else None
             income = float(cols[33]) if cols[33] != '' else 0
             cost_bussiness = float(cols[34]) if cols[34] != '' else 0
             cost_household = float(cols[35]) if cols[35] != '' else 0
             cost_instalments = float(cols[36]) if cols[36] != '' else 0
             total = float(cost_bussiness + cost_household + cost_instalments)
-            account_number = cols[37]
-            total_account_number = cols[38]
-            total_account_number_other = cols[39]
+            account_number = cols[37] if cols[37] != '' else None
+            total_account_number = cols[38] if cols[38] != '' else 0
+            total_account_number_other = cols[39] if cols[39] != '' else 0
             have_internet_banking = True if cols[40] == 'ya' else False
             current_balance = float(cols[41]) if cols[41] != '' else 0
 
             # Ecommerce
-            type_of_bussiness = cols[42]
-            name_store = cols[43]
-            domain_store = cols[44]
-            rating = cols[45]
-            transaction_freq = cols[46]
-            cashflow = cols[47]
-            success_rate = cols[48]
+            type_of_bussiness = cols[42] if cols[42] != '' else 100
+            name_store = cols[43] if cols[43] != '' else None
+            domain_store = cols[44] if cols[44] != '' else None
+            rating = cols[45] if cols[45] != '' else 0
+            transaction_freq = cols[46] if cols[46] != '' else 0
+            cashflow = cols[47] if cols[47] != '' else 0
+            success_rate = cols[48] if cols[48] != '' else 0
             ecommerce = file.owned_by.get_profile().associated_with
 
             # Loan
             amount = float(cols[49]) if cols[49] != '' else 0
-            duration = int(cols[50])
+            duration = int(cols[50]) if cols[50] != '' else None
 
             profile = Profile.objects.filter(id_card_num=nik).last()
             if not profile:
@@ -270,6 +273,16 @@ def import_csv(file, uploader):
             # loan.owned_by = user
             # loan.save()
             loan.publish(uploader)
+            success.append(_nik)
         except Exception as e:
-            fail += 1
+            message = str(e)
+            if type(e) == IntegrityError:
+                message = _('Null value or invalid data type')
+            failed.append(
+                {
+                    'nik': _nik,
+                    'error': message
+                }
+            )
             continue
+    bulk_upload_report(uploader, success, failed)

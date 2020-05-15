@@ -485,6 +485,30 @@ def user_created_by_admin_email(email, user):
         email
     )
 
+def bulk_upload_report(uploader, success, failed):
+    from enterprise.libs.email import send_mail
+    from django.conf import settings
+    from core.libs.constant import ECOMMERCE
+
+    subject_template_name = 'home/email/bulk_upload_report.txt'
+    html_email_template_name = 'home/email/bulk_upload_report.html'
+    email_template_name = html_email_template_name
+
+    context = {
+        'name' : uploader.full_name,
+        'ecommerce' : dict(ECOMMERCE).get(uploader.get_profile().associated_with),
+        'success' : success,
+        'failed' : failed,
+    }
+
+    send_mail(
+        subject_template_name,
+        email_template_name,
+        html_email_template_name,
+        context,
+        uploader.email
+    )
+
 
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):

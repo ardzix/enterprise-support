@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 11:21+0700\n"
+"POT-Creation-Date: 2020-05-15 23:22+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: libs/bulk_upload.py:279
+msgid "Null value or invalid data type"
+msgstr "Nilai kosong atau tipe data tidak valid"
 
 #: libs/constant.py:117
 msgid "1 Month"
@@ -198,7 +202,7 @@ msgstr "Diproses"
 msgid "Approved"
 msgstr "Disetujui"
 
-#: libs/constant.py:173 structures/loan/models/__init__.py:316
+#: libs/constant.py:173 structures/loan/models/__init__.py:327
 msgid "Rejected"
 msgstr "Ditolak"
 
@@ -250,149 +254,149 @@ msgstr "Asuransi"
 msgid "Others"
 msgstr "Lainnya"
 
-#: libs/constant.py:222
+#: libs/constant.py:223
 msgid "Student Loan"
 msgstr ""
 
-#: libs/constant.py:223
+#: libs/constant.py:224
 msgid "Business"
 msgstr "Bisnis"
 
-#: libs/constant.py:227
+#: libs/constant.py:228
 msgid "Borrower"
 msgstr "Peminjam"
 
-#: libs/constant.py:228
+#: libs/constant.py:229
 msgid "E-Commerce"
 msgstr ""
 
-#: libs/constant.py:229
+#: libs/constant.py:230
 msgid "Undefined"
 msgstr ""
 
-#: libs/constant.py:233
+#: libs/constant.py:234
 msgid "ID Card can not be read"
 msgstr ""
 
-#: libs/constant.py:234 libs/constant.py:235
+#: libs/constant.py:235 libs/constant.py:236
 msgid "Bank account verification failed"
 msgstr ""
 
-#: libs/constant.py:266
+#: libs/constant.py:267
 msgid "Fiscal"
 msgstr ""
 
-#: libs/constant.py:267
+#: libs/constant.py:268
 msgid "Score"
 msgstr ""
 
-#: libs/constant.py:268
+#: libs/constant.py:269
 msgid "Weight"
 msgstr ""
 
-#: libs/constant.py:269
+#: libs/constant.py:270
 msgid "Fiscal & Score"
 msgstr ""
 
-#: libs/constant.py:270
+#: libs/constant.py:271
 msgid "Weight & Score"
 msgstr ""
 
-#: libs/constant.py:274
+#: libs/constant.py:275
 msgid "Account Receivable"
 msgstr ""
 
-#: libs/constant.py:275
+#: libs/constant.py:276
 msgid "Account Payable"
 msgstr ""
 
-#: structures/account/models/__init__.py:29
 #: structures/account/models/__init__.py:30
+#: structures/account/models/__init__.py:31
 msgid "Nonce WhiteList"
 msgstr ""
 
-#: structures/account/models/__init__.py:41
+#: structures/account/models/__init__.py:42
 msgid "Branch"
 msgstr ""
 
-#: structures/account/models/__init__.py:42
+#: structures/account/models/__init__.py:43
 msgid "Branches"
 msgstr ""
 
-#: structures/account/models/__init__.py:52
+#: structures/account/models/__init__.py:53
 msgid "Province"
 msgstr ""
 
-#: structures/account/models/__init__.py:53
+#: structures/account/models/__init__.py:54
 msgid "Provinces"
 msgstr ""
 
-#: structures/account/models/__init__.py:65
+#: structures/account/models/__init__.py:66
 msgid "Regency"
 msgstr ""
 
-#: structures/account/models/__init__.py:66
+#: structures/account/models/__init__.py:67
 msgid "Regencies"
 msgstr ""
 
-#: structures/account/models/__init__.py:78
+#: structures/account/models/__init__.py:79
 msgid "District"
 msgstr ""
 
-#: structures/account/models/__init__.py:79
+#: structures/account/models/__init__.py:80
 msgid "Districts"
 msgstr ""
 
-#: structures/account/models/__init__.py:92
 #: structures/account/models/__init__.py:93
+#: structures/account/models/__init__.py:94
 msgid "Kelurahan"
 msgstr ""
 
-#: structures/account/models/__init__.py:119
+#: structures/account/models/__init__.py:120
 msgid "Address"
 msgstr "Alamat"
 
-#: structures/account/models/__init__.py:120
+#: structures/account/models/__init__.py:121
 msgid "Addresses"
 msgstr "Alamat"
 
-#: structures/account/models/__init__.py:140
+#: structures/account/models/__init__.py:141
 msgid "Phone"
 msgstr "Telepon"
 
-#: structures/account/models/__init__.py:141
+#: structures/account/models/__init__.py:142
 msgid "Phones"
 msgstr "Telepon"
 
-#: structures/account/models/__init__.py:317
+#: structures/account/models/__init__.py:318
 msgid "Profile Detail"
 msgstr "Detail Profil"
 
-#: structures/account/models/__init__.py:318
+#: structures/account/models/__init__.py:319
 msgid "Profile Details"
 msgstr "Detail Profil"
 
-#: structures/account/models/__init__.py:341
+#: structures/account/models/__init__.py:348
 msgid "Company"
 msgstr "Perusahaan"
 
-#: structures/account/models/__init__.py:342
+#: structures/account/models/__init__.py:349
 msgid "Companies"
 msgstr "Perusahaan"
 
-#: structures/account/models/__init__.py:359
+#: structures/account/models/__init__.py:375
 msgid "ECommerce"
 msgstr ""
 
-#: structures/account/models/__init__.py:360
+#: structures/account/models/__init__.py:376
 msgid "ECommerces"
 msgstr ""
 
-#: structures/account/models/__init__.py:372
+#: structures/account/models/__init__.py:388
 msgid "Company Detail"
 msgstr "Detail Perusahaan"
 
-#: structures/account/models/__init__.py:373
+#: structures/account/models/__init__.py:389
 msgid "Company Details"
 msgstr "Detail Perusahaan"
 
@@ -586,96 +590,96 @@ msgstr "Keuangan"
 msgid "FinancialSheet Keys"
 msgstr "Keuangan"
 
-#: structures/loan/models/__init__.py:345
+#: structures/loan/models/__init__.py:356
 msgid "Loan"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:346
+#: structures/loan/models/__init__.py:357
 msgid "Loans"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:365
+#: structures/loan/models/__init__.py:376
 #, fuzzy
 #| msgid "Profile Detail"
 msgid "Loan Detail"
 msgstr "Detail Profil"
 
-#: structures/loan/models/__init__.py:366
+#: structures/loan/models/__init__.py:377
 #, fuzzy
 #| msgid "Profile Details"
 msgid "Loan Details"
 msgstr "Detail Profil"
 
-#: structures/loan/models/__init__.py:385
+#: structures/loan/models/__init__.py:396
 #, fuzzy
 #| msgid "Loan"
 msgid "Loan FactSheet"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:386
+#: structures/loan/models/__init__.py:397
 #, fuzzy
 #| msgid "Loans"
 msgid "Loan FactSheets"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:420
+#: structures/loan/models/__init__.py:431
 #, fuzzy
 #| msgid "Loan"
 msgid "Loan FinancialSheet"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:421
+#: structures/loan/models/__init__.py:432
 #, fuzzy
 #| msgid "Loans"
 msgid "Loan FinancialSheets"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:448
-#: structures/loan/models/__init__.py:449
+#: structures/loan/models/__init__.py:459
+#: structures/loan/models/__init__.py:460
 msgid "Account Receivable and Payable Analysis"
 msgstr ""
 
-#: structures/loan/models/__init__.py:480
+#: structures/loan/models/__init__.py:491
 #, fuzzy
 #| msgid "Loan"
 msgid "Loan Document"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:481
+#: structures/loan/models/__init__.py:492
 #, fuzzy
 #| msgid "Loans"
 msgid "Loan Documents"
 msgstr "Pinjaman"
 
-#: structures/loan/models/__init__.py:518
+#: structures/loan/models/__init__.py:529
 msgid "Fund"
 msgstr "Pendanaan"
 
-#: structures/loan/models/__init__.py:519
+#: structures/loan/models/__init__.py:530
 msgid "Funds"
 msgstr "Pendanaan"
 
-#: structures/loan/models/__init__.py:617
+#: structures/loan/models/__init__.py:628
 msgid "Payment"
 msgstr "Pembayaran"
 
-#: structures/loan/models/__init__.py:618
+#: structures/loan/models/__init__.py:629
 msgid "Payments"
 msgstr "Pembayaran"
 
-#: structures/loan/models/__init__.py:630
+#: structures/loan/models/__init__.py:641
 msgid "MasterAgreement"
 msgstr ""
 
-#: structures/loan/models/__init__.py:631
+#: structures/loan/models/__init__.py:642
 msgid "MasterAgreements"
 msgstr ""
 
-#: structures/loan/models/__init__.py:657
+#: structures/loan/models/__init__.py:668
 msgid "ParticipationAgreement"
 msgstr ""
 
-#: structures/loan/models/__init__.py:658
+#: structures/loan/models/__init__.py:669
 msgid "ParticipationAgreements"
 msgstr ""
 
