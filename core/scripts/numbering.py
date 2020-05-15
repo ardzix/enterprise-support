@@ -19,16 +19,6 @@ from core.structures.loan.models import Loan
 
 
 def regenerate_numbering():
-    for l in Loan.objects.all():
-        l.number = ''
-        l.save(create_number=False)
+    Loan.objects.all().update(number='')
     for l in Loan.objects.all():
         l.save()
-        print(l.get_number())
-
-        for f in l.fund_set.all():
-            f.number = ''
-            f.save(create_number=False)
-        for f in l.fund_set.all():
-            f.save()
-            print('---%s' % (f.get_number()))

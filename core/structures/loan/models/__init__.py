@@ -256,7 +256,7 @@ class Loan(BaseModelGeneric):
         return 'Rp.{:,.0f},-'.format(self.amount)
 
     def get_number(self):
-        return '%s-%s' % (self.owned_by.get_profile().get_number(), self.number)
+        return self.number
 
     def get_grade(self):
         score = self.score
@@ -338,12 +338,9 @@ class Loan(BaseModelGeneric):
 
     def create_number(self, *args, **kwargs):
         if not self.number and self.pk:
-            existing_loan_count = Loan.objects.filter(
-                owned_by=self.owned_by).exclude(number="").count()
-            number = 1 + existing_loan_count
-            number = str(number).zfill(3)
-            prefix = 'KUR'
-            self.number = '{}-{}'.format(prefix, number)
+            CONSTANT_START_NUMBER = 21470
+            number = self.pk + CONSTANT_START_NUMBER
+            self.number = '{}{}'.format("kur-", base36.encode(number))
             self.save()
 
     def save(self, create_number=True, *args, **kwargs):
