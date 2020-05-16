@@ -19,11 +19,14 @@
 
 import datetime
 import urllib
+import uuid
 from slugify import slugify
 from django.db.utils import IntegrityError
-from core.libs.email import bulk_upload_report
 from django.utils.translation import gettext_lazy as _
 
+from enterprise.structures.common.models import File
+
+from core.libs.email import bulk_upload_report
 from core.structures.account.models import (Profile, Address, Phone,
                                             Company, ECommerce, Province, Regency,
                                             District, Kelurahan)
@@ -34,8 +37,8 @@ from core.structures.loan.models import Loan
 def bulk_upload(file, name, uploader):
     if file.file.name.split('.')[-1] == 'csv':
         import_csv(file, uploader)
-    else:
-        associate_document(file, name)
+    # else:
+    #     associate_document(file, name)
 
 
 def associate_document(file, name):
@@ -72,10 +75,11 @@ def import_csv(file, uploader):
             continue
         _nik = "-"
         try:
-            nonce = file.nonce
-            row = line.decode('utf-8')
+            nonce = str(uuid.uuid4())
+            row = line.decode('utf-8').replace("\r\n", "")
             cols = row.split(';')
             nik = cols[0]
+            cl = len(cols)
             _nik = nik
             # Contact
             email = cols[20] if cols[20] != '' else None
@@ -146,6 +150,15 @@ def import_csv(file, uploader):
             # Loan
             amount = float(cols[49]) if cols[49] != '' else 0
             duration = int(cols[50]) if cols[50] != '' else None
+
+            # Attachment
+            ktp = cols[51]
+            sku = cols[52]
+            selfie = cols[53]
+            npwp = cols[54]
+            store_picts = []
+            for x in range(55, cl):
+                store_picts.append(cols[x])
 
             profile = Profile.objects.filter(id_card_num=nik).last()
             if not profile:
@@ -267,6 +280,19 @@ def import_csv(file, uploader):
                 amount=amount,
                 duration=duration
             )
+
+            if ktp and ktp != '':
+                loan.attachements.add(create_file(ktp, user, 'KTP'))
+            if sku and sku != '':
+                loan.attachements.add(create_file(sku, user, 'Surat Keterangan Usaha'))
+            if selfie and selfie != '':
+                loan.attachements.add(create_file(selfie, user, 'Foto Selfie'))
+            if npwp and npwp != '':
+                loan.attachements.add(create_file(npwp, user, 'NPWP'))
+            for sp in store_picts:
+                if sp and sp != '':
+                    loan.attachements.add(create_file(sp, user, 'Foto Toko'))
+
             # code bellow is handled in signal
             # loan.bussiness = business
             # loan.ecommerce = ecommerce
@@ -286,3 +312,11 @@ def import_csv(file, uploader):
             )
             continue
     bulk_upload_report(uploader, success, failed)
+
+def create_file(url, user, name):
+    return File.objects.create(
+        display_name=name,
+        short_name=slugify(name),
+        file=url,
+        created_by=user
+    )
