@@ -3,14 +3,14 @@
 # File: bulk_upload.py
 # Project: kur.bri.co.id
 # File Created: Wednesday, 13th May 2020 12:38:42 am
-# 
+#
 # Author: Arif Dzikrullah
 #         ardzix@hotmail.com>
 #         https://github.com/ardzix/>
-# 
+#
 # Last Modified: Wednesday, 13th May 2020 12:38:43 am
 # Modified By: Arif Dzikrullah (ardzix@hotmail.com>)
-# 
+#
 # Handcrafted and Made with Love - Ardz
 # Copyright - 2020 PT Bank Rakyat Indonesia, bri.co.id
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,6 +35,7 @@ from core.structures.loan.models import Loan
 
 
 def bulk_upload(file, name, uploader):
+    print("*** Processing Bul Upload! ***")
     if file.file.name.split('.')[-1] == 'csv':
         import_csv(file, uploader)
     # else:
