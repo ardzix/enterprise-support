@@ -31,6 +31,18 @@ class NonceWhiteList(models.Model):
         verbose_name_plural = _('Nonce WhiteList')
 
 
+class BranchPostalcode(models.Model):
+    postal_code = models.PositiveIntegerField()
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('BranchPostalcode')
+        verbose_name_plural = _('BranchPostalcodes')
+
+
 class Branch(models.Model):
     region = models.CharField(max_length=4)
     number = models.CharField(max_length=4)
