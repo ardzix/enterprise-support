@@ -134,6 +134,23 @@ class ProtectedMixin(LoginRequiredMixin):
     def is_staff(self, request):
         return (request.user.is_staff or request.user.is_superuser)
 
+
+class StaffProtectedMixin(ProtectedMixin):
+
+    def app_allowed(self, request):
+        if request.user.is_superuser:
+            return True
+        if request.user.is_staff:
+            return True
+        return False
+
+    def permission_allowed(self, request):
+        if request.user.is_superuser:
+            return True
+        if request.user.is_staff:
+            return True
+        return False
+
 class JSONResponseMixin(object):
     """
     A mixin that can be used to render a JSON response.
