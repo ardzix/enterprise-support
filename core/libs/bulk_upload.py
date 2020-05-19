@@ -79,12 +79,12 @@ def import_csv(file, uploader):
             nonce = str(uuid.uuid4())
             row = line.decode('utf-8').replace("\r\n", "")
             cols = row.split(';')
-            nik = cols[0]
+            nik = cols[0].replace("'","")
             cl = len(cols)
             _nik = nik
             # Contact
             email = cols[20] if cols[20] != '' else None
-            phone = cols[21] if cols[21] != '' else None
+            phone = cols[21].replace("'","") if cols[21] != '' else None
 
             if email in emails:
                 raise Exception('Email %s duplikat')
@@ -132,7 +132,7 @@ def import_csv(file, uploader):
             cost_household = float(cols[35]) if cols[35] != '' else 0
             cost_instalments = float(cols[36]) if cols[36] != '' else 0
             total = float(cost_bussiness + cost_household + cost_instalments)
-            account_number = cols[37] if cols[37] != '' else None
+            account_number = cols[37].replace("'","") if cols[37] != '' else None
             total_account_number = cols[38] if cols[38] != '' else 0
             total_account_number_other = cols[39] if cols[39] != '' else 0
             have_internet_banking = True if cols[40] == 'ya' else False
