@@ -29,3 +29,4 @@ def generate_master_data():
     import_kelurahan()
 
     import_branches()
+    import_branch_postal_code()
