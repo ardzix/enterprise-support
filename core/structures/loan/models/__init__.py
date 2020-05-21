@@ -705,10 +705,10 @@ def generate_ma(sender, instance, created, **kwargs):
         instance.pre_screen_approved = approved
         instance.pre_screen_reduction = reduction
 
-        if not approved:
-            instance.notes = "Tidak lolos pre screen"
-            instance.status = "rejected"
-            instance.reject(instance.created_by)
+        # if not approved:
+        #     instance.notes = "Tidak lolos pre screen"
+        #     instance.status = "rejected"
+        #     instance.reject(instance.created_by)
 
         # commit
         instance.save()
