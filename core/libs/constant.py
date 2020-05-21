@@ -279,3 +279,23 @@ ARP_ANALYSIS_CHOICES = (
 NO_IMAGE_URL = "https://a75f8eca1cb38315333c-678aa23ddc581c009f308cf5d4dc9c11.ssl.cf6.rackcdn.com/defaults/NO_IMAGE.png"
 NO_AVATAR_1_URL = "https://a75f8eca1cb38315333c-678aa23ddc581c009f308cf5d4dc9c11.ssl.cf6.rackcdn.com/defaults/AVATAR_1.png"
 NO_AVATAR_2_URL = "https://a75f8eca1cb38315333c-678aa23ddc581c009f308cf5d4dc9c11.ssl.cf6.rackcdn.com/defaults/AVATAR_2.png"
+
+
+CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
+    "Jenis Kelamin", "Status pernikahan", "Pekerjaan", "Alamat Lengkap KTP",
+    "Propinsi KTP", "Kota/Kabupaten KTP", "Kecamatan KTP", "Kelurahan KTP",
+    "Kode Pos KTP", "Alamat Lengkap Domisili", "Propinsi Domisili",
+    "Kota/Kabupaten Domisili", "Kecamatan Domisili", "Kelurahan Domisili",
+    "Kode Pos Domisili", "Tanggal Mulai Tinggal", "Email", "Telepon",
+    "Nama Pasangan", "NIK Pasangan", "Tempat Lahir Pasangan",
+    "Tanggal Lahir Pasangan", "Nama Ibu Kandung", "Agama", "Pendidikan",
+    "Kepemilikan Rumah Tinggal", "Jenis Usaha", "Kepemilikan Usaha",
+    "Tanggal Mulai Usaha", "Penghasilan Per Bulan", "Biaya Usaha",
+    "Biaya Rumah Tangga", "Biaya Cicilan", "No Rekening BRI",
+    "Jumlah Rekening BRI", "Jumlah Rekening Bank Lain",
+    "Memiliki Internet Banking", "Saldo Simpanan Bulan Ini",
+    "Jenis Usaha Ecommerce", "Nama Toko di Ecommerce",
+    "Domain Toko di Ecommerce", "Rating Toko", "Frekuensi Transaki 6 bulan terakhir",
+    "Cashflow 6 bulan Terakhir", "Sukses Rate Transaksi",
+    "Nominal Pengajuan", "Jangka Waktu", "URL KTP", "URL Surat Keterangan Usaha",
+    "URL Foto Selfie", "URL NPWP", "URL Foto Usaha", "Status Pinjaman"]
