@@ -297,6 +297,6 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
     "Jenis Usaha Ecommerce", "Nama Toko di Ecommerce",
     "Domain Toko di Ecommerce", "Rating Toko", "Frekuensi Transaki 6 bulan terakhir",
     "Cashflow 6 bulan Terakhir", "Sukses Rate Transaksi",
-    "Nominal Pengajuan", "Jangka Waktu", "Status Pinjaman", "URL KTP",
+    "Nominal Pengajuan", "Jangka Waktu", "Grade", "Score", "Status Pinjaman", "URL KTP",
     "URL Surat Keterangan Usaha",
     "URL Foto Selfie", "URL NPWP", "URL Foto Usaha"]
