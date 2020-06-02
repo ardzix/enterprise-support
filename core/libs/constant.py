@@ -29,6 +29,15 @@ CURRENCY_CHOICES = [(currency.alpha_3, currency.name)
 LANGUAGE_CHOICES = [(language.alpha_3, language.name)
                     for language in list(pycountry.languages)]
 
+Notes = (
+    ('Grade 9-10', 'Grade 9-10'),
+    ('Sudah menjadi debitur BRI', 'Sudah menjadi debitur BRI'),
+    ('Tidak Lolos Pre-screening/SLIK bermasalah', 'Tidak Lolos Pre-screening/SLIK bermasalah'),
+    ('Hasil Penilaian Tidak Layak', 'Hasil Penilaian Tidak Layak'),
+    ('Data tidak valid/calon debitur tidak dapat dihubungi', 'Data tidak valid/calon debitur tidak dapat dihubungi'),
+    ('Lain-Lain', 'Lain-Lain'),
+)
+
 YES_OR_NO = (
     ('ya', 'Ya'),
     ('tidak', 'Tidak')
