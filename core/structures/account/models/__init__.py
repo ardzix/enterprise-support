@@ -216,7 +216,9 @@ class Profile(BaseModelUnique):
 
     def get_phone(self):
         phone = self.phones.exclude(number__contains='E+').last()
-        return phone.number
+        if phone:
+            return phone.number
+        return "-"
 
     def get_avatar(self):
         if self.avatar:
