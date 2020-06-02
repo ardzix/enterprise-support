@@ -214,6 +214,12 @@ class Profile(BaseModelUnique):
     def __str__(self):
         return self.owned_by.full_name
 
+    def get_phone(self):
+        phone = self.phones.exclude(number__contains='E+').last()
+        if phone:
+            return phone.number
+        return "-"
+
     def get_avatar(self):
         if self.avatar:
             return self.avatar.url
