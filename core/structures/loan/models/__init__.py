@@ -197,6 +197,7 @@ class Loan(BaseModelGeneric):
     short_description = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
+    approved_amount = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
     status = models.CharField(default='requested', max_length=40,
                               choices=constant.PROJECT_STATUS_CHOICES)
 
