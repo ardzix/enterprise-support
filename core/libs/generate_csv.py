@@ -10,11 +10,11 @@ def generate_csv(data, filename, headers, start_time, end_time):
     if not start_time and not end_time:
         date = datetime.utcnow().strftime("%Y-%M-%d")
     else:
-        date = f'{start_time}_{end_time}'
+        date = '{}_{}'.format(start_time, end_time)
 
     response = HttpResponse(content_type='text/csv')
-    filename = f'{filename}_{date}'
-    response['Content-Disposition'] = f'attachment; filename="{filename}.csv"'
+    filename = '{}_{}'.format(filename, date)
+    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(filename)
     writer = csv.writer(response)
     writer.writerow(headers)
     for _data in data:
