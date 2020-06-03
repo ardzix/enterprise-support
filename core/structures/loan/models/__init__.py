@@ -256,6 +256,9 @@ class Loan(BaseModelGeneric):
     def get_formatted_amount(self):
         return 'Rp.{:,.0f},-'.format(self.amount)
 
+    def get_formatted_approved_amount(self):
+        return 'Rp.{:,.0f},-'.format(self.approved_amount)
+
     def get_number(self):
         return self.number
 
