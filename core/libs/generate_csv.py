@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import HttpResponse
 
 
-def generate_csv(data, filename, headers, start_time, end_time):
+def generate_csv(data, filename, headers, start_time=None, end_time=None):
     """
     data => List of list [[],[],[]]
     """
