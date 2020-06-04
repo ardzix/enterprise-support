@@ -302,7 +302,7 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
     "URL KTP", "URL Surat Keterangan Usaha",
     "URL Foto Selfie", "URL NPWP", "URL Foto Usaha"]
 
-Notes = (
+NOTES = (
     ('Grade 9-10', 'Grade 9-10'),
     ('Sudah menjadi debitur BRI', 'Sudah menjadi debitur BRI'),
     ('Tidak Lolos Pre-screening/SLIK bermasalah', 'Tidak Lolos Pre-screening/SLIK bermasalah'),
