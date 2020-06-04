@@ -173,6 +173,7 @@ PROJECT_STATUS_CHOICES = (
     ('rejected', _('Rejected')),
     ('processed', _('Processed')),
     ('closed', _('Closed')),
+    ('canceled', _('Canceled')),
 )
 
 PAYMENT_STATUS_CHOICES = (
