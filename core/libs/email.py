@@ -140,12 +140,12 @@ def application_rejected_email(email, user):
         email
     )
 
-def application_publish_email(email, user):
+def application_proceed_email(email, user):
     from enterprise.libs.email import send_mail
     from django.conf import settings
 
-    subject_template_name = 'home/email/application_publish.txt'
-    html_email_template_name = 'home/email/application_publish.html'
+    subject_template_name = 'home/email/application_proceed.txt'
+    html_email_template_name = 'home/email/application_proceed.html'
     email_template_name = html_email_template_name
 
     context = {
