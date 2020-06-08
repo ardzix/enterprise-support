@@ -221,6 +221,9 @@ class Loan(BaseModelGeneric):
 
     notes = models.TextField(blank=True, null=True)
 
+    account_number = models.DecimalField(
+        max_digits=20, decimal_places=0, blank=True, null=True)
+
     def __str__(self):
         return self.number
 
