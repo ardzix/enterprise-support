@@ -176,6 +176,8 @@ def import_csv(file, uploader):
             else:
                 user = profile.owned_by
 
+            check_loan_exist(user)
+
             profile = Profile.objects.filter(owned_by=user).last()
             profile.id_card_num = nik
             profile.birth_place = birth_place
@@ -305,6 +307,8 @@ def import_csv(file, uploader):
             message = str(e)
             if type(e) == IntegrityError:
                 message = _('Null value or invalid data type')
+            if message == 'unconverted data remains: 7':
+                message = 'Format tanggal tidak sesuai'
             failed.append(
                 {
                     'nik': _nik,
@@ -321,3 +325,10 @@ def create_file(url, user, name):
         file=url,
         created_by=user
     )
+
+
+def check_loan_exist(user):
+    if Loan.objects.filter(
+            owned_by=user,
+            status__in=['requested', 'processed', 'approved']).exists():
+        raise Exception('Pinjaman telah diajukan sebelumnya')
