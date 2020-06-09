@@ -89,7 +89,7 @@ def application_approved_email(request, loan):
         context,
         email
     )
-    offer_letter_email(request, loan)
+    # offer_letter_email(request, loan)
 
 def offer_letter_email(request, loan):
     # from enterprise.libs.email import send_mail
