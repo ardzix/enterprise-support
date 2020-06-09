@@ -335,8 +335,12 @@ class Loan(BaseModelGeneric):
     def get_complete_grade(self):
         rejected_reason = ''
         if self.unapproved_at:
-            rejected_reason = '<br> %s' % self.notes
-        return '<span class="bg-%s">%s (score: %s) PD:%s</span>%s' % (self.get_b_color(), self.get_grade(), self.score, self.get_pd(), rejected_reason)
+            rejected_reason = '<br> <i>Alasan: %s</i>' % self.notes
+        account_number = ''
+        if self.account_number:
+            account_number = '<br> <i>Rek: %s</i>' % self.account_number
+
+        return '<span class="bg-%s">%s (score: %s) PD:%s</span>%s%s' % (self.get_b_color(), self.get_grade(), self.score, self.get_pd(), rejected_reason, account_number)
 
     def disburse(self, user=None, date=None, *args, **kwargs):
         if user:
