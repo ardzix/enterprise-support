@@ -329,24 +329,33 @@ class Profile(BaseModelUnique):
         if _addr.exists():
             _addr_last = _addr.last()
             kelurahan = _addr_last.kelurahan.name if _addr_last.kelurahan else ""
-            if kelurahan != "":
-                district = _addr_last.kelurahan.district.name
-                regency = _addr_last.kelurahan.district.regency.name
-                province = _addr_last.kelurahan.district.regency.province.name
-            else:
-                district = _addr_last.district.name if _addr_last.district else ""
-                if district != "":
-                    regency = _addr_last.district.regency.name
-                    province = _addr_last.district.regency.province.name
-                else:
-                    regency = _addr_last.regency.name if _addr_last.regency else ""
-                    if regency != "":
-                        province = _addr_last.regency.province.name
-                    else:
-                        province = _addr_last.province.name if _addr_last.province else ""
-            address = _addr_last.address
-            postal_code = _addr_last.postal_code
+            district = _addr_last.district.name if _addr_last.district else ""
+            regency = _addr_last.regency.name if _addr_last.regency else ""
+            province = _addr_last.province.name if _addr_last.province else ""
+            address = _addr_last.address if _addr_last.address else ""
+            postal_code = _addr_last.postal_code if _addr_last.postal_code else ""
             start_live = _addr_last.start_live.strftime("%d-%m-%Y") if _addr_last.start_live else ""
+        # if _addr.exists():
+        #     _addr_last = _addr.last()
+        #     kelurahan = _addr_last.kelurahan.name if _addr_last.kelurahan else ""
+        #     if kelurahan != "":
+        #         district = _addr_last.kelurahan.district.name
+        #         regency = _addr_last.kelurahan.district.regency.name
+        #         province = _addr_last.kelurahan.district.regency.province.name
+        #     else:
+        #         district = _addr_last.district.name if _addr_last.district else ""
+        #         if district != "":
+        #             regency = _addr_last.district.regency.name
+        #             province = _addr_last.district.regency.province.name
+        #         else:
+        #             regency = _addr_last.regency.name if _addr_last.regency else ""
+        #             if regency != "":
+        #                 province = _addr_last.regency.province.name
+        #             else:
+        #                 province = _addr_last.province.name if _addr_last.province else ""
+        #     address = _addr_last.address
+        #     postal_code = _addr_last.postal_code
+        #     start_live = _addr_last.start_live.strftime("%d-%m-%Y") if _addr_last.start_live else ""
         return province, regency, district, kelurahan, address, postal_code, start_live
 
 class ProfileDetail(BaseModelGeneric):
