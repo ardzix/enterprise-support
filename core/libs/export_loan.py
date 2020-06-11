@@ -17,11 +17,12 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
     "Domain Toko di Ecommerce", "Nama Ecommerce", "Rating Toko", "Frekuensi Transaki 6 bulan terakhir",
     "Cashflow 6 bulan Terakhir", "Sukses Rate Transaksi",
     "Plafon Pengajuan", "Plafon Disetujui", "Jangka Waktu", 
-    "Grade", "Score", "Status Pinjaman", "Alasan Ditolak",
-    "URL KTP", "URL Surat Keterangan Usaha",
+    "Grade", "Score", "Status Pinjaman", "Alasan Ditolak"]
+
+CSV_FILE_HEADERS = ["URL KTP", "URL Surat Keterangan Usaha",
     "URL Foto Selfie", "URL NPWP", "URL Foto Usaha"]
 
-def export_loan(loans, suffix=''):
+def export_loan(loans, suffix='', additional_data=[]):
         data = []
         for _loan in loans:
             profile = _loan.owned_by.get_profile()
@@ -100,6 +101,7 @@ def export_loan(loans, suffix=''):
                 loan_score = _loan.score
                 loan_status = _loan.status
                 loan_notes = _loan.notes
+                loan_account_number = _loan.account_number
 
                 ktp = attachments.filter(short_name='ktp').first()
                 url_ktp = ktp.get_safe_url() if ktp else ""
@@ -127,12 +129,23 @@ def export_loan(loans, suffix=''):
                     current_balance, ecom_type_of_bussiness, ecom_name,
                     ecom_domain, ecom_name, ecom_rating, ecom_transaction_freq,
                     ecom_cashflow, ecom_success_rate, 
-                    loan_amount, loan_approved_amount, loan_duration, loan_grade, loan_score,
-                    loan_status,loan_notes, url_ktp, url_k_u, url_selfie, url_npwp]
+                    loan_amount, loan_approved_amount, loan_duration, loan_grade,
+                    loan_score, loan_status,loan_notes]
+                
+                for ad in additional_data:
+                    if ad == 'loan_account_number':
+                        row.append(loan_account_number)
+
+                row += [url_ktp, url_k_u, url_selfie, url_npwp]
                 for f in attachments.exclude(short_name__in=[
                     'ktp', 'surat-keterangan-usaha', 'foto-selfie', 'npwp'
                 ]):
                     row.append(f.get_safe_url())
-                data.append(row)
 
-        return generate_csv(data, "loan_report%s" % suffix, CSV_HEADERS_LOAN)
+                data.append(row)
+        headers = CSV_HEADERS_LOAN 
+        for ad in additional_data:
+            if ad == 'loan_account_number':
+                headers.append('Rekening Pinjaman')
+        headers += CSV_FILE_HEADERS
+        return generate_csv(data, "loan_report%s" % suffix, headers)
