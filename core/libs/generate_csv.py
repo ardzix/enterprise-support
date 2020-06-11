@@ -3,6 +3,11 @@ from datetime import datetime
 from django.http import HttpResponse, StreamingHttpResponse
 
 
+class Echo:
+    def write(self, value):
+        return value
+
+
 def generate_csv(data, filename, headers, start_time=None, end_time=None):
     """
     data => List of list [[],[],[]]
@@ -12,11 +17,12 @@ def generate_csv(data, filename, headers, start_time=None, end_time=None):
     else:
         date = '{}_{}'.format(start_time, end_time)
 
-    response = StreamingHttpResponse(content_type='text/csv')
+    echo_buffer = Echo()
+    writer = csv.writer(echo_buffer)
+    data = [headers] + data
+    rows = (writer.writerow(_data) for _data in data)
+
+    response = StreamingHttpResponse(rows, content_type='text/csv')
     filename = '{}_{}'.format(filename, date)
     response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(filename)
-    writer = csv.writer(response)
-    writer.writerow(headers)
-    for _data in data:
-        writer.writerow(_data)
     return response
