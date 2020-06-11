@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 
 
 def generate_csv(data, filename, headers, start_time=None, end_time=None):
@@ -12,7 +12,7 @@ def generate_csv(data, filename, headers, start_time=None, end_time=None):
     else:
         date = '{}_{}'.format(start_time, end_time)
 
-    response = HttpResponse(content_type='text/csv')
+    response = StreamingHttpResponse(content_type='text/csv')
     filename = '{}_{}'.format(filename, date)
     response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(filename)
     writer = csv.writer(response)
