@@ -198,6 +198,8 @@ class Loan(BaseModelGeneric):
     description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
     approved_amount = models.DecimalField(max_digits=19, decimal_places=2, blank=True, null=True)
+    approved_duration = models.PositiveIntegerField(blank=True, null=True)
+    disbursement_date = models.DateField(blank=True, null=True)
     status = models.CharField(default='requested', max_length=40,
                               choices=constant.PROJECT_STATUS_CHOICES)
 
