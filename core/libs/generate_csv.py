@@ -1,28 +1,34 @@
 import csv
 from datetime import datetime
+from io import StringIO
 from django.http import HttpResponse, StreamingHttpResponse
 
 
-class Echo:
-    def write(self, value):
-        return value
-
-
-def generate_csv(data, filename, headers, start_time=None, end_time=None):
+def generate_csv(
+        data, filename, headers,
+        send_email=False, start_time=None, end_time=None):
     """
     data => List of list [[],[],[]]
     """
     if not start_time and not end_time:
-        date = datetime.utcnow().strftime("%Y-%M-%d")
+        date = datetime.utcnow().strftime("%Y-%m-%d")
     else:
         date = '{}_{}'.format(start_time, end_time)
 
-    echo_buffer = Echo()
-    writer = csv.writer(echo_buffer)
-    data = [headers] + data
-    rows = (writer.writerow(_data) for _data in data)
+    content_type = "text/csv"
+    csvfile = StringIO()
+    csvwriter = csv.writer(csvfile)
 
-    response = StreamingHttpResponse(rows, content_type='text/csv')
-    filename = '{}_{}'.format(filename, date)
-    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(filename)
-    return response
+    data = [headers] + data
+    for _data in data:
+        csvwriter.writerow(_data)
+
+    filename = '{}_{}.csv'.format(filename, date)
+    data = csvfile.getvalue()
+
+    return filename, data, content_type
+
+    # response = HttpResponse(data, content_type=content_type)
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+    #     filename)
+    # return response

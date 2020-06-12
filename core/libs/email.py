@@ -10,11 +10,13 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import pre_save, post_save
 
+from django.core.mail import EmailMessage
 from core.structures.authentication.models import User, EmailVerification, send_verification_email
 
+
 def send_mail_with_attachment(subject_template_name, email_template_name, html_email_template_name,
-              context, to_email, attachment, filename, from_email=None, mandrill_template=None, mandrill_variables=None,
-              cc=[]):
+                              context, to_email, attachment, filename, from_email=None, mandrill_template=None, mandrill_variables=None,
+                              cc=[]):
     """
     Sends a django.core.mail.EmailMultiAlternatives to `to_email`.
     """
@@ -41,12 +43,10 @@ def send_mail_with_attachment(subject_template_name, email_template_name, html_e
     if html_email_template_name is not None:
         html_email = loader.render_to_string(html_email_template_name, context)
         email_message.attach_alternative(html_email, 'text/html')
-    
 
     email_message.attach(filename, attachment, 'application/pdf')
 
     email_message.send()
-
 
 
 def application_submit_email(email, user):
@@ -58,7 +58,7 @@ def application_submit_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -68,6 +68,7 @@ def application_submit_email(email, user):
         context,
         email
     )
+
 
 def application_approved_email(request, loan):
     from enterprise.libs.email import send_mail
@@ -79,7 +80,7 @@ def application_approved_email(request, loan):
 
     email = loan.owned_by.email
     context = {
-        'name' : loan.owned_by.full_name
+        'name': loan.owned_by.full_name
     }
 
     send_mail(
@@ -91,6 +92,7 @@ def application_approved_email(request, loan):
     )
     # offer_letter_email(request, loan)
 
+
 def offer_letter_email(request, loan):
     # from enterprise.libs.email import send_mail
     from django.conf import settings
@@ -101,7 +103,7 @@ def offer_letter_email(request, loan):
     pdf = MA_pdf(request, loan)
 
     context = {
-        'name' : loan.owned_by.full_name
+        'name': loan.owned_by.full_name
     }
 
     filename = "{date}-{name}-ma.pdf".format(
@@ -120,6 +122,7 @@ def offer_letter_email(request, loan):
         filename
     )
 
+
 def application_rejected_email(email, user):
     from enterprise.libs.email import send_mail
     from django.conf import settings
@@ -129,7 +132,7 @@ def application_rejected_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -139,6 +142,7 @@ def application_rejected_email(email, user):
         context,
         email
     )
+
 
 def application_proceed_email(email, user):
     from enterprise.libs.email import send_mail
@@ -149,7 +153,7 @@ def application_proceed_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -159,6 +163,7 @@ def application_proceed_email(email, user):
         context,
         email
     )
+
 
 def application_unpublish_email(email, user):
     from enterprise.libs.email import send_mail
@@ -169,7 +174,7 @@ def application_unpublish_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -180,6 +185,7 @@ def application_unpublish_email(email, user):
         email
     )
 
+
 def application_disbursed_email(email, cc, loan):
     from enterprise.libs.email import send_mail
     from django.conf import settings
@@ -189,7 +195,7 @@ def application_disbursed_email(email, cc, loan):
     email_template_name = html_email_template_name
 
     context = {
-        'loan' : loan
+        'loan': loan
     }
 
     send_mail(
@@ -211,7 +217,7 @@ def account_approved_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -222,6 +228,7 @@ def account_approved_email(email, user):
         email
     )
 
+
 def account_rejected_email(email, user, reason):
     from enterprise.libs.email import send_mail
     from django.conf import settings
@@ -231,8 +238,8 @@ def account_rejected_email(email, user, reason):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name,
-        'reason' : reason
+        'name': user.full_name,
+        'reason': reason
     }
 
     send_mail(
@@ -253,7 +260,7 @@ def account_submission_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -274,7 +281,7 @@ def account_submission_complete_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -300,10 +307,10 @@ def topup_requested_email(email, user, topup):
         show_bank_account = True
 
     context = {
-        'name' : user.full_name,
-        'amount' : topup.get_formatted_amount(),
-        'show_bank_account' : show_bank_account,
-        'link' : '%saccount/wallet/topup/?inv=%s' % (
+        'name': user.full_name,
+        'amount': topup.get_formatted_amount(),
+        'show_bank_account': show_bank_account,
+        'link': '%saccount/wallet/topup/?inv=%s' % (
             settings.BASE_URL,
             topup.invoice.number)
     }
@@ -326,8 +333,8 @@ def topup_approved_email(email, user, topup):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name,
-        'amount' : topup.get_formatted_amount(),
+        'name': user.full_name,
+        'amount': topup.get_formatted_amount(),
     }
 
     send_mail(
@@ -348,8 +355,8 @@ def topup_rejected_email(email, user, topup):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name,
-        'amount' : topup.get_formatted_amount(),
+        'name': user.full_name,
+        'amount': topup.get_formatted_amount(),
     }
 
     send_mail(
@@ -370,8 +377,8 @@ def withdraw_approved_email(email, user, withdraw):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name,
-        'amount' : withdraw.get_formatted_amount(),
+        'name': user.full_name,
+        'amount': withdraw.get_formatted_amount(),
     }
 
     send_mail(
@@ -392,8 +399,8 @@ def withdraw_rejected_email(email, user, withdraw):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name,
-        'amount' : withdraw.get_formatted_amount(),
+        'name': user.full_name,
+        'amount': withdraw.get_formatted_amount(),
     }
 
     send_mail(
@@ -416,7 +423,7 @@ def funding_sent_email(request, email, user):
     # pdf = PA_pdf(request, user)
 
     context = {
-        'name' : user.full_name,
+        'name': user.full_name,
     }
 
     filename = "{date}-{name}-pa.pdf".format(
@@ -433,8 +440,6 @@ def funding_sent_email(request, email, user):
     #     pdf,
     #     filename
     # )
-
-
     send_mail(
         subject_template_name,
         email_template_name,
@@ -442,6 +447,7 @@ def funding_sent_email(request, email, user):
         context,
         email
     )
+
 
 def repayment_email(email, cc, payment):
     from enterprise.libs.email import send_mail
@@ -452,8 +458,8 @@ def repayment_email(email, cc, payment):
     email_template_name = html_email_template_name
 
     context = {
-        'payment' : payment,
-        'loan' : payment.loan,
+        'payment': payment,
+        'loan': payment.loan,
     }
 
     send_mail(
@@ -465,6 +471,7 @@ def repayment_email(email, cc, payment):
         cc=cc
     )
 
+
 def user_created_by_admin_email(email, user):
     from enterprise.libs.email import send_mail
     from django.conf import settings
@@ -474,7 +481,7 @@ def user_created_by_admin_email(email, user):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : user.full_name
+        'name': user.full_name
     }
 
     send_mail(
@@ -484,6 +491,7 @@ def user_created_by_admin_email(email, user):
         context,
         email
     )
+
 
 def bulk_upload_report(uploader, success, failed):
     from enterprise.libs.email import send_mail
@@ -495,10 +503,10 @@ def bulk_upload_report(uploader, success, failed):
     email_template_name = html_email_template_name
 
     context = {
-        'name' : uploader.full_name,
-        'ecommerce' : dict(ECOMMERCE).get(uploader.get_profile().associated_with),
-        'success' : success,
-        'failed' : failed,
+        'name': uploader.full_name,
+        'ecommerce': dict(ECOMMERCE).get(uploader.get_profile().associated_with),
+        'success': success,
+        'failed': failed,
     }
 
     send_mail(
@@ -510,11 +518,24 @@ def bulk_upload_report(uploader, success, failed):
     )
 
 
+def send_email_loan_report(data, filename, content_type, to_email):
+    report_date = filename.replace(
+        "loan_report_", "").replace(".csv", "").replace("_", " ~ ")
+    email = EmailMessage(
+        "Loan Report {}".format(report_date),
+        "Dear {},\n\nHere attachement loan report {}.".format(
+            to_email, report_date),
+        "kur@work.bri.co.id",
+        [to_email]
+    )
+    email.attach(filename, data, content_type)
+    email.send()
+
+
 @receiver(pre_save, sender=User)
 def verify_email(sender, instance, **kwargs):
     from django.conf import settings
     from core.structures.authentication.models import User
-    # import ipdb ; ipdb.set_trace()
 
     if getattr(settings, 'AUTO_VERIFY_EMAIL', False):
         email = instance.email
