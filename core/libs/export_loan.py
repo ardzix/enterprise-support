@@ -18,7 +18,8 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
                     "Jenis Usaha Ecommerce", "Nama Toko di Ecommerce",
                     "Domain Toko di Ecommerce", "Nama Ecommerce", "Rating Toko", "Frekuensi Transaki 6 bulan terakhir",
                     "Cashflow 6 bulan Terakhir", "Sukses Rate Transaksi",
-                    "Plafon Pengajuan", "Plafon Disetujui", "Jangka Waktu",
+                    "Plafon Pengajuan", "Plafon Disetujui", "Jangka Waktu", "Jangka Waktu Disetujui",
+                    "Tanggal Pencairan",
                     "Grade", "Score", "Status Pinjaman", "Alasan Ditolak"]
 
 CSV_FILE_HEADERS = ["URL KTP", "URL Surat Keterangan Usaha",
@@ -110,6 +111,8 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
             loan_amount = _loan.amount
             loan_approved_amount = _loan.approved_amount
             loan_duration = _loan.duration
+            loan_approved_duration = _loan.approved_duration
+            loan_disbursement_date = _loan.disbursement_date
             loan_grade = _loan.get_grade()
             loan_score = _loan.score
             loan_status = _loan.status
@@ -142,8 +145,9 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
                 current_balance, ecom_type_of_bussiness, ecom_store_name,
                 ecom_domain, ecom_name, ecom_rating, ecom_transaction_freq,
                 ecom_cashflow, ecom_success_rate,
-                loan_amount, loan_approved_amount, loan_duration, loan_grade,
-                loan_score, loan_status, loan_notes]
+                loan_amount, loan_approved_amount, loan_duration, loan_approved_duration,
+                loan_disbursement_date,
+                loan_grade,loan_score, loan_status, loan_notes]
 
             for ad in additional_data:
                 if ad == 'loan_account_number':
