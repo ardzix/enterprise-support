@@ -100,7 +100,7 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
 
             # ecommerce
             ecom_type_of_bussiness = ecommerce.get_type_of_bussiness_display() if ecommerce else ""
-            ecom_name = ecommerce.name_store if ecommerce else ""
+            ecom_store_name = ecommerce.name_store if ecommerce else ""
             ecom_domain = ecommerce.domain_store if ecommerce else ""
             ecom_name = ecommerce.ecommerce if ecommerce else ""
             ecom_rating = ecommerce.rating if ecommerce else ""
@@ -139,7 +139,7 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
                 business_income, business_cost, cost_household,
                 cost_instalments, account_number, total_account_number,
                 total_account_number_other, have_internet_banking,
-                current_balance, ecom_type_of_bussiness, ecom_name,
+                current_balance, ecom_type_of_bussiness, ecom_store_name,
                 ecom_domain, ecom_name, ecom_rating, ecom_transaction_freq,
                 ecom_cashflow, ecom_success_rate,
                 loan_amount, loan_approved_amount, loan_duration, loan_grade,
