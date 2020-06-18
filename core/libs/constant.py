@@ -58,6 +58,7 @@ RELIGION_CHOICES = (
 EDUCATION_CHOICES = (
     ('sd-smp', 'SD s/d SMP'),
     ('smu', 'SMU'),
+    ('diploma', 'Diploma'),
     ('s1', 'Strata 1'),
     ('s2', 'Strata 2'),
     ('s3', 'Strata 3')
