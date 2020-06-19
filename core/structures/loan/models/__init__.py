@@ -242,7 +242,7 @@ class Loan(BaseModelGeneric):
             self.processed_at = timezone.now()
             self.processed_by = user
             # save it
-            return super(_BaseAbstract, self).save(*args, **kwargs)
+            return super().save(*args, **kwargs)
 
     def get_funds(self):
         return getattr(self, 'fund_set')
