@@ -20,7 +20,8 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
                     "Cashflow 6 bulan Terakhir", "Sukses Rate Transaksi",
                     "Plafon Pengajuan", "Plafon Disetujui", "Jangka Waktu", "Jangka Waktu Disetujui",
                     "Tanggal Pencairan",
-                    "Grade", "Score", "Status Pinjaman", "Alasan Ditolak"]
+                    "Grade", "Score", "Status Pinjaman", "Alasan Ditolak",
+                    "Tanngal Pengajuan", "Tanngal Diproses", "Tanngal Disetujui", "Tanngal Ditolak"]
 
 CSV_FILE_HEADERS = ["URL KTP", "URL Surat Keterangan Usaha",
                     "URL Foto Selfie", "URL NPWP", "URL Foto Usaha"]
@@ -119,6 +120,11 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
             loan_notes = _loan.notes
             loan_account_number = _loan.account_number
 
+            loan_created_at = _loan.created_at
+            loan_processed_at = _loan.processed_at
+            loan_approved_at = _loan.approved_at
+            loan_rejected_at = _loan.rejected_at
+
             ktp = attachments.filter(short_name='ktp').first()
             url_ktp = ktp.get_safe_url() if ktp else ""
             k_u = attachments.filter(
@@ -147,7 +153,8 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
                 ecom_cashflow, ecom_success_rate,
                 loan_amount, loan_approved_amount, loan_duration, loan_approved_duration,
                 loan_disbursement_date,
-                loan_grade,loan_score, loan_status, loan_notes]
+                loan_grade, loan_score, loan_status, loan_notes,
+                loan_created_at, loan_processed_at, loan_approved_at, loan_rejected_at]
 
             for ad in additional_data:
                 if ad == 'loan_account_number':

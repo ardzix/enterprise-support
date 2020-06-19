@@ -226,8 +226,23 @@ class Loan(BaseModelGeneric):
     account_number = models.DecimalField(
         max_digits=20, decimal_places=0, blank=True, null=True)
 
+    processed_at = models.DateTimeField(blank=True, null=True)
+    processed_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
+                                    related_name="%(app_label)s_%(class)s_approved_by")
+
     def __str__(self):
         return self.number
+
+
+    def process(self, user=None, *args, **kwargs):
+        return self.proceed(user, *args, **kwargs)
+
+    def proceed(self, user=None, *args, **kwargs):
+        if user:
+            self.processed_at = timezone.now()
+            self.processed_by = user
+            # save it
+            return super(_BaseAbstract, self).save(*args, **kwargs)
 
     def get_funds(self):
         return getattr(self, 'fund_set')
