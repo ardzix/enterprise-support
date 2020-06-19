@@ -228,7 +228,7 @@ class Loan(BaseModelGeneric):
 
     processed_at = models.DateTimeField(blank=True, null=True)
     processed_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE,
-                                    related_name="%(app_label)s_%(class)s_approved_by")
+                                    related_name="%(app_label)s_%(class)s_processed_by")
 
     def __str__(self):
         return self.number
