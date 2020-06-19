@@ -21,7 +21,7 @@ CSV_HEADERS_LOAN = ["NIK", "Nama Lengkap", "Tempat Lahir", "Tanggal Lahir",
                     "Plafon Pengajuan", "Plafon Disetujui", "Jangka Waktu", "Jangka Waktu Disetujui",
                     "Tanggal Pencairan",
                     "Grade", "Score", "Status Pinjaman", "Alasan Ditolak",
-                    "Tanngal Pengajuan", "Tanngal Diproses", "Tanngal Disetujui", "Tanngal Ditolak"]
+                    "Tanngal Pengajuan", "Tanngal Diproses", "Tanngal Disetujui", "Tanngal Ditolak/Dibatalkan"]
 
 CSV_FILE_HEADERS = ["URL KTP", "URL Surat Keterangan Usaha",
                     "URL Foto Selfie", "URL NPWP", "URL Foto Usaha"]
@@ -123,7 +123,7 @@ def export_loan(loans, user_email, suffix='', additional_data=[]):
             loan_created_at = _loan.created_at
             loan_processed_at = _loan.processed_at
             loan_approved_at = _loan.approved_at
-            loan_rejected_at = _loan.rejected_at
+            loan_rejected_at = _loan.unapproved_at
 
             ktp = attachments.filter(short_name='ktp').first()
             url_ktp = ktp.get_safe_url() if ktp else ""
