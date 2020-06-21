@@ -233,6 +233,21 @@ class Loan(BaseModelGeneric):
     def __str__(self):
         return self.number
 
+    def get_done_time(self):
+        if self.processed_at:
+            time = self.approved_at - self.processed_at
+            if time.days:
+                days = str(time).split(',')[0]
+                days = days.split(' ')[0]
+                days = int(days)
+                days = '%s hari' % days if days > 0 else ' '
+
+            hours = str(time).split(':')[0]
+            if time.days:
+                hours = hours.split(', ')[1]
+            hours = int(hours)
+            hours = '%s jam' % hours if hours > 0 else ' '
+        return '<span class="text-success font-bold">%s %s</span>' % (days, hours)
 
     def process(self, user=None, *args, **kwargs):
         return self.proceed(user, *args, **kwargs)
