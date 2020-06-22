@@ -241,6 +241,8 @@ class Loan(BaseModelGeneric):
                 days = days.split(' ')[0]
                 days = int(days)
                 days = '%s hari' % days if days > 0 else ' '
+            else:
+                days = ' '
 
             hours = str(time).split(':')[0]
             if time.days:
