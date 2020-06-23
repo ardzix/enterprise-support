@@ -249,7 +249,7 @@ class Loan(BaseModelGeneric):
                 hours = hours.split(', ')[1]
             hours = int(hours)
             hours = '%s jam' % hours if hours > 0 else ' '
-        return '<span class="text-success font-bold">%s %s</span>' % (days, hours)
+            return '<span class="text-success font-bold">%s %s</span>' % (days, hours)
 
     def process(self, user=None, *args, **kwargs):
         return self.proceed(user, *args, **kwargs)
