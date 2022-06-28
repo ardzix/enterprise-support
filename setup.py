@@ -67,7 +67,7 @@ setup(
         'timeago==1.0.8',
         'psycopg2==2.7.5',
         'postgis==1.0.4',
-        'arrow==0.12.1'
+        'arrow==0.15.1'
     ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
